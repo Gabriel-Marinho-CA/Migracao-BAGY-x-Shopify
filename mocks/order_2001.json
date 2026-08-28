@@ -1,0 +1,405 @@
+{
+  "Order": {
+    "status": "FINALIZADO",
+    "id": "2001",
+    "date": "2025-06-18",
+    "hour": "10:32:14",
+    "customer_id": "88",
+    "partial_total": "60399.80",
+    "taxes": "0.00",
+    "discount": "0.00",
+    "point_sale": "LOJA VIRTUAL",
+    "shipment": "SEDEX Bagy",
+    "shipment_value": "88.40",
+    "shipment_date": "",
+    "delivered": "1",
+    "delivered_status": "",
+    "shipping_cancelled": "",
+    "store_note": "18/06/2025 10:32:40 Pedido em 1 vez de R$ 60.488,20 atraves do Boleto - Vindi",
+    "customer_note": "",
+    "partner_id": "",
+    "discount_coupon": "",
+    "client_ip": "",
+    "payment_method_rate": "0.00",
+    "installment": "1",
+    "value_1": "0.00",
+    "sending_code": "BR555444333BR",
+    "sending_date": "0000-00-00",
+    "billing_address": "",
+    "delivery_time": "4",
+    "payment_method_id": "10544",
+    "payment_method": "Boleto - Vindi",
+    "session_id": "e5r7t9y1u3i5o7p9a1s3d5f7g9",
+    "total": "60488.20",
+    "payment_date": "2025-06-18",
+    "access_code": "A1B2C3D4E5F6071",
+    "shipment_integrator": "Correios",
+    "modified": "2025-06-24 16:20:11",
+    "printed": "",
+    "interest": "0.00",
+    "cart_additional_values_discount": "0.00",
+    "cart_additional_values_increase": "0.00",
+    "id_quotation": "",
+    "estimated_delivery_date": "2025-06-24",
+    "is_traceable": "1",
+    "external_code": "",
+    "tracking_url": "https://rastreamento.correios.com.br/app/index.php?objeto=BR555444333BR",
+    "has_payment": "1",
+    "has_shipment": "1",
+    "has_invoice": "1",
+    "delivery_date": "",
+    "dc_id": "799",
+    "total_comission_user": "0.00",
+    "total_comission": "0.00",
+    "OrderStatus": {
+      "id": "69",
+      "default": "1",
+      "type": "closed",
+      "show_backoffice": "1",
+      "allow_edit_order": "0",
+      "description": "",
+      "status": "FINALIZADO",
+      "show_status_central": "",
+      "background": "#85CC8D",
+      "display_name": "",
+      "font_color": ""
+    },
+    "PickupLocation": [],
+    "cost": "41196.00",
+    "app_id": "0",
+    "urls": {
+      "payment": "https://ecommerce.analisevirtual.com.br/loja/pagamento.php?loja=1098664&pedido=A1B2C3D4E5F6071"
+    },
+    "store_segment": "Eletronicos & Foto",
+    "payment_method_type": "billet",
+    "Customer": {
+      "cnpj": "11222333000181",
+      "newsletter": "1",
+      "created": "2025-06-12 10:05:00",
+      "terms": "0000-00-00 00:00:00",
+      "id": "88",
+      "name": "Fernanda Ribeiro Alves",
+      "registration_date": "2025-06-12",
+      "rg": "",
+      "cpf": "",
+      "phone": "1133224455",
+      "cellphone": "11988776655",
+      "birth_date": "0000-00-00",
+      "gender": "0",
+      "email": "compras@turboindustria.com.br",
+      "nickname": "",
+      "token": "A1B2C3D4E5F6071",
+      "total_orders": "0",
+      "observation": "",
+      "type": "0",
+      "foreign": "0",
+      "company_name": "Turbo Industria e Comercio LTDA",
+      "state_inscription": "",
+      "reseller": "0",
+      "discount": "0.000",
+      "blocked": "",
+      "credit_limit": "0.00",
+      "indicator_id": "0",
+      "profile_customer_id": "1",
+      "last_sending_newsletter": "0000-00-00",
+      "last_purchase": "2025-06-18",
+      "last_visit": "2025-06-18",
+      "last_modification": "0000-00-00 00:00:00",
+      "address": "Avenida Paulista",
+      "zip_code": "01310-200",
+      "number": "1578",
+      "complement": "conjunto 142",
+      "neighborhood": "Bela Vista",
+      "city": "Sao Paulo",
+      "state": "SP",
+      "country": "",
+      "modified": "2025-06-24 16:20:11",
+      "count_orders": "0",
+      "Extensions": {
+        "Profile": {
+          "id": "1",
+          "name": "Padrao",
+          "approves_registration": "0"
+        },
+        "Profiles": [
+          {
+            "id": "1",
+            "price_list_id": "0",
+            "name": "Padrao",
+            "approves_registration": "0",
+            "show_price": "",
+            "theme_id": "0",
+            "selected": "1"
+          }
+        ]
+      },
+      "CustomerAddresses": [
+        {
+          "CustomerAddress": {
+            "id": "310",
+            "customer_id": "88",
+            "address": "Avenida Paulista",
+            "number": "1578",
+            "complement": "conjunto 142",
+            "neighborhood": "Bela Vista",
+            "city": "Sao Paulo",
+            "state": "SP",
+            "zip_code": "01310-200",
+            "country": "",
+            "type": "1",
+            "active": "1",
+            "description": "01310200",
+            "recipient": "Fernanda R Alves",
+            "type_delivery": "1",
+            "not_list": "0"
+          }
+        }
+      ]
+    },
+    "ProductsSold": [
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "92",
+          "quantity": "1",
+          "id": "20011",
+          "order_id": "2001",
+          "name": "tv oled 65 polegadas (Ref. ref92)",
+          "original_name": "tv oled 65 polegadas",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "59900.00",
+          "cost_price": "41000.00",
+          "original_price": "59900.00",
+          "weight": "24000",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref92",
+          "length": "150",
+          "width": "95",
+          "height": "20",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_tv_oled_65_polegadas_92_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "6",
+              "name": "Eletronicos",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/eletronicos/tv-oled-65-polegadas",
+            "https": "https://ecommerce.analisevirtual.com.br/eletronicos/tv-oled-65-polegadas"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      },
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "233",
+          "quantity": "2",
+          "id": "20012",
+          "order_id": "2001",
+          "name": "mochila urbana 25l (Ref. ref233)",
+          "original_name": "mochila urbana 25l",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "249.90",
+          "cost_price": "98.00",
+          "original_price": "249.90",
+          "weight": "750",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref233",
+          "length": "48",
+          "width": "32",
+          "height": "18",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "3",
+              "name": "Acessorios",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/acessorios/mochila-urbana-25l",
+            "https": "https://ecommerce.analisevirtual.com.br/acessorios/mochila-urbana-25l"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      }
+    ],
+    "OrderInvoice": [
+      {
+        "id": "2001",
+        "link": ""
+      }
+    ],
+    "Payment": [
+      {
+        "Payment": {
+          "created": "2025-06-24 16:20:11",
+          "modified": "2025-06-24 16:20:11",
+          "id": "810",
+          "order_id": "2001",
+          "payment_method_id": "",
+          "method": "Boleto",
+          "payment_place": "",
+          "value": "60488.20",
+          "date": "2025-06-18",
+          "note": "",
+          "unique_number": "Bagy__810__25001-1"
+        }
+      }
+    ],
+    "MlOrder": [],
+    "MarketplaceOrder": [],
+    "OrderTransactions": [],
+    "OrderInvoiceAmount": [],
+    "OtherInvoiceAmounts": [],
+    "ExtraTabs": [],
+    "OrderChilds": [],
+    "PaymentMethodMessage": {
+      "text": "",
+      "text_pag": "",
+      "text_confirm": "",
+      "confirmation": "0"
+    },
+    "payments_notification": {
+      "notification": "https://1098664.commercesuite.com.br/loja/retorno_pagamento.php?loja=1098664&gateway=5&codigoAcesso=A1B2C3D4E5F6071&notification=true"
+    },
+    "partner_name": "",
+    "DistributionCenter": {
+      "status": "completed",
+      "type": "child_order",
+      "group_id": "27927",
+      "Package": {
+        "id": "22861",
+        "created_at": "2025-06-18T12:46:24.000000Z",
+        "updated_at": "2025-06-18T12:57:46.000000Z",
+        "order_id": "2001",
+        "DistributionCenter": {
+          "id": "799",
+          "name": "Rio preto - SP",
+          "document": "",
+          "postal_code": "15010011",
+          "country": "Brasil",
+          "state": "SP",
+          "city": "Sao Jose do Rio Preto",
+          "address": "Praca Paul S. Harris",
+          "number": "158",
+          "neighborhood": "Centro",
+          "complement": "",
+          "updated_at": "2025-01-15T13:50:42.000000Z",
+          "created_at": "2025-01-15T13:47:57.000000Z"
+        },
+        "Products": [
+          {
+            "product_id": "92",
+            "variant_id": "0",
+            "product_sold_id": "20011",
+            "quantity": "1"
+          },
+          {
+            "product_id": "233",
+            "variant_id": "0",
+            "product_sold_id": "20012",
+            "quantity": "2"
+          }
+        ]
+      }
+    }
+  },
+  "Extensions": [],
+  "User": [],
+  "Confirmation": []
+}

@@ -1,0 +1,405 @@
+{
+  "Order": {
+    "status": "FINALIZADO",
+    "id": "2005",
+    "date": "2025-08-14",
+    "hour": "13:41:19",
+    "customer_id": "34",
+    "partial_total": "289.80",
+    "taxes": "0.00",
+    "discount": "0.00",
+    "point_sale": "LOJA VIRTUAL",
+    "shipment": "SEDEX Bagy",
+    "shipment_value": "24.80",
+    "shipment_date": "",
+    "delivered": "1",
+    "delivered_status": "",
+    "shipping_cancelled": "",
+    "store_note": "14/08/2025 13:41:40 Pedido em 3x de R$ 343,58 atraves do Cartao de Credito - Vindi",
+    "customer_note": "",
+    "partner_id": "",
+    "discount_coupon": "",
+    "client_ip": "",
+    "payment_method_rate": "28.98",
+    "installment": "3",
+    "value_1": "0.00",
+    "sending_code": "BR111222333BR",
+    "sending_date": "0000-00-00",
+    "billing_address": "",
+    "delivery_time": "3",
+    "payment_method_id": "10546",
+    "payment_method": "Cartao de Credito - Vindi",
+    "session_id": "a1b2c3d4e5f6g7h8i9j0k1l2m3",
+    "total": "343.58",
+    "payment_date": "2025-08-14",
+    "access_code": "5A4B3C2D1E0F9A8",
+    "shipment_integrator": "Correios",
+    "modified": "2025-08-19 10:11:22",
+    "printed": "",
+    "interest": "0.00",
+    "cart_additional_values_discount": "0.00",
+    "cart_additional_values_increase": "0.00",
+    "id_quotation": "",
+    "estimated_delivery_date": "2025-08-19",
+    "is_traceable": "1",
+    "external_code": "",
+    "tracking_url": "https://rastreamento.correios.com.br/app/index.php?objeto=BR111222333BR",
+    "has_payment": "1",
+    "has_shipment": "1",
+    "has_invoice": "1",
+    "delivery_date": "",
+    "dc_id": "799",
+    "total_comission_user": "0.00",
+    "total_comission": "0.00",
+    "OrderStatus": {
+      "id": "69",
+      "default": "1",
+      "type": "closed",
+      "show_backoffice": "1",
+      "allow_edit_order": "0",
+      "description": "",
+      "status": "FINALIZADO",
+      "show_status_central": "",
+      "background": "#85CC8D",
+      "display_name": "",
+      "font_color": ""
+    },
+    "PickupLocation": [],
+    "cost": "110.40",
+    "app_id": "0",
+    "urls": {
+      "payment": "https://ecommerce.analisevirtual.com.br/loja/pagamento.php?loja=1098664&pedido=5A4B3C2D1E0F9A8"
+    },
+    "store_segment": "Eletronicos & Foto",
+    "payment_method_type": "credit_card",
+    "Customer": {
+      "cnpj": "",
+      "newsletter": "1",
+      "created": "2024-11-11 21:40:02",
+      "terms": "0000-00-00 00:00:00",
+      "id": "34",
+      "name": "Juliana Ferreira Costa",
+      "registration_date": "2024-11-11",
+      "rg": "445566778",
+      "cpf": "52998224725",
+      "phone": "8134445555",
+      "cellphone": "81988883333",
+      "birth_date": "0000-00-00",
+      "gender": "0",
+      "email": "juliana.costa@example.com",
+      "nickname": "",
+      "token": "5A4B3C2D1E0F9A8",
+      "total_orders": "0",
+      "observation": "",
+      "type": "0",
+      "foreign": "0",
+      "company_name": "",
+      "state_inscription": "",
+      "reseller": "0",
+      "discount": "0.000",
+      "blocked": "",
+      "credit_limit": "0.00",
+      "indicator_id": "0",
+      "profile_customer_id": "1",
+      "last_sending_newsletter": "0000-00-00",
+      "last_purchase": "2025-08-14",
+      "last_visit": "2025-08-14",
+      "last_modification": "0000-00-00 00:00:00",
+      "address": "Rua do Sol",
+      "zip_code": "50060-060",
+      "number": "45",
+      "complement": "apto 302",
+      "neighborhood": "Boa Vista",
+      "city": "Recife",
+      "state": "PE",
+      "country": "",
+      "modified": "2025-08-19 10:11:22",
+      "count_orders": "0",
+      "Extensions": {
+        "Profile": {
+          "id": "1",
+          "name": "Padrao",
+          "approves_registration": "0"
+        },
+        "Profiles": [
+          {
+            "id": "1",
+            "price_list_id": "0",
+            "name": "Padrao",
+            "approves_registration": "0",
+            "show_price": "",
+            "theme_id": "0",
+            "selected": "1"
+          }
+        ]
+      },
+      "CustomerAddresses": [
+        {
+          "CustomerAddress": {
+            "id": "204",
+            "customer_id": "34",
+            "address": "Rua do Sol",
+            "number": "45",
+            "complement": "apto 302",
+            "neighborhood": "Boa Vista",
+            "city": "Recife",
+            "state": "PE",
+            "zip_code": "50060-060",
+            "country": "",
+            "type": "1",
+            "active": "1",
+            "description": "50060060",
+            "recipient": "Juliana F Costa",
+            "type_delivery": "1",
+            "not_list": "0"
+          }
+        }
+      ]
+    },
+    "ProductsSold": [
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "233",
+          "quantity": "1",
+          "id": "20051",
+          "order_id": "2005",
+          "name": "mochila urbana 25l (Ref. ref233)",
+          "original_name": "mochila urbana 25l",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "249.90",
+          "cost_price": "98.00",
+          "original_price": "249.90",
+          "weight": "750",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref233",
+          "length": "48",
+          "width": "32",
+          "height": "18",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_mochila_urbana_25l_233_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "3",
+              "name": "Acessorios",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/acessorios/mochila-urbana-25l",
+            "https": "https://ecommerce.analisevirtual.com.br/acessorios/mochila-urbana-25l"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      },
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "601",
+          "quantity": "1",
+          "id": "20052",
+          "order_id": "2005",
+          "name": "kit meia 3 pares (Ref. ref601)",
+          "original_name": "kit meia 3 pares",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "39.90",
+          "cost_price": "12.40",
+          "original_price": "39.90",
+          "weight": "150",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref601",
+          "length": "20",
+          "width": "14",
+          "height": "6",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_kit_meia_3_pares_601_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "2",
+              "name": "Vestuario",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/vestuario/kit-meia-3-pares",
+            "https": "https://ecommerce.analisevirtual.com.br/vestuario/kit-meia-3-pares"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      }
+    ],
+    "OrderInvoice": [
+      {
+        "id": "2005",
+        "link": ""
+      }
+    ],
+    "Payment": [
+      {
+        "Payment": {
+          "created": "2025-08-19 10:11:22",
+          "modified": "2025-08-19 10:11:22",
+          "id": "861",
+          "order_id": "2005",
+          "payment_method_id": "",
+          "method": "Cartao de Credito",
+          "payment_place": "",
+          "value": "343.58",
+          "date": "2025-08-14",
+          "note": "",
+          "unique_number": "Bagy__861__25055-1"
+        }
+      }
+    ],
+    "MlOrder": [],
+    "MarketplaceOrder": [],
+    "OrderTransactions": [],
+    "OrderInvoiceAmount": [],
+    "OtherInvoiceAmounts": [],
+    "ExtraTabs": [],
+    "OrderChilds": [],
+    "PaymentMethodMessage": {
+      "text": "",
+      "text_pag": "",
+      "text_confirm": "",
+      "confirmation": "0"
+    },
+    "payments_notification": {
+      "notification": "https://1098664.commercesuite.com.br/loja/retorno_pagamento.php?loja=1098664&gateway=5&codigoAcesso=5A4B3C2D1E0F9A8&notification=true"
+    },
+    "partner_name": "",
+    "DistributionCenter": {
+      "status": "completed",
+      "type": "child_order",
+      "group_id": "27927",
+      "Package": {
+        "id": "22861",
+        "created_at": "2025-08-14T12:46:24.000000Z",
+        "updated_at": "2025-08-14T12:57:46.000000Z",
+        "order_id": "2005",
+        "DistributionCenter": {
+          "id": "799",
+          "name": "Rio preto - SP",
+          "document": "",
+          "postal_code": "15010011",
+          "country": "Brasil",
+          "state": "SP",
+          "city": "Sao Jose do Rio Preto",
+          "address": "Praca Paul S. Harris",
+          "number": "158",
+          "neighborhood": "Centro",
+          "complement": "",
+          "updated_at": "2025-01-15T13:50:42.000000Z",
+          "created_at": "2025-01-15T13:47:57.000000Z"
+        },
+        "Products": [
+          {
+            "product_id": "233",
+            "variant_id": "0",
+            "product_sold_id": "20051",
+            "quantity": "1"
+          },
+          {
+            "product_id": "601",
+            "variant_id": "0",
+            "product_sold_id": "20052",
+            "quantity": "1"
+          }
+        ]
+      }
+    }
+  },
+  "Extensions": [],
+  "User": [],
+  "Confirmation": []
+}

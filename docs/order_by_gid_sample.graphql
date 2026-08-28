@@ -1,0 +1,25 @@
+# Consulta o pedido pelo GID, nao pela busca por tag.
+#
+# A busca (`orders(query: "tag:...")`) passa pelo indice, que fica minutos
+# atrasado depois de uma escrita - logo apos criar o pedido ela devolve vazio.
+# `order(id:)` le o objeto direto e responde na hora.
+
+query OrderFulfillmentOrders($id: ID!) {
+  order(id: $id) {
+    id
+    name
+    displayFulfillmentStatus
+    fulfillmentOrders(first: 10) {
+      nodes {
+        id
+        status
+        lineItems(first: 100) {
+          nodes {
+            id
+            remainingQuantity
+          }
+        }
+      }
+    }
+  }
+}

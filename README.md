@@ -3,7 +3,7 @@
 Scripts em Python para importar pedidos da Bagy (CommerceSuite/Tray) na Shopify
 via **Admin GraphQL API**, usando a mutation `orderCreate`.
 
-Estado atual: **funcionando end-to-end**. Os 8 pedidos de teste já foram criados
+Estado atual: **funcionando end-to-end**. Os 15 pedidos de teste já foram criados
 na loja `turbo-starter.myshopify.com`, confirmados pela tag `bagy-import`.
 
 ---
@@ -41,6 +41,7 @@ Scripts de apoio, em `tools/`:
 | `verify_migration.py` | Confere pedido a pedido contra a Bagy (total, frete, status) |
 | `backfill_attributes.py` | Reaplica CPF/CNPJ e informações adicionais em pedidos já migrados |
 | `show_order_card.py <id>` | Mostra um pedido como o admin exibe |
+| `check_customer_document.py` | Confere o CPF/CNPJ no registro dos clientes |
 | `show_errors.py` | Revisa os erros registrados |
 | `diagnose_visibility.py` | Por que um pedido não aparece na aba de Pedidos |
 | `unarchive_orders.py` | Desarquiva os pedidos que a Shopify fechou sozinha |
@@ -262,7 +263,8 @@ então dá para casar com variantes depois se o catálogo for migrado. O
 
 | Dado | Onde vai | Como aparece no admin |
 |---|---|---|
-| CPF / CNPJ | `localizedFields` → `TAX_CREDENTIAL_BR` | Card do Cliente → **Informações adicionais → CPF/CNPJ** |
+| CPF / CNPJ (no pedido) | `localizedFields` → `TAX_CREDENTIAL_BR` | Página do pedido → card do Cliente → **Informações adicionais → CPF/CNPJ** |
+| CPF / CNPJ (no cliente) | metafield `custom.cpf_cnpj` | Aba **Clientes** → página do cliente → **Informações adicionais** |
 | RG, IE, telefones, pagamento, frete, endereço destrinchado, códigos da Bagy | `customAttributes` | Card **Informações adicionais**, em pares chave/valor |
 | Observações em texto livre da Bagy | `note` | Observações |
 
@@ -274,6 +276,26 @@ atributos por pedido.
 **O `orderCreate` não aceita `localizedFields`** — só `OrderInput` tem esse
 campo. Por isso o CPF entra numa chamada `orderUpdate` logo depois da criação, o
 que exige o GID e, portanto, acesso de leitura a Order.
+
+**O CPF vai para dois lugares diferentes, por mecanismos diferentes.** São
+telas distintas do admin:
+
+- No **pedido**: `localizedFields` / `TAX_CREDENTIAL_BR`.
+- No **cliente**: `Customer` não tem `localizedFields` (só `Order` e
+  `DraftOrder` têm), então lá é **metafield** `custom.cpf_cnpj`, gravado com
+  `metafieldsSet`.
+
+Para o admin exibir o metafield na página do cliente, a **definição precisa
+existir e estar fixada** (`pin: true`) — por padrão só metafields fixados
+aparecem. `ensure_customer_document_definition()` cria a definição uma vez, é
+idempotente (trata o userError `TAKEN`) e roda no início da migração e do
+backfill.
+
+Detalhe achado na prática: passar `access: { admin: MERCHANT_READ_WRITE }` na
+definição é recusado neste app (*"must be one of [public_read_write]"*). O campo
+`access` foi omitido, ficando no padrão — que funciona.
+
+Conferir com `python tools/check_customer_document.py`.
 
 ### A Shopify valida CPF/CNPJ de verdade
 
@@ -315,9 +337,20 @@ positivo não tem campo próprio no `orderCreate`, então entra como um item
 "Acréscimo - <meio de pagamento>" com `requiresShipping: false`. É o que mantém
 o total idêntico ao da Bagy.
 
+**Varredura de fulfillment depois da criação.** O campo `fulfillment` do
+`orderCreate` fecha **um só** fulfillment order. A linha de acréscimo acima
+ganha um fulfillment order próprio (mesmo com `requiresShipping: false`), então
+pedidos com juros ficavam presos em `PARTIALLY_FULFILLED` para sempre. Depois de
+criar, o migrador relê o pedido e fecha o que sobrou — `sweep_fulfillment()`,
+compartilhado com o `fix_fulfillment.py`.
+
+A releitura é **pelo GID** (`order(id:)`), não pela busca por tag: o índice de
+busca fica minutos atrasado após uma escrita e devolveria vazio, fazendo a
+varredura passar batido. Foi exatamente esse o bug na primeira tentativa.
+
 **Conferência de total.** Para cada pedido o script recalcula
 `subtotal + acréscimos − descontos + frete` e compara com o `total` da Bagy.
-Divergência acima de R$ 0,01 vira aviso. Nos 8 mocks, todos batem.
+Divergência acima de R$ 0,01 vira aviso. Nos 15 mocks, todos batem.
 
 **Datas.** `date` + `hour` viram `processedAt` em ISO 8601 com offset `-03:00`.
 Fixo porque o Brasil não tem horário de verão desde 2019 e todos os pedidos são
@@ -399,7 +432,21 @@ continuam batendo com os originais.
 | 1185 | 2025-04-11 | A ENVIAR | retirada na loja, frete zero |
 | 1190 | 2025-04-25 | FINALIZADO | cupom + 2 itens + rastreio |
 
+Lote 2, criado depois das melhorias, para exercitar o que antes não existia
+(fulfillment já na criação, CPF/CNPJ nos campos certos):
+
+| # | Data | Status | Exercita |
+|---|---|---|---|
+| 2001 | 2025-06-18 | FINALIZADO | **CNPJ** + razão social + IE, fulfillment na criação |
+| 2002 | 2025-07-03 | A ENVIAR | **CPF inválido** — degrada sem quebrar |
+| 2003 | 2025-07-22 | EM SEPARACAO | **cliente sem documento nenhum** |
+| 2004 | 2025-08-05 | ENTREGUE | cupom **e** juros juntos (desconto único somado) |
+| 2005 | 2025-08-14 | FINALIZADO | regressão da varredura de fulfillment |
+| 2006 | 2025-08-20 | ENTREGUE | cupom + juros + retirada na loja |
+| 2007 | 2025-08-26 | FINALIZADO | prova da varredura já corrigida |
+
 O fluxo do mock imita o real: pagina a listagem e busca o detalhe de cada pedido.
+São 15 pedidos em 5 páginas de 3.
 
 ---
 

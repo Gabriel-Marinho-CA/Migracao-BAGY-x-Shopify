@@ -1,0 +1,420 @@
+{
+  "Order": {
+    "status": "ENTREGUE",
+    "id": "2006",
+    "date": "2025-08-20",
+    "hour": "15:02:08",
+    "customer_id": "88",
+    "partial_total": "239.70",
+    "taxes": "0.00",
+    "discount": "0.00",
+    "point_sale": "LOJA VIRTUAL",
+    "shipment": "Retirar na loja",
+    "shipment_value": "0.00",
+    "shipment_date": "",
+    "delivered": "",
+    "delivered_status": "",
+    "shipping_cancelled": "",
+    "store_note": "Retirada na loja fisica - Rio preto - SP",
+    "customer_note": "",
+    "partner_id": "",
+    "discount_coupon": "agosto10/23.97",
+    "client_ip": "",
+    "payment_method_rate": "10.79",
+    "installment": "2",
+    "value_1": "0.00",
+    "sending_code": "",
+    "sending_date": "0000-00-00",
+    "billing_address": "",
+    "delivery_time": "0",
+    "payment_method_id": "10546",
+    "payment_method": "Cartao de Credito - Vindi",
+    "session_id": "n1m2b3v4c5x6z7l8k9j0h1g2f3",
+    "total": "226.52",
+    "payment_date": "0000-00-00",
+    "access_code": "8B7C6D5E4F3A2B1",
+    "shipment_integrator": "",
+    "modified": "2025-08-21 09:33:41",
+    "printed": "",
+    "interest": "0.00",
+    "cart_additional_values_discount": "0.00",
+    "cart_additional_values_increase": "0.00",
+    "id_quotation": "",
+    "estimated_delivery_date": "2025-08-21",
+    "is_traceable": "",
+    "external_code": "",
+    "tracking_url": "",
+    "has_payment": "0",
+    "has_shipment": "0",
+    "has_invoice": "1",
+    "delivery_date": "",
+    "dc_id": "799",
+    "total_comission_user": "0.00",
+    "total_comission": "0.00",
+    "OrderStatus": {
+      "id": "70",
+      "default": "1",
+      "type": "closed",
+      "show_backoffice": "1",
+      "allow_edit_order": "0",
+      "description": "",
+      "status": "ENTREGUE",
+      "show_status_central": "",
+      "background": "#7FBF87",
+      "display_name": "",
+      "font_color": ""
+    },
+    "PickupLocation": [
+      {
+        "id": "3",
+        "name": "Loja Rio Preto - SP",
+        "address": "Praca Paul S. Harris",
+        "number": "158",
+        "neighborhood": "Centro",
+        "city": "Sao Jose do Rio Preto",
+        "state": "SP",
+        "zip_code": "15010-011"
+      }
+    ],
+    "cost": "75.50",
+    "app_id": "0",
+    "urls": {
+      "payment": "https://ecommerce.analisevirtual.com.br/loja/pagamento.php?loja=1098664&pedido=8B7C6D5E4F3A2B1"
+    },
+    "store_segment": "Eletronicos & Foto",
+    "payment_method_type": "credit_card",
+    "Customer": {
+      "cnpj": "11222333000181",
+      "newsletter": "1",
+      "created": "2025-06-12 10:05:00",
+      "terms": "0000-00-00 00:00:00",
+      "id": "88",
+      "name": "Fernanda Ribeiro Alves",
+      "registration_date": "2025-06-12",
+      "rg": "",
+      "cpf": "",
+      "phone": "1133224455",
+      "cellphone": "11988776655",
+      "birth_date": "0000-00-00",
+      "gender": "0",
+      "email": "compras@turboindustria.com.br",
+      "nickname": "",
+      "token": "8B7C6D5E4F3A2B1",
+      "total_orders": "0",
+      "observation": "",
+      "type": "0",
+      "foreign": "0",
+      "company_name": "Turbo Industria e Comercio LTDA",
+      "state_inscription": "",
+      "reseller": "0",
+      "discount": "0.000",
+      "blocked": "",
+      "credit_limit": "0.00",
+      "indicator_id": "0",
+      "profile_customer_id": "1",
+      "last_sending_newsletter": "0000-00-00",
+      "last_purchase": "2025-08-20",
+      "last_visit": "2025-08-20",
+      "last_modification": "0000-00-00 00:00:00",
+      "address": "Avenida Paulista",
+      "zip_code": "01310-200",
+      "number": "1578",
+      "complement": "conjunto 142",
+      "neighborhood": "Bela Vista",
+      "city": "Sao Paulo",
+      "state": "SP",
+      "country": "",
+      "modified": "2025-08-21 09:33:41",
+      "count_orders": "0",
+      "Extensions": {
+        "Profile": {
+          "id": "1",
+          "name": "Padrao",
+          "approves_registration": "0"
+        },
+        "Profiles": [
+          {
+            "id": "1",
+            "price_list_id": "0",
+            "name": "Padrao",
+            "approves_registration": "0",
+            "show_price": "",
+            "theme_id": "0",
+            "selected": "1"
+          }
+        ]
+      },
+      "CustomerAddresses": [
+        {
+          "CustomerAddress": {
+            "id": "310",
+            "customer_id": "88",
+            "address": "Avenida Paulista",
+            "number": "1578",
+            "complement": "conjunto 142",
+            "neighborhood": "Bela Vista",
+            "city": "Sao Paulo",
+            "state": "SP",
+            "zip_code": "01310-200",
+            "country": "",
+            "type": "1",
+            "active": "1",
+            "description": "01310200",
+            "recipient": "Fernanda R Alves",
+            "type_delivery": "1",
+            "not_list": "0"
+          }
+        }
+      ]
+    },
+    "ProductsSold": [
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "412",
+          "quantity": "2",
+          "id": "20061",
+          "order_id": "2006",
+          "name": "camiseta preta basica (Ref. ref412)",
+          "original_name": "camiseta preta basica",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "89.90",
+          "cost_price": "28.00",
+          "original_price": "89.90",
+          "weight": "180",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref412",
+          "length": "30",
+          "width": "22",
+          "height": "3",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_camiseta_preta_basica_412_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "2",
+              "name": "Vestuario",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/vestuario/camiseta-preta-basica",
+            "https": "https://ecommerce.analisevirtual.com.br/vestuario/camiseta-preta-basica"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      },
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "508",
+          "quantity": "1",
+          "id": "20062",
+          "order_id": "2006",
+          "name": "bone vermelho aba reta (Ref. ref508)",
+          "original_name": "bone vermelho aba reta",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "59.90",
+          "cost_price": "19.50",
+          "original_price": "59.90",
+          "weight": "120",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref508",
+          "length": "25",
+          "width": "20",
+          "height": "12",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "3",
+              "name": "Acessorios",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/acessorios/bone-vermelho-aba-reta",
+            "https": "https://ecommerce.analisevirtual.com.br/acessorios/bone-vermelho-aba-reta"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      }
+    ],
+    "OrderInvoice": [
+      {
+        "id": "2006",
+        "link": ""
+      }
+    ],
+    "Payment": [
+      {
+        "Payment": {
+          "created": "2025-08-21 09:33:41",
+          "modified": "2025-08-21 09:33:41",
+          "id": "874",
+          "order_id": "2006",
+          "payment_method_id": "",
+          "method": "Cartao de Credito",
+          "payment_place": "",
+          "value": "226.52",
+          "date": "2025-08-20",
+          "note": "",
+          "unique_number": "Bagy__874__25060-1"
+        }
+      }
+    ],
+    "MlOrder": [],
+    "MarketplaceOrder": [],
+    "OrderTransactions": [],
+    "OrderInvoiceAmount": [],
+    "OtherInvoiceAmounts": [],
+    "ExtraTabs": [],
+    "OrderChilds": [],
+    "PaymentMethodMessage": {
+      "text": "",
+      "text_pag": "",
+      "text_confirm": "",
+      "confirmation": "0"
+    },
+    "payments_notification": {
+      "notification": "https://1098664.commercesuite.com.br/loja/retorno_pagamento.php?loja=1098664&gateway=5&codigoAcesso=8B7C6D5E4F3A2B1&notification=true"
+    },
+    "partner_name": "",
+    "coupon": {
+      "code": "agosto10",
+      "discount": "23.97"
+    },
+    "DistributionCenter": {
+      "status": "completed",
+      "type": "child_order",
+      "group_id": "27927",
+      "Package": {
+        "id": "22861",
+        "created_at": "2025-08-20T12:46:24.000000Z",
+        "updated_at": "2025-08-20T12:57:46.000000Z",
+        "order_id": "2006",
+        "DistributionCenter": {
+          "id": "799",
+          "name": "Rio preto - SP",
+          "document": "",
+          "postal_code": "15010011",
+          "country": "Brasil",
+          "state": "SP",
+          "city": "Sao Jose do Rio Preto",
+          "address": "Praca Paul S. Harris",
+          "number": "158",
+          "neighborhood": "Centro",
+          "complement": "",
+          "updated_at": "2025-01-15T13:50:42.000000Z",
+          "created_at": "2025-01-15T13:47:57.000000Z"
+        },
+        "Products": [
+          {
+            "product_id": "412",
+            "variant_id": "0",
+            "product_sold_id": "20061",
+            "quantity": "2"
+          },
+          {
+            "product_id": "508",
+            "variant_id": "0",
+            "product_sold_id": "20062",
+            "quantity": "1"
+          }
+        ]
+      }
+    }
+  },
+  "Extensions": [],
+  "User": [],
+  "Confirmation": []
+}

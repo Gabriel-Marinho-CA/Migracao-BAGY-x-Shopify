@@ -40,6 +40,48 @@ SKIP = "[--]"
 FAIL = "[!!]"
 
 
+def pending_fulfillment_orders(shopify_order: dict) -> list:
+    """Fulfillment orders ainda abertos, com unidades a despachar."""
+    return [
+        fo for fo in (shopify_order.get("fulfillmentOrders") or {}).get("nodes") or []
+        if fo.get("status") in ("OPEN", "IN_PROGRESS")
+        and any(li.get("remainingQuantity", 0) > 0
+                for li in (fo.get("lineItems") or {}).get("nodes") or [])
+    ]
+
+
+def sweep_fulfillment(client, bagy_order: dict, shopify_order: dict):
+    """Despacha TODOS os fulfillment orders abertos do pedido.
+
+    O campo `fulfillment` do `orderCreate` cobre so um deles. Pedidos com a
+    linha de acrescimo (juros de parcelamento) ganham um fulfillment order
+    separado para ela, e ficariam eternamente PARTIALLY_FULFILLED. Esta
+    varredura fecha o que sobrou.
+
+    Devolve (fulfillment, quantidade) ou (None, 0) se nao havia nada aberto.
+    """
+    pending = pending_fulfillment_orders(shopify_order)
+    if not pending:
+        return None, 0
+
+    fulfillment_input: dict = {
+        "notifyCustomer": False,
+        "lineItemsByFulfillmentOrder": [
+            {"fulfillmentOrderId": fo["id"]} for fo in pending
+        ],
+    }
+    tracking = tracking_info(bagy_order)
+    if tracking:
+        fulfillment_input["trackingInfo"] = tracking
+
+    quantity = sum(
+        li["remainingQuantity"]
+        for fo in pending
+        for li in (fo.get("lineItems") or {}).get("nodes") or []
+    )
+    return client.create_fulfillment(fulfillment_input), quantity
+
+
 def tracking_info(order: dict) -> dict | None:
     """Monta o trackingInfo a partir dos dados da Bagy."""
     number = (order.get("sending_code") or "").strip()
@@ -135,12 +177,7 @@ def main(argv: list | None = None) -> int:
             skipped.append(bagy_id)
             continue
 
-        pending = [
-            fo for fo in (shopify_order.get("fulfillmentOrders") or {}).get("nodes") or []
-            if fo.get("status") in ("OPEN", "IN_PROGRESS")
-            and any(li.get("remainingQuantity", 0) > 0
-                    for li in (fo.get("lineItems") or {}).get("nodes") or [])
-        ]
+        pending = pending_fulfillment_orders(shopify_order)
 
         if not pending:
             print(f"{SKIP} {label} -> {name}: nenhum fulfillment order aberto")

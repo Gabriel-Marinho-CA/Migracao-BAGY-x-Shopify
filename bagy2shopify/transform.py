@@ -66,6 +66,8 @@ class TransformResult:
     warnings: list = field(default_factory=list)
     # `orderCreate` nao aceita localizedFields; vao num orderUpdate logo depois.
     localized_fields: list = field(default_factory=list)
+    # Se o pedido deve terminar despachado (exige varredura pos-criacao).
+    should_fulfill: bool = False
 
 
 # --------------------------------------------------------------------------- #
@@ -733,4 +735,5 @@ def to_shopify_order(
         options=options,
         warnings=warnings,
         localized_fields=localized_fields,
+        should_fulfill=mapping.fulfilled,
     )

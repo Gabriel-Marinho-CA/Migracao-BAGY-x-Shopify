@@ -83,6 +83,36 @@ CUSTOMERS = {
                neighborhood="Partenon", city="Porto Alegre", state="RS",
                zip_code="90619-900", recipient="Thiago N Barbosa", created="2025-01-30 11:22:33",
                address_id="231"),
+
+    # --- casos de borda, para exercitar a validacao de documento ---
+    "88": dict(name="Fernanda Ribeiro Alves", email="compras@turboindustria.com.br",
+               cnpj="11222333000181", company_name="Turbo Industria e Comercio LTDA",
+               state_inscription="110042490114", rg="", cpf="",
+               phone="1133224455", cell="11988776655",
+               address="Avenida Paulista", number="1578", complement="conjunto 142",
+               neighborhood="Bela Vista", city="Sao Paulo", state="SP",
+               zip_code="01310-200", recipient="Fernanda R Alves",
+               created="2025-06-12 10:05:00", address_id="310"),
+    "92": dict(name="Carlos Eduardo Menezes", email="carlos.menezes@example.com",
+               cpf="45678912300", rg="556677889", phone="7132221100", cell="71988884444",
+               address="Rua Chile", number="212", complement="",
+               neighborhood="Comercio", city="Salvador", state="BA",
+               zip_code="40020-000", recipient="Carlos E Menezes",
+               created="2025-07-01 14:30:00", address_id="322"),
+    # Cliente inedito, para provar que a criacao ja grava o CPF no registro
+    # do cliente (metafield), nao so no pedido.
+    "101": dict(name="Renata Aparecida Souza", email="renata.souza@example.com",
+                cpf="39053344705", rg="223344556", phone="2133445566", cell="21988997766",
+                address="Rua Voluntarios da Patria", number="340", complement="sala 12",
+                neighborhood="Botafogo", city="Rio de Janeiro", state="RJ",
+                zip_code="22270-000", recipient="Renata A Souza",
+                created="2025-08-25 08:00:00", address_id="401"),
+    "95": dict(name="Beatriz Lopes Martins", email="beatriz.martins@example.com",
+               cpf="", rg="", phone="6232221010", cell="62988885555",
+               address="Avenida Goias", number="900", complement="apto 71",
+               neighborhood="Setor Central", city="Goiania", state="GO",
+               zip_code="74005-010", recipient="Beatriz L Martins",
+               created="2025-07-20 09:15:00", address_id="335"),
 }
 
 STATUS_META = {
@@ -90,6 +120,8 @@ STATUS_META = {
     "FINALIZADO": ("69", "closed", "#85CC8D"),
     "CANCELADO": ("5", "canceled", "#F5C6C6"),
     "AGUARDANDO PAGAMENTO": ("2", "open", "#FDF2C0"),
+    "ENTREGUE": ("70", "closed", "#7FBF87"),
+    "EM SEPARACAO": ("3", "open", "#D6E4FF"),
 }
 
 
@@ -182,6 +214,110 @@ ORDER_SPECS = [
          sending_code="BR987654321BR", delivered="1",
          store_note="25/04/2025 12:00:44 Pedido em 2x de R$ 942,32 atraves do Cartao de Credito - Vindi",
          payment_entry=dict(id="744", method="Cartao de Credito", unique_number="Bagy__744__24210-1")),
+
+    # ----------------------------------------------------------------------- #
+    # Lote 2: exercita o que so passou a existir depois das melhorias -
+    # fulfillment ja na criacao (locationId agora resolve), CNPJ, documento
+    # invalido e cliente sem documento.
+    # ----------------------------------------------------------------------- #
+
+    # CNPJ + fulfillment na criacao. Pessoa juridica com inscricao estadual.
+    dict(id="2001", date="2025-06-18", hour="10:32:14", status="FINALIZADO", customer="88",
+         items=[("92", 1), ("233", 2)], shipment="SEDEX Bagy", shipment_value="88.40",
+         integrator="Correios", coupon=None, rate="0.00",
+         payment_method="Boleto - Vindi", payment_type="billet", payment_method_id="10544",
+         installment="1", delivery_time="4", eta="2025-06-24", has_invoice="1",
+         access_code="A1B2C3D4E5F6071", session="e5r7t9y1u3i5o7p9a1s3d5f7g9",
+         dc_id="799", modified="2025-06-24 16:20:11",
+         sending_code="BR555444333BR", delivered="1",
+         store_note="18/06/2025 10:32:40 Pedido em 1 vez de R$ 60.488,20 atraves do Boleto - Vindi",
+         payment_entry=dict(id="810", method="Boleto", unique_number="Bagy__810__25001-1")),
+
+    # CPF invalido: a Shopify recusa o TAX_CREDENTIAL_BR, mas o pedido e os
+    # customAttributes precisam entrar mesmo assim.
+    dict(id="2002", date="2025-07-03", hour="16:48:02", status="A ENVIAR", customer="92",
+         items=[("412", 3)], shipment="PAC Bagy", shipment_value="19.90",
+         integrator="Correios", coupon=("julho15", "40.46"), rate="0.00",
+         payment_method="Pix - Vindi", payment_type="pix", payment_method_id="10545",
+         installment="0", delivery_time="7", eta="2025-07-12", has_invoice="0",
+         access_code="F7E6D5C4B3A2190", session="q1w2e3r4t5y6u7i8o9p0a1s2d3",
+         dc_id="799", modified="2025-07-03 16:52:30",
+         store_note="03/07/2025 16:48:20 Pedido em 1 vez de R$ 249,14 atraves do Pix - Vindi",
+         payment_entry=dict(id="822", method="Pix", unique_number="Bagy__822__25010-1")),
+
+    # Cliente sem CPF nenhum: nao pode gerar erro, so um aviso.
+    dict(id="2003", date="2025-07-22", hour="11:05:47", status="EM SEPARACAO", customer="95",
+         items=[("508", 1), ("601", 2)], shipment="PAC Bagy", shipment_value="21.30",
+         integrator="Correios", coupon=None, rate="-7.99",
+         payment_method="Pix - Vindi", payment_type="pix", payment_method_id="10545",
+         installment="0", delivery_time="6", eta="2025-07-30", has_invoice="0",
+         access_code="1122334455667788"[:15], session="m9n8b7v6c5x4z3l2k1j0h9g8f7",
+         dc_id="799", modified="2025-07-22 11:10:03",
+         store_note="22/07/2025 11:05:58 Pedido em 1 vez de R$ 153,01 atraves do Pix - Vindi",
+         payment_entry=dict(id="835", method="Pix", unique_number="Bagy__835__25022-1")),
+
+    # ENTREGUE com cupom e juros ao mesmo tempo: o desconto unico da Shopify
+    # tem de somar tudo, e o acrescimo vira linha separada.
+    dict(id="2004", date="2025-08-05", hour="09:20:33", status="ENTREGUE", customer="47",
+         items=[("351", 1), ("412", 1)], shipment="SEDEX Bagy", shipment_value="27.60",
+         integrator="Correios", coupon=("agosto20", "197.98"), rate="79.19",
+         payment_method="Cartao de Credito - Vindi", payment_type="credit_card",
+         payment_method_id="10546", installment="4", delivery_time="3", eta="2025-08-11",
+         has_invoice="1", access_code="9F8E7D6C5B4A321", session="z9x8c7v6b5n4m3l2k1j0h9g8f7",
+         dc_id="799", modified="2025-08-11 14:02:55",
+         sending_code="BR777888999BR", delivered="1",
+         store_note="05/08/2025 09:20:51 Pedido em 4x de R$ 898,71 atraves do Cartao de Credito - Vindi",
+         payment_entry=dict(id="848", method="Cartao de Credito", unique_number="Bagy__848__25040-1")),
+
+    # Regressao: FINALIZADO + juros de parcelamento. A linha de acrescimo ganha
+    # um fulfillment order proprio; sem a varredura pos-criacao o pedido fica
+    # PARTIALLY_FULFILLED para sempre.
+    dict(id="2005", date="2025-08-14", hour="13:41:19", status="FINALIZADO", customer="34",
+         items=[("233", 1), ("601", 1)], shipment="SEDEX Bagy", shipment_value="24.80",
+         integrator="Correios", coupon=None, rate="28.98",
+         payment_method="Cartao de Credito - Vindi", payment_type="credit_card",
+         payment_method_id="10546", installment="3", delivery_time="3", eta="2025-08-19",
+         has_invoice="1", access_code="5A4B3C2D1E0F9A8", session="a1b2c3d4e5f6g7h8i9j0k1l2m3",
+         dc_id="799", modified="2025-08-19 10:11:22",
+         sending_code="BR111222333BR", delivered="1",
+         store_note="14/08/2025 13:41:40 Pedido em 3x de R$ 343,58 atraves do Cartao de Credito - Vindi",
+         payment_entry=dict(id="861", method="Cartao de Credito", unique_number="Bagy__861__25055-1")),
+
+    # ENTREGUE com cupom + juros + retirada na loja, para fechar os cruzamentos.
+    dict(id="2006", date="2025-08-20", hour="15:02:08", status="ENTREGUE", customer="88",
+         items=[("412", 2), ("508", 1)], shipment="Retirar na loja", shipment_value="0.00",
+         integrator="", coupon=("agosto10", "23.97"), rate="10.79",
+         payment_method="Cartao de Credito - Vindi", payment_type="credit_card",
+         payment_method_id="10546", installment="2", delivery_time="0", eta="2025-08-21",
+         has_invoice="1", access_code="8B7C6D5E4F3A2B1", session="n1m2b3v4c5x6z7l8k9j0h1g2f3",
+         dc_id="799", modified="2025-08-21 09:33:41", pickup=True,
+         store_note="Retirada na loja fisica - Rio preto - SP",
+         payment_entry=dict(id="874", method="Cartao de Credito", unique_number="Bagy__874__25060-1")),
+
+    # Mesma forma do 2005, para provar a varredura pos-criacao ja corrigida:
+    # tem de sair FULFILLED direto, sem passar pelo fix_fulfillment.
+    dict(id="2007", date="2025-08-26", hour="08:55:12", status="FINALIZADO", customer="92",
+         items=[("351", 1), ("601", 2)], shipment="SEDEX Bagy", shipment_value="26.10",
+         integrator="Correios", coupon=None, rate="49.49",
+         payment_method="Cartao de Credito - Vindi", payment_type="credit_card",
+         payment_method_id="10546", installment="3", delivery_time="3", eta="2025-08-31",
+         has_invoice="1", access_code="3C2B1A0F9E8D7C6", session="k1l2m3n4o5p6q7r8s9t0u1v2w3",
+         dc_id="799", modified="2025-08-31 17:44:09",
+         sending_code="BR444555666BR", delivered="1",
+         store_note="26/08/2025 08:55:33 Pedido em 3x de R$ 1.055,39 atraves do Cartao de Credito - Vindi",
+         payment_entry=dict(id="887", method="Cartao de Credito", unique_number="Bagy__887__25070-1")),
+
+    # Cliente novo: prova que a criacao grava o CPF nos DOIS lugares - no pedido
+    # (localizedFields) e no registro do cliente (metafield).
+    dict(id="2008", date="2025-08-27", hour="10:15:00", status="A ENVIAR", customer="101",
+         items=[("233", 1)], shipment="PAC Bagy", shipment_value="17.40",
+         integrator="Correios", coupon=None, rate="-24.99",
+         payment_method="Pix - Vindi", payment_type="pix", payment_method_id="10545",
+         installment="0", delivery_time="4", eta="2025-09-02", has_invoice="0",
+         access_code="7D6C5B4A3F2E1D0", session="r1e2n3a4t5a6s7o8u9z0a1b2c3",
+         dc_id="799", modified="2025-08-27 10:18:44",
+         store_note="27/08/2025 10:15:22 Pedido em 1 vez de R$ 242,31 atraves do Pix - Vindi",
+         payment_entry=dict(id="901", method="Pix", unique_number="Bagy__901__25080-1")),
 ]
 
 
@@ -280,15 +416,15 @@ def build_products_sold(spec: dict) -> tuple[list, Decimal, Decimal]:
 def build_customer(customer_id: str, spec: dict) -> dict:
     c = CUSTOMERS[customer_id]
     return {
-        "cnpj": "",
+        "cnpj": c.get("cnpj", ""),
         "newsletter": "1",
         "created": c["created"],
         "terms": "0000-00-00 00:00:00",
         "id": customer_id,
         "name": c["name"],
         "registration_date": c["created"][:10],
-        "rg": c["rg"],
-        "cpf": c["cpf"],
+        "rg": c.get("rg", ""),
+        "cpf": c.get("cpf", ""),
         "phone": c["phone"],
         "cellphone": c["cell"],
         "birth_date": "0000-00-00",
@@ -300,7 +436,7 @@ def build_customer(customer_id: str, spec: dict) -> dict:
         "observation": "",
         "type": "0",
         "foreign": "0",
-        "company_name": "",
+        "company_name": c.get("company_name", ""),
         "state_inscription": "",
         "reseller": "0",
         "discount": "0.000",

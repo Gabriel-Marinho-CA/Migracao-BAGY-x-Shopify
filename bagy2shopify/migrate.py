@@ -25,6 +25,7 @@ from pathlib import Path
 from .bagy_client import MockBagyClient, iter_orders
 from .config import get_settings
 from .errorlog import ErrorLog
+from .fix_fulfillment import sweep_fulfillment
 from .transform import to_shopify_order
 
 try:
@@ -168,6 +169,15 @@ def main(argv: list | None = None) -> int:
             print(f"\n[aviso] a loja esta em {shop['currencyCode']} mas os pedidos da Bagy "
                   f"estao em {settings.currency}.")
             print("        Os valores serao gravados na moeda da loja, sem conversao.")
+
+        # Sem essa definicao o CPF/CNPJ ate e gravado no cliente, mas o admin
+        # nao mostra em "Informacoes adicionais" na pagina dele.
+        try:
+            print(f"Metafield : definicao CPF/CNPJ do cliente "
+                  f"{client.ensure_customer_document_definition()}")
+        except (ShopifyUserError, ShopifyError) as exc:
+            print(f"[aviso] nao foi possivel garantir a definicao do metafield: {exc}")
+            print("        O CPF/CNPJ do cliente pode nao aparecer no admin.")
 
         location_id = client.primary_location_id()
         print(f"Local     : {location_id or '(nenhum) - pedidos finalizados ficarao sem fulfillment'}")
@@ -326,8 +336,17 @@ def main(argv: list | None = None) -> int:
                     "id": shopify_order["id"],
                     "localizedFields": result.localized_fields,
                 })
-                print(f"       CPF/CNPJ    : gravado "
+                print(f"       CPF/CNPJ    : gravado no pedido "
                       f"({result.localized_fields[0]['value']})")
+
+                # O mesmo documento no registro do cliente (aba Clientes), que
+                # nao tem localizedFields - la e metafield.
+                customer_gid = (shopify_order.get("customer") or {}).get("id")
+                if customer_gid:
+                    client.set_customer_document(
+                        customer_gid, result.localized_fields[0]["value"]
+                    )
+                    print(f"       CPF/CNPJ    : gravado no cliente")
             except (ShopifyUserError, ShopifyError) as exc:
                 print(f"{WARN} nao foi possivel gravar o CPF/CNPJ de #{bagy_id}: {exc}")
                 errors_log.record(
@@ -338,6 +357,23 @@ def main(argv: list | None = None) -> int:
         elif result.localized_fields:
             print(f"{WARN} CPF/CNPJ de #{bagy_id} nao gravado: resposta sem GID "
                   f"(falta Protected Customer Data)")
+
+        # O campo `fulfillment` do orderCreate fecha apenas um fulfillment
+        # order. Pedidos com linha de acrescimo ganham outro so para ela e
+        # ficariam PARTIALLY_FULFILLED - esta varredura fecha o que sobrou.
+        if result.should_fulfill and shopify_order.get("id"):
+            try:
+                # Pelo GID: a busca por tag ainda nao indexou o pedido recem-criado.
+                found = client.get_order_by_gid(shopify_order["id"])
+                if found:
+                    fulfillment, quantity = sweep_fulfillment(client, order, found)
+                    if fulfillment:
+                        print(f"       fulfillment : +{quantity} unidade(s) "
+                              f"({fulfillment['status']})")
+            except (ShopifyUserError, ShopifyError) as exc:
+                print(f"{WARN} varredura de fulfillment de #{bagy_id} falhou: {exc}")
+                errors_log.record(script="migrate", stage="sweep-fulfillment",
+                                  bagy_id=bagy_id, message=str(exc), error=exc)
 
         entry = {
             "shopify_gid": shopify_order.get("id"),

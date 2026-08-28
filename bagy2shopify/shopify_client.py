@@ -125,6 +125,9 @@ query FindBagyOrder($query: String!) {
       name
       displayFulfillmentStatus
       displayFinancialStatus
+      customer {
+        id
+      }
       fulfillmentOrders(first: 10) {
         nodes {
           id
@@ -158,6 +161,73 @@ mutation FulfillmentCreate($fulfillment: FulfillmentInput!) {
     userErrors {
       field
       message
+    }
+  }
+}
+"""
+
+# Pelo GID, nao pela busca: `orders(query:)` passa pelo indice de busca, que fica
+# minutos atrasado apos uma escrita e devolveria vazio logo depois de criar.
+ORDER_BY_GID_QUERY = """
+query OrderFulfillmentOrders($id: ID!) {
+  order(id: $id) {
+    id
+    name
+    displayFulfillmentStatus
+    fulfillmentOrders(first: 10) {
+      nodes {
+        id
+        status
+        lineItems(first: 100) {
+          nodes {
+            id
+            remainingQuantity
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+# CPF/CNPJ no registro do CLIENTE. Customer nao tem localizedFields (so Order
+# tem), entao vai como metafield - e precisa de definicao fixada para o admin
+# exibir em "Informacoes adicionais" na pagina do cliente.
+CUSTOMER_DOCUMENT_NAMESPACE = "custom"
+CUSTOMER_DOCUMENT_KEY = "cpf_cnpj"
+
+METAFIELD_DEFINITION_CREATE_MUTATION = """
+mutation CustomerDocumentDefinition($definition: MetafieldDefinitionInput!) {
+  metafieldDefinitionCreate(definition: $definition) {
+    createdDefinition {
+      id
+      name
+      namespace
+      key
+      pinnedPosition
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}
+"""
+
+METAFIELDS_SET_MUTATION = """
+mutation SetCustomerDocument($metafields: [MetafieldsSetInput!]!) {
+  metafieldsSet(metafields: $metafields) {
+    metafields {
+      id
+      namespace
+      key
+      value
+    }
+    userErrors {
+      field
+      message
+      code
     }
   }
 }
@@ -428,6 +498,56 @@ class ShopifyClient:
         data = self.execute(FIND_ORDER_BY_TAG_QUERY, {"query": f"tag:bagy-id-{bagy_id}"})
         nodes = (data.get("orders") or {}).get("nodes") or []
         return nodes[0] if nodes else None
+
+    def ensure_customer_document_definition(self) -> str:
+        """Garante a definicao do metafield CPF/CNPJ do cliente, fixada no admin.
+
+        Idempotente: se ja existe, a Shopify devolve userError TAKEN e o metodo
+        segue em frente. Sem a definicao o valor ate e gravado, mas o admin nao
+        mostra na pagina do cliente.
+        """
+        definition = {
+            "ownerType": "CUSTOMER",
+            "namespace": CUSTOMER_DOCUMENT_NAMESPACE,
+            "key": CUSTOMER_DOCUMENT_KEY,
+            "name": "CPF/CNPJ",
+            "description": "Documento fiscal do cliente, importado da Bagy",
+            "type": "single_line_text_field",
+            "pin": True,
+            # `access` fica no padrao: definir admin: MERCHANT_READ_WRITE aqui e
+            # recusado ("must be one of [public_read_write]") para o namespace
+            # `custom` neste app.
+        }
+        data = self.execute(METAFIELD_DEFINITION_CREATE_MUTATION, {"definition": definition})
+        result = data.get("metafieldDefinitionCreate") or {}
+
+        for error in result.get("userErrors") or []:
+            if error.get("code") == "TAKEN":
+                return "ja existia"
+            raise ShopifyUserError(result["userErrors"], request_id=self.last_request_id)
+
+        created = result.get("createdDefinition") or {}
+        return f"criada ({created.get('id')})"
+
+    def set_customer_document(self, customer_gid: str, document: str) -> dict | None:
+        """Grava o CPF/CNPJ como metafield do cliente."""
+        data = self.execute(METAFIELDS_SET_MUTATION, {"metafields": [{
+            "ownerId": customer_gid,
+            "namespace": CUSTOMER_DOCUMENT_NAMESPACE,
+            "key": CUSTOMER_DOCUMENT_KEY,
+            "type": "single_line_text_field",
+            "value": document,
+        }]})
+        result = data.get("metafieldsSet") or {}
+        user_errors = result.get("userErrors") or []
+        if user_errors:
+            raise ShopifyUserError(user_errors, request_id=self.last_request_id)
+        metafields = result.get("metafields") or []
+        return metafields[0] if metafields else None
+
+    def get_order_by_gid(self, gid: str) -> dict | None:
+        """Le o pedido pelo GID, com os fulfillment orders. Sem atraso de indice."""
+        return self.execute(ORDER_BY_GID_QUERY, {"id": gid}).get("order")
 
     def update_order(self, order_input: dict) -> dict:
         """Aplica no pedido o que o `orderCreate` nao aceita.

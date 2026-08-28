@@ -1,0 +1,94 @@
+# CPF/CNPJ no registro do CLIENTE (aba Clientes do admin).
+#
+# O campo localizado TAX_CREDENTIAL_BR so existe em Order/DraftOrder - Customer
+# nao tem localizedFields, so metafields. Para aparecer em "Informacoes
+# adicionais" na pagina do cliente, a definicao precisa existir e estar fixada
+# (`pin: true`): por padrao o admin so exibe metafields fixados.
+
+mutation CustomerDocumentDefinition($definition: MetafieldDefinitionInput!) {
+  metafieldDefinitionCreate(definition: $definition) {
+    createdDefinition {
+      id
+      name
+      namespace
+      key
+      pinnedPosition
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}
+
+mutation SetCustomerDocument($metafields: [MetafieldsSetInput!]!) {
+  metafieldsSet(metafields: $metafields) {
+    metafields {
+      id
+      namespace
+      key
+      value
+      owner {
+        ... on Customer {
+          id
+          displayName
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}
+
+mutation DefinitionLiteralCheck {
+  metafieldDefinitionCreate(
+    definition: {
+      ownerType: CUSTOMER
+      namespace: "custom"
+      key: "cpf_cnpj"
+      name: "CPF/CNPJ"
+      description: "Documento fiscal do cliente, importado da Bagy"
+      type: "single_line_text_field"
+      pin: true
+      access: { admin: MERCHANT_READ_WRITE }
+    }
+  ) {
+    createdDefinition {
+      id
+      pinnedPosition
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}
+
+mutation MetafieldsSetLiteralCheck {
+  metafieldsSet(
+    metafields: [
+      {
+        ownerId: "gid://shopify/Customer/1234567890"
+        namespace: "custom"
+        key: "cpf_cnpj"
+        type: "single_line_text_field"
+        value: "00474780040"
+      }
+    ]
+  ) {
+    metafields {
+      id
+      value
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}

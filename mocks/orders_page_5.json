@@ -1,8 +1,8 @@
 {
   "paging": {
     "total": 16,
-    "page": 2,
-    "offset": 3,
+    "page": 5,
+    "offset": 12,
     "limit": 3,
     "maxLimit": 50
   },
@@ -42,31 +42,31 @@
     {
       "Order": {
         "status": "FINALIZADO",
-        "id": "1168",
-        "date": "2025-03-14",
-        "customer_id": "5",
-        "partial_total": "219.70",
+        "id": "2005",
+        "date": "2025-08-14",
+        "customer_id": "34",
+        "partial_total": "289.80",
         "taxes": "0.00",
         "discount": "0.00",
         "point_sale": "LOJA VIRTUAL",
         "shipment": "SEDEX Bagy",
-        "shipment_value": "22.40",
+        "shipment_value": "24.80",
         "shipment_date": "",
-        "store_note": "14/03/2025 15:22:31 Pedido em 3x de R$ 242,10 atraves do Cartao de Credito - Vindi",
+        "store_note": "14/08/2025 13:41:40 Pedido em 3x de R$ 343,58 atraves do Cartao de Credito - Vindi",
         "discount_coupon": "",
-        "payment_method_rate": "0.00",
+        "payment_method_rate": "28.98",
         "value_1": "0.00",
-        "sending_code": "BR123456789BR",
-        "session_id": "qm2v8t7xk1p0zj4n6c9h3s5db1",
-        "total": "242.10",
-        "payment_date": "2025-03-14",
-        "access_code": "7C1B0A4E9F2D385",
+        "sending_code": "BR111222333BR",
+        "session_id": "a1b2c3d4e5f6g7h8i9j0k1l2m3",
+        "total": "343.58",
+        "payment_date": "2025-08-14",
+        "access_code": "5A4B3C2D1E0F9A8",
         "shipment_integrator": "Correios",
-        "modified": "2025-03-18 08:41:02",
+        "modified": "2025-08-19 10:11:22",
         "printed": "",
         "interest": "0.00",
         "id_quotation": "",
-        "estimated_delivery_date": "2025-03-18",
+        "estimated_delivery_date": "2025-08-19",
         "external_code": "",
         "has_payment": "1",
         "has_shipment": "1",
@@ -94,16 +94,16 @@
         "PickupLocation": [],
         "ProductsSold": [
           {
-            "id": "11681"
+            "id": "20051"
           },
           {
-            "id": "11682"
+            "id": "20052"
           }
         ],
         "Payment": [],
         "OrderInvoice": [
           {
-            "id": "1168",
+            "id": "2005",
             "link": ""
           }
         ],
@@ -115,64 +115,87 @@
     },
     {
       "Order": {
-        "status": "CANCELADO",
-        "id": "1172",
-        "date": "2025-03-20",
-        "customer_id": "1",
-        "partial_total": "59.90",
+        "status": "ENTREGUE",
+        "id": "2006",
+        "date": "2025-08-20",
+        "customer_id": "88",
+        "partial_total": "239.70",
         "taxes": "0.00",
         "discount": "0.00",
         "point_sale": "LOJA VIRTUAL",
-        "shipment": "PAC Bagy",
-        "shipment_value": "18.70",
+        "shipment": "Retirar na loja",
+        "shipment_value": "0.00",
         "shipment_date": "",
-        "store_note": "Pedido cancelado por falta de pagamento do boleto apos 7 dias.",
-        "discount_coupon": "",
-        "payment_method_rate": "0.00",
+        "store_note": "Retirada na loja fisica - Rio preto - SP",
+        "discount_coupon": "agosto10/23.97",
+        "payment_method_rate": "10.79",
         "value_1": "0.00",
         "sending_code": "",
-        "session_id": "t4r8w2q6y0u3i7o1p5a9s2d6f0",
-        "total": "78.60",
+        "session_id": "n1m2b3v4c5x6z7l8k9j0h1g2f3",
+        "total": "226.52",
         "payment_date": "0000-00-00",
-        "access_code": "9AD3F70C2E8B146",
-        "shipment_integrator": "Correios",
-        "modified": "2025-03-27 16:10:55",
+        "access_code": "8B7C6D5E4F3A2B1",
+        "shipment_integrator": "",
+        "modified": "2025-08-21 09:33:41",
         "printed": "",
         "interest": "0.00",
         "id_quotation": "",
-        "estimated_delivery_date": "2025-03-28",
+        "estimated_delivery_date": "2025-08-21",
         "external_code": "",
         "has_payment": "0",
         "has_shipment": "0",
-        "has_invoice": "0",
+        "has_invoice": "1",
         "dc_id": "799",
         "total_comission_user": "0.00",
         "total_comission": "0.00",
         "is_traceable": "",
-        "payment_form": "Boleto - Vindi",
+        "payment_form": "Cartao de Credito - Vindi",
         "progressive_discount": "0.00",
         "shipping_progressive_discount": "0.00",
+        "coupon": {
+          "code": "agosto10",
+          "discount": "23.97"
+        },
         "OrderStatus": {
-          "id": "5",
+          "id": "70",
           "default": "1",
-          "type": "canceled",
+          "type": "closed",
           "show_backoffice": "1",
           "allow_edit_order": "0",
           "description": "",
-          "status": "CANCELADO",
+          "status": "ENTREGUE",
           "show_status_central": "",
-          "background": "#F5C6C6",
+          "background": "#7FBF87",
           "display_name": "",
           "font_color": ""
         },
-        "PickupLocation": [],
+        "PickupLocation": [
+          {
+            "id": "3",
+            "name": "Loja Rio Preto - SP",
+            "address": "Praca Paul S. Harris",
+            "number": "158",
+            "neighborhood": "Centro",
+            "city": "Sao Jose do Rio Preto",
+            "state": "SP",
+            "zip_code": "15010-011"
+          }
+        ],
         "ProductsSold": [
           {
-            "id": "11721"
+            "id": "20061"
+          },
+          {
+            "id": "20062"
           }
         ],
         "Payment": [],
-        "OrderInvoice": [],
+        "OrderInvoice": [
+          {
+            "id": "2006",
+            "link": ""
+          }
+        ],
         "MlOrder": [],
         "OrderTransactions": [],
         "MarketplaceOrder": [],
@@ -181,67 +204,72 @@
     },
     {
       "Order": {
-        "status": "AGUARDANDO PAGAMENTO",
-        "id": "1180",
-        "date": "2025-04-02",
-        "customer_id": "34",
-        "partial_total": "339.80",
+        "status": "FINALIZADO",
+        "id": "2007",
+        "date": "2025-08-26",
+        "customer_id": "92",
+        "partial_total": "979.80",
         "taxes": "0.00",
         "discount": "0.00",
         "point_sale": "LOJA VIRTUAL",
         "shipment": "SEDEX Bagy",
-        "shipment_value": "31.20",
+        "shipment_value": "26.10",
         "shipment_date": "",
-        "store_note": "02/04/2025 08:12:19 Pedido em 1 vez de R$ 371,00 atraves do Boleto - Vindi",
+        "store_note": "26/08/2025 08:55:33 Pedido em 3x de R$ 1.055,39 atraves do Cartao de Credito - Vindi",
         "discount_coupon": "",
-        "payment_method_rate": "0.00",
+        "payment_method_rate": "49.49",
         "value_1": "0.00",
-        "sending_code": "",
-        "session_id": "z1x3c5v7b9n2m4k6j8h0g2f4d6",
-        "total": "371.00",
-        "payment_date": "0000-00-00",
-        "access_code": "4E82BC15A9D703F",
+        "sending_code": "BR444555666BR",
+        "session_id": "k1l2m3n4o5p6q7r8s9t0u1v2w3",
+        "total": "1055.39",
+        "payment_date": "2025-08-26",
+        "access_code": "3C2B1A0F9E8D7C6",
         "shipment_integrator": "Correios",
-        "modified": "2025-04-02 08:12:41",
+        "modified": "2025-08-31 17:44:09",
         "printed": "",
         "interest": "0.00",
         "id_quotation": "",
-        "estimated_delivery_date": "2025-04-07",
+        "estimated_delivery_date": "2025-08-31",
         "external_code": "",
-        "has_payment": "0",
-        "has_shipment": "0",
-        "has_invoice": "0",
+        "has_payment": "1",
+        "has_shipment": "1",
+        "has_invoice": "1",
         "dc_id": "799",
         "total_comission_user": "0.00",
         "total_comission": "0.00",
-        "is_traceable": "",
-        "payment_form": "Boleto - Vindi",
+        "is_traceable": "1",
+        "payment_form": "Cartao de Credito - Vindi",
         "progressive_discount": "0.00",
         "shipping_progressive_discount": "0.00",
         "OrderStatus": {
-          "id": "2",
+          "id": "69",
           "default": "1",
-          "type": "open",
+          "type": "closed",
           "show_backoffice": "1",
           "allow_edit_order": "0",
           "description": "",
-          "status": "AGUARDANDO PAGAMENTO",
+          "status": "FINALIZADO",
           "show_status_central": "",
-          "background": "#FDF2C0",
+          "background": "#85CC8D",
           "display_name": "",
           "font_color": ""
         },
         "PickupLocation": [],
         "ProductsSold": [
           {
-            "id": "11801"
+            "id": "20071"
           },
           {
-            "id": "11802"
+            "id": "20072"
           }
         ],
         "Payment": [],
-        "OrderInvoice": [],
+        "OrderInvoice": [
+          {
+            "id": "2007",
+            "link": ""
+          }
+        ],
         "MlOrder": [],
         "OrderTransactions": [],
         "MarketplaceOrder": [],

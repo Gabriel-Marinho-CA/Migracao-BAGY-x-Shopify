@@ -61,6 +61,12 @@ def main() -> int:
         return 2
 
     print(f"Loja : {client.shop_info()['name']}")
+    if not args.dry_run:
+        try:
+            print(f"Metafield : definicao CPF/CNPJ do cliente "
+                  f"{client.ensure_customer_document_definition()}")
+        except (ShopifyUserError, ShopifyError) as exc:
+            print(f"[aviso] definicao do metafield: {exc}")
     print(f"Modo : {'DRY-RUN' if args.dry_run else 'ENVIO REAL'}")
     print("-" * 72)
 
@@ -148,10 +154,24 @@ def main() -> int:
                 failed.append(bagy_id)
                 continue
 
+        # O mesmo documento no registro do cliente (aba Clientes).
+        customer_gid = (shopify_order.get("customer") or {}).get("id")
+        no_cliente = "-"
+        if localized and customer_gid:
+            try:
+                client.set_customer_document(customer_gid, localized[0]["value"])
+                no_cliente = localized[0]["value"]
+            except (ShopifyUserError, ShopifyError) as exc:
+                print(f"     aviso: CPF/CNPJ nao gravado no cliente: {exc}")
+                errors_log.record(script="backfill", stage="metafieldsSet",
+                                  bagy_id=bagy_id, message=str(exc), error=exc,
+                                  context={"cliente": customer_gid})
+
         gravados = len(result.get("customAttributes") or [])
         localizados = (result.get("localizedFields") or {}).get("nodes") or []
         cpf_gravado = localizados[0]["value"] if localizados else "-"
-        print(f"[ok] {label} -> {name}: {gravados} atributo(s), CPF/CNPJ {cpf_gravado}")
+        print(f"[ok] {label} -> {name}: {gravados} atributo(s), "
+              f"CPF/CNPJ pedido={cpf_gravado} cliente={no_cliente}")
         updated.append(bagy_id)
 
     print("\n" + "=" * 72)

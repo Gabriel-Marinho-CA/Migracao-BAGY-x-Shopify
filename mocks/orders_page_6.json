@@ -1,0 +1,109 @@
+{
+  "paging": {
+    "total": 16,
+    "page": 6,
+    "offset": 15,
+    "limit": 3,
+    "maxLimit": 50
+  },
+  "sort": [
+    {
+      "id": "asc"
+    }
+  ],
+  "availableFilters": [
+    "id",
+    "status",
+    "partner_id",
+    "session_id",
+    "sending_code",
+    "customer_id",
+    "shipment",
+    "point_sale",
+    "payment_form",
+    "access_code",
+    "external_code",
+    "has_payment",
+    "has_invoice",
+    "has_shipment",
+    "with_statuses",
+    "printed",
+    "payment_method_id",
+    "store_note",
+    "discount_coupon",
+    "dc_id",
+    "modified",
+    "date",
+    "shipment_date",
+    "payment_date"
+  ],
+  "appliedFilters": [],
+  "Orders": [
+    {
+      "Order": {
+        "status": "A ENVIAR",
+        "id": "2008",
+        "date": "2025-08-27",
+        "customer_id": "101",
+        "partial_total": "249.90",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "PAC Bagy",
+        "shipment_value": "17.40",
+        "shipment_date": "",
+        "store_note": "27/08/2025 10:15:22 Pedido em 1 vez de R$ 242,31 atraves do Pix - Vindi",
+        "discount_coupon": "",
+        "payment_method_rate": "-24.99",
+        "value_1": "0.00",
+        "sending_code": "",
+        "session_id": "r1e2n3a4t5a6s7o8u9z0a1b2c3",
+        "total": "242.31",
+        "payment_date": "2025-08-27",
+        "access_code": "7D6C5B4A3F2E1D0",
+        "shipment_integrator": "Correios",
+        "modified": "2025-08-27 10:18:44",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2025-09-02",
+        "external_code": "",
+        "has_payment": "1",
+        "has_shipment": "0",
+        "has_invoice": "0",
+        "dc_id": "799",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "",
+        "payment_form": "Pix - Vindi",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "OrderStatus": {
+          "id": "1",
+          "default": "1",
+          "type": "open",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "A ENVIAR",
+          "show_status_central": "",
+          "background": "#CAFAD1",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "20081"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    }
+  ]
+}
