@@ -1,0 +1,273 @@
+{
+  "Order": {
+    "status": "A ENVIAR",
+    "id": "5",
+    "date": "2020-12-07",
+    "hour": "11:55:22",
+    "customer_id": "5",
+    "partial_total": "35999.00",
+    "taxes": "0.00",
+    "discount": "0.00",
+    "point_sale": "LOJA VIRTUAL",
+    "shipment": "Correios Expresso",
+    "shipment_value": "28.35",
+    "shipment_date": "",
+    "delivered": "",
+    "delivered_status": "",
+    "shipping_cancelled": "",
+    "store_note": "07/12/2020 11:55:22 Pedido em 1 vez de R$ 27,027.60 atraves do Boleto - Yapay - Boleto",
+    "customer_note": "",
+    "partner_id": "",
+    "discount_coupon": "natal25/8999.75",
+    "client_ip": "",
+    "payment_method_rate": "0.00",
+    "installment": "1",
+    "value_1": "0.00",
+    "sending_code": "",
+    "sending_date": "0000-00-00",
+    "billing_address": "",
+    "delivery_time": "3",
+    "payment_method_id": "80",
+    "payment_method": "Boleto - Yapay",
+    "session_id": "rdlq7ogripa61r33p75bei8cj2",
+    "total": "27027.60",
+    "payment_date": "2020-12-07",
+    "access_code": "DB91EEA5D671CA2",
+    "shipment_integrator": "Frete Facil",
+    "modified": "2020-12-21 11:21:52",
+    "printed": "",
+    "interest": "0.00",
+    "cart_additional_values_discount": "0.00",
+    "cart_additional_values_increase": "0.00",
+    "id_quotation": "",
+    "estimated_delivery_date": "2020-12-22",
+    "is_traceable": "",
+    "external_code": "",
+    "tracking_url": "",
+    "has_payment": "1",
+    "has_shipment": "0",
+    "has_invoice": "1",
+    "delivery_date": "",
+    "dc_id": "611",
+    "total_comission_user": "0.00",
+    "total_comission": "0.00",
+    "OrderStatus": {
+      "id": "1",
+      "default": "1",
+      "type": "open",
+      "show_backoffice": "1",
+      "allow_edit_order": "0",
+      "description": "",
+      "status": "A ENVIAR",
+      "show_status_central": "",
+      "background": "#CAFAD1",
+      "display_name": "",
+      "font_color": ""
+    },
+    "PickupLocation": [],
+    "cost": "24500.00",
+    "app_id": "0",
+    "urls": {
+      "payment": "https://ecommerce.analisevirtual.com.br/loja/pagamento.php?loja=1098664&pedido=DB91EEA5D671CA2"
+    },
+    "store_segment": "Eletronicos & Foto",
+    "payment_method_type": "billet",
+    "Customer": {
+      "cnpj": "",
+      "newsletter": "1",
+      "created": "2020-10-02 09:12:44",
+      "terms": "0000-00-00 00:00:00",
+      "id": "5",
+      "name": "Marina Souza Lima",
+      "registration_date": "2020-10-02",
+      "rg": "221334455",
+      "cpf": "11144477735",
+      "phone": "3133334444",
+      "cellphone": "31988887777",
+      "birth_date": "0000-00-00",
+      "gender": "0",
+      "email": "marina.lima@example.com",
+      "nickname": "",
+      "token": "DB91EEA5D671CA2",
+      "total_orders": "0",
+      "observation": "",
+      "type": "0",
+      "foreign": "0",
+      "company_name": "",
+      "state_inscription": "",
+      "reseller": "0",
+      "discount": "0.000",
+      "blocked": "",
+      "credit_limit": "0.00",
+      "indicator_id": "0",
+      "profile_customer_id": "1",
+      "last_sending_newsletter": "0000-00-00",
+      "last_purchase": "2020-12-07",
+      "last_visit": "2020-12-07",
+      "last_modification": "0000-00-00 00:00:00",
+      "address": "Rua da Bahia",
+      "zip_code": "30160-011",
+      "number": "1200",
+      "complement": "sala 5",
+      "neighborhood": "Centro",
+      "city": "Belo Horizonte",
+      "state": "MG",
+      "country": "",
+      "modified": "2020-12-21 11:21:52",
+      "count_orders": "0",
+      "Extensions": {
+        "Profile": {
+          "id": "1",
+          "name": "Padrao",
+          "approves_registration": "0"
+        },
+        "Profiles": [
+          {
+            "id": "1",
+            "price_list_id": "0",
+            "name": "Padrao",
+            "approves_registration": "0",
+            "show_price": "",
+            "theme_id": "0",
+            "selected": "1"
+          }
+        ]
+      },
+      "CustomerAddresses": [
+        {
+          "CustomerAddress": {
+            "id": "41",
+            "customer_id": "5",
+            "address": "Rua da Bahia",
+            "number": "1200",
+            "complement": "sala 5",
+            "neighborhood": "Centro",
+            "city": "Belo Horizonte",
+            "state": "MG",
+            "zip_code": "30160-011",
+            "country": "",
+            "type": "1",
+            "active": "1",
+            "description": "30160011",
+            "recipient": "Marina S Lima",
+            "type_delivery": "1",
+            "not_list": "0"
+          }
+        }
+      ]
+    },
+    "ProductsSold": [
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "88",
+          "quantity": "1",
+          "id": "51",
+          "order_id": "5",
+          "name": "notebook gamer 16gb (Ref. ref88)",
+          "original_name": "notebook gamer 16gb",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "35999.00",
+          "cost_price": "24500.00",
+          "original_price": "35999.00",
+          "weight": "3200",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref88",
+          "length": "45",
+          "width": "32",
+          "height": "8",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_notebook_gamer_16gb_88_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "4",
+              "name": "Informatica",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/informatica/notebook-gamer-16gb",
+            "https": "https://ecommerce.analisevirtual.com.br/informatica/notebook-gamer-16gb"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      }
+    ],
+    "OrderInvoice": [
+      {
+        "id": "5",
+        "link": ""
+      }
+    ],
+    "Payment": [],
+    "MlOrder": [],
+    "MarketplaceOrder": [],
+    "OrderTransactions": [],
+    "OrderInvoiceAmount": [],
+    "OtherInvoiceAmounts": [],
+    "ExtraTabs": [],
+    "OrderChilds": [],
+    "PaymentMethodMessage": {
+      "text": "",
+      "text_pag": "",
+      "text_confirm": "",
+      "confirmation": "0"
+    },
+    "payments_notification": {
+      "notification": "https://1098664.commercesuite.com.br/loja/retorno_pagamento.php?loja=1098664&gateway=5&codigoAcesso=DB91EEA5D671CA2&notification=true"
+    },
+    "partner_name": "",
+    "coupon": {
+      "code": "natal25",
+      "discount": "8999.75"
+    }
+  },
+  "Extensions": [],
+  "User": [],
+  "Confirmation": []
+}

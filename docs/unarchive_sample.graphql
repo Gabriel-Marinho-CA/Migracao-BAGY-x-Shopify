@@ -1,0 +1,30 @@
+# Usada por tools/unarchive_orders.py para desarquivar pedidos que a Shopify
+# fechou sozinha depois do fulfillment.
+
+mutation OrderOpen($input: OrderOpenInput!) {
+  orderOpen(input: $input) {
+    order {
+      id
+      name
+      closed
+      closedAt
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+mutation OrderOpenLiteralCheck {
+  orderOpen(input: { id: "gid://shopify/Order/1234567890" }) {
+    order {
+      id
+      closed
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

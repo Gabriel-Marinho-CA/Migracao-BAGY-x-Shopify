@@ -1,0 +1,63 @@
+# orderUpdate: usado para o que o orderCreate nao aceita.
+#
+# `localizedFields` nao existe em OrderCreateOrderInput, so em OrderInput. E por
+# ele que se grava o CPF/CNPJ que o admin mostra como "Informacoes adicionais"
+# dentro do card do Cliente.
+#
+# `customAttributes` existe nos dois; aqui serve para corrigir pedidos que ja
+# foram criados sem eles.
+
+mutation OrderUpdate($input: OrderInput!) {
+  orderUpdate(input: $input) {
+    order {
+      id
+      name
+      note
+      customAttributes {
+        key
+        value
+      }
+      localizedFields(first: 5) {
+        nodes {
+          key
+          title
+          value
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+mutation OrderUpdateLiteralCheck {
+  orderUpdate(
+    input: {
+      id: "gid://shopify/Order/1234567890"
+      note: "Obs. do cliente: entregar apos as 18h"
+      localizedFields: [{ key: TAX_CREDENTIAL_BR, value: "00474780040" }]
+      customAttributes: [
+        { key: "info_document", value: "00474780040" }
+        { key: "info_document_type", value: "CPF" }
+        { key: "shipping_street_name", value: "Rua Cristiano Olsen" }
+        { key: "shipping_street_number", value: "1067" }
+        { key: "shipping_city", value: "Aracatuba" }
+        { key: "shipping_province", value: "SP" }
+      ]
+    }
+  ) {
+    order {
+      id
+      customAttributes {
+        key
+        value
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

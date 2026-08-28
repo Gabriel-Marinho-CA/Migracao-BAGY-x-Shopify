@@ -1,0 +1,198 @@
+{
+  "paging": {
+    "total": 8,
+    "page": 3,
+    "offset": 6,
+    "limit": 3,
+    "maxLimit": 50
+  },
+  "sort": [
+    {
+      "id": "asc"
+    }
+  ],
+  "availableFilters": [
+    "id",
+    "status",
+    "partner_id",
+    "session_id",
+    "sending_code",
+    "customer_id",
+    "shipment",
+    "point_sale",
+    "payment_form",
+    "access_code",
+    "external_code",
+    "has_payment",
+    "has_invoice",
+    "has_shipment",
+    "with_statuses",
+    "printed",
+    "payment_method_id",
+    "store_note",
+    "discount_coupon",
+    "dc_id",
+    "modified",
+    "date",
+    "shipment_date",
+    "payment_date"
+  ],
+  "appliedFilters": [],
+  "Orders": [
+    {
+      "Order": {
+        "status": "A ENVIAR",
+        "id": "1185",
+        "date": "2025-04-11",
+        "customer_id": "47",
+        "partial_total": "119.70",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "Retirar na loja",
+        "shipment_value": "0.00",
+        "shipment_date": "",
+        "store_note": "Retirada na loja fisica - Rio preto - SP",
+        "discount_coupon": "",
+        "payment_method_rate": "-11.97",
+        "value_1": "0.00",
+        "sending_code": "",
+        "session_id": "l9k7j5h3g1f8d6s4a2q0w8e6r4",
+        "total": "107.73",
+        "payment_date": "2025-04-11",
+        "access_code": "6BF091D3E7A2C58",
+        "shipment_integrator": "",
+        "modified": "2025-04-11 17:52:08",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2025-04-12",
+        "external_code": "",
+        "has_payment": "1",
+        "has_shipment": "0",
+        "has_invoice": "0",
+        "dc_id": "799",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "",
+        "payment_form": "Pix - Vindi",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "OrderStatus": {
+          "id": "1",
+          "default": "1",
+          "type": "open",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "A ENVIAR",
+          "show_status_central": "",
+          "background": "#CAFAD1",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [
+          {
+            "id": "3",
+            "name": "Loja Rio Preto - SP",
+            "address": "Praca Paul S. Harris",
+            "number": "158",
+            "neighborhood": "Centro",
+            "city": "Sao Jose do Rio Preto",
+            "state": "SP",
+            "zip_code": "15010-011"
+          }
+        ],
+        "ProductsSold": [
+          {
+            "id": "11851"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    },
+    {
+      "Order": {
+        "status": "FINALIZADO",
+        "id": "1190",
+        "date": "2025-04-25",
+        "customer_id": "21",
+        "partial_total": "1019.80",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "PAC Bagy",
+        "shipment_value": "24.50",
+        "shipment_date": "",
+        "store_note": "25/04/2025 12:00:44 Pedido em 2x de R$ 942,32 atraves do Cartao de Credito - Vindi",
+        "discount_coupon": "outono10/101.98",
+        "payment_method_rate": "0.00",
+        "value_1": "0.00",
+        "sending_code": "BR987654321BR",
+        "session_id": "p2o4i6u8y0t1r3e5w7q9a1s3d5",
+        "total": "942.32",
+        "payment_date": "2025-04-25",
+        "access_code": "0C74AE28B6F91D3",
+        "shipment_integrator": "Correios",
+        "modified": "2025-05-02 09:15:20",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2025-05-02",
+        "external_code": "",
+        "has_payment": "1",
+        "has_shipment": "1",
+        "has_invoice": "1",
+        "dc_id": "799",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "1",
+        "payment_form": "Cartao de Credito - Vindi",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "coupon": {
+          "code": "outono10",
+          "discount": "101.98"
+        },
+        "OrderStatus": {
+          "id": "69",
+          "default": "1",
+          "type": "closed",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "FINALIZADO",
+          "show_status_central": "",
+          "background": "#85CC8D",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "11901"
+          },
+          {
+            "id": "11902"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [
+          {
+            "id": "1190",
+            "link": ""
+          }
+        ],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    }
+  ]
+}

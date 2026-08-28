@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "shopify-admin": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-admin/SKILL.md",
+      "computedHash": "65fa7a15a1e799781542fb815d2675e8069ce83287fbd589d8cddb72d4fed85c"
+    },
+    "shopify-app-store-review": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-app-store-review/SKILL.md",
+      "computedHash": "a09f7be3efafede680f4f3a70bd3d946dbc53de428d397c9383b827aafefbe4c"
+    },
+    "shopify-custom-data": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-custom-data/SKILL.md",
+      "computedHash": "3bdd0f54a68dccaf4a3e82d632064c2db3d9623d106f05088579871fe6e890d4"
+    },
+    "shopify-customer": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-customer/SKILL.md",
+      "computedHash": "903175e743e5879995130542316d02562aa5694a41793f0a19ff376a4503ab84"
+    },
+    "shopify-dev": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-dev/SKILL.md",
+      "computedHash": "c048e63e62efa1a42856280edd055a070642d483e4f5d535c1d148fbf74fb87e"
+    },
+    "shopify-functions": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-functions/SKILL.md",
+      "computedHash": "082818e024e9bf25aeb935a641b3d17f9a258c215202cb75d55289eda5839247"
+    },
+    "shopify-shopifyql": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-shopifyql/SKILL.md",
+      "computedHash": "d6302b078cb39927f3f7df4a810abb6de04ea54cc8f44432d7b91c071bd7f441"
+    },
+    "shopify-storefront-graphql": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-storefront-graphql/SKILL.md",
+      "computedHash": "d596204808fea4509cec05229a09f82deeda25ecc204469f22cb5665cef0f6f5"
+    },
+    "shopify-use-shopify-cli": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-use-shopify-cli/SKILL.md",
+      "computedHash": "875b05b0d2895874e3d0405245d684ed4099783c24f9b3a7ba319bc89f608089"
+    }
+  }
+}

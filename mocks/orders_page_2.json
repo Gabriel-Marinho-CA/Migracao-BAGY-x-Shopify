@@ -1,0 +1,252 @@
+{
+  "paging": {
+    "total": 8,
+    "page": 2,
+    "offset": 3,
+    "limit": 3,
+    "maxLimit": 50
+  },
+  "sort": [
+    {
+      "id": "asc"
+    }
+  ],
+  "availableFilters": [
+    "id",
+    "status",
+    "partner_id",
+    "session_id",
+    "sending_code",
+    "customer_id",
+    "shipment",
+    "point_sale",
+    "payment_form",
+    "access_code",
+    "external_code",
+    "has_payment",
+    "has_invoice",
+    "has_shipment",
+    "with_statuses",
+    "printed",
+    "payment_method_id",
+    "store_note",
+    "discount_coupon",
+    "dc_id",
+    "modified",
+    "date",
+    "shipment_date",
+    "payment_date"
+  ],
+  "appliedFilters": [],
+  "Orders": [
+    {
+      "Order": {
+        "status": "FINALIZADO",
+        "id": "1168",
+        "date": "2025-03-14",
+        "customer_id": "5",
+        "partial_total": "219.70",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "SEDEX Bagy",
+        "shipment_value": "22.40",
+        "shipment_date": "",
+        "store_note": "14/03/2025 15:22:31 Pedido em 3x de R$ 242,10 atraves do Cartao de Credito - Vindi",
+        "discount_coupon": "",
+        "payment_method_rate": "0.00",
+        "value_1": "0.00",
+        "sending_code": "BR123456789BR",
+        "session_id": "qm2v8t7xk1p0zj4n6c9h3s5db1",
+        "total": "242.10",
+        "payment_date": "2025-03-14",
+        "access_code": "7C1B0A4E9F2D385",
+        "shipment_integrator": "Correios",
+        "modified": "2025-03-18 08:41:02",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2025-03-18",
+        "external_code": "",
+        "has_payment": "1",
+        "has_shipment": "1",
+        "has_invoice": "1",
+        "dc_id": "799",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "1",
+        "payment_form": "Cartao de Credito - Vindi",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "OrderStatus": {
+          "id": "69",
+          "default": "1",
+          "type": "closed",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "FINALIZADO",
+          "show_status_central": "",
+          "background": "#85CC8D",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "11681"
+          },
+          {
+            "id": "11682"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [
+          {
+            "id": "1168",
+            "link": ""
+          }
+        ],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    },
+    {
+      "Order": {
+        "status": "CANCELADO",
+        "id": "1172",
+        "date": "2025-03-20",
+        "customer_id": "1",
+        "partial_total": "59.90",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "PAC Bagy",
+        "shipment_value": "18.70",
+        "shipment_date": "",
+        "store_note": "Pedido cancelado por falta de pagamento do boleto apos 7 dias.",
+        "discount_coupon": "",
+        "payment_method_rate": "0.00",
+        "value_1": "0.00",
+        "sending_code": "",
+        "session_id": "t4r8w2q6y0u3i7o1p5a9s2d6f0",
+        "total": "78.60",
+        "payment_date": "0000-00-00",
+        "access_code": "9AD3F70C2E8B146",
+        "shipment_integrator": "Correios",
+        "modified": "2025-03-27 16:10:55",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2025-03-28",
+        "external_code": "",
+        "has_payment": "0",
+        "has_shipment": "0",
+        "has_invoice": "0",
+        "dc_id": "799",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "",
+        "payment_form": "Boleto - Vindi",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "OrderStatus": {
+          "id": "5",
+          "default": "1",
+          "type": "canceled",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "CANCELADO",
+          "show_status_central": "",
+          "background": "#F5C6C6",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "11721"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    },
+    {
+      "Order": {
+        "status": "AGUARDANDO PAGAMENTO",
+        "id": "1180",
+        "date": "2025-04-02",
+        "customer_id": "34",
+        "partial_total": "339.80",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "SEDEX Bagy",
+        "shipment_value": "31.20",
+        "shipment_date": "",
+        "store_note": "02/04/2025 08:12:19 Pedido em 1 vez de R$ 371,00 atraves do Boleto - Vindi",
+        "discount_coupon": "",
+        "payment_method_rate": "0.00",
+        "value_1": "0.00",
+        "sending_code": "",
+        "session_id": "z1x3c5v7b9n2m4k6j8h0g2f4d6",
+        "total": "371.00",
+        "payment_date": "0000-00-00",
+        "access_code": "4E82BC15A9D703F",
+        "shipment_integrator": "Correios",
+        "modified": "2025-04-02 08:12:41",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2025-04-07",
+        "external_code": "",
+        "has_payment": "0",
+        "has_shipment": "0",
+        "has_invoice": "0",
+        "dc_id": "799",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "",
+        "payment_form": "Boleto - Vindi",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "OrderStatus": {
+          "id": "2",
+          "default": "1",
+          "type": "open",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "AGUARDANDO PAGAMENTO",
+          "show_status_central": "",
+          "background": "#FDF2C0",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "11801"
+          },
+          {
+            "id": "11802"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    }
+  ]
+}

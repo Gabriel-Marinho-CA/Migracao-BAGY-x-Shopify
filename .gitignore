@@ -1,0 +1,11 @@
+.env
+state/
+out/
+logs/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Contem credenciais - nao versionar
+api-keys-shopify-test-loja.txt

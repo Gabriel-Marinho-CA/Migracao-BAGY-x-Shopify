@@ -1,0 +1,409 @@
+{
+  "Order": {
+    "status": "FINALIZADO",
+    "id": "1190",
+    "date": "2025-04-25",
+    "hour": "12:00:00",
+    "customer_id": "21",
+    "partial_total": "1019.80",
+    "taxes": "0.00",
+    "discount": "0.00",
+    "point_sale": "LOJA VIRTUAL",
+    "shipment": "PAC Bagy",
+    "shipment_value": "24.50",
+    "shipment_date": "",
+    "delivered": "1",
+    "delivered_status": "",
+    "shipping_cancelled": "",
+    "store_note": "25/04/2025 12:00:44 Pedido em 2x de R$ 942,32 atraves do Cartao de Credito - Vindi",
+    "customer_note": "",
+    "partner_id": "",
+    "discount_coupon": "outono10/101.98",
+    "client_ip": "",
+    "payment_method_rate": "0.00",
+    "installment": "2",
+    "value_1": "0.00",
+    "sending_code": "BR987654321BR",
+    "sending_date": "0000-00-00",
+    "billing_address": "",
+    "delivery_time": "5",
+    "payment_method_id": "10546",
+    "payment_method": "Cartao de Credito - Vindi",
+    "session_id": "p2o4i6u8y0t1r3e5w7q9a1s3d5",
+    "total": "942.32",
+    "payment_date": "2025-04-25",
+    "access_code": "0C74AE28B6F91D3",
+    "shipment_integrator": "Correios",
+    "modified": "2025-05-02 09:15:20",
+    "printed": "",
+    "interest": "0.00",
+    "cart_additional_values_discount": "0.00",
+    "cart_additional_values_increase": "0.00",
+    "id_quotation": "",
+    "estimated_delivery_date": "2025-05-02",
+    "is_traceable": "1",
+    "external_code": "",
+    "tracking_url": "https://rastreamento.correios.com.br/app/index.php?objeto=BR987654321BR",
+    "has_payment": "1",
+    "has_shipment": "1",
+    "has_invoice": "1",
+    "delivery_date": "",
+    "dc_id": "799",
+    "total_comission_user": "0.00",
+    "total_comission": "0.00",
+    "OrderStatus": {
+      "id": "69",
+      "default": "1",
+      "type": "closed",
+      "show_backoffice": "1",
+      "allow_edit_order": "0",
+      "description": "",
+      "status": "FINALIZADO",
+      "show_status_central": "",
+      "background": "#85CC8D",
+      "display_name": "",
+      "font_color": ""
+    },
+    "PickupLocation": [],
+    "cost": "372.33",
+    "app_id": "0",
+    "urls": {
+      "payment": "https://ecommerce.analisevirtual.com.br/loja/pagamento.php?loja=1098664&pedido=0C74AE28B6F91D3"
+    },
+    "store_segment": "Eletronicos & Foto",
+    "payment_method_type": "credit_card",
+    "Customer": {
+      "cnpj": "",
+      "newsletter": "1",
+      "created": "2024-03-08 13:39:08",
+      "terms": "0000-00-00 00:00:00",
+      "id": "21",
+      "name": "Danilo Carlos Ribeiro",
+      "registration_date": "2024-03-08",
+      "rg": "364787958",
+      "cpf": "00474780040",
+      "phone": "1433334444",
+      "cellphone": "18999898989",
+      "birth_date": "0000-00-00",
+      "gender": "0",
+      "email": "danilo.carlos123@bagy.net.br",
+      "nickname": "",
+      "token": "0C74AE28B6F91D3",
+      "total_orders": "0",
+      "observation": "",
+      "type": "0",
+      "foreign": "0",
+      "company_name": "",
+      "state_inscription": "",
+      "reseller": "0",
+      "discount": "0.000",
+      "blocked": "",
+      "credit_limit": "0.00",
+      "indicator_id": "0",
+      "profile_customer_id": "1",
+      "last_sending_newsletter": "0000-00-00",
+      "last_purchase": "2025-04-25",
+      "last_visit": "2025-04-25",
+      "last_modification": "0000-00-00 00:00:00",
+      "address": "Rua Cristiano Olsen",
+      "zip_code": "16015-244",
+      "number": "1067",
+      "complement": "apto 44",
+      "neighborhood": "Jardim Sumare",
+      "city": "Aracatuba",
+      "state": "SP",
+      "country": "",
+      "modified": "2025-05-02 09:15:20",
+      "count_orders": "0",
+      "Extensions": {
+        "Profile": {
+          "id": "1",
+          "name": "Padrao",
+          "approves_registration": "0"
+        },
+        "Profiles": [
+          {
+            "id": "1",
+            "price_list_id": "0",
+            "name": "Padrao",
+            "approves_registration": "0",
+            "show_price": "",
+            "theme_id": "0",
+            "selected": "1"
+          }
+        ]
+      },
+      "CustomerAddresses": [
+        {
+          "CustomerAddress": {
+            "id": "167",
+            "customer_id": "21",
+            "address": "Rua Cristiano Olsen",
+            "number": "1067",
+            "complement": "apto 44",
+            "neighborhood": "Jardim Sumare",
+            "city": "Aracatuba",
+            "state": "SP",
+            "zip_code": "16015-244",
+            "country": "",
+            "type": "1",
+            "active": "1",
+            "description": "16015244",
+            "recipient": "Danilo O",
+            "type_delivery": "1",
+            "not_list": "0"
+          }
+        }
+      ]
+    },
+    "ProductsSold": [
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "351",
+          "quantity": "1",
+          "id": "11901",
+          "order_id": "1190",
+          "name": "tenis azul (Ref. ref351)",
+          "original_name": "tenis azul",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "900.00",
+          "cost_price": "333.33",
+          "original_price": "900.00",
+          "weight": "100",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref351",
+          "length": "28",
+          "width": "15",
+          "height": "10",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_tenis_azul_351_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "9",
+              "name": "Outlet",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/outlet/tenis-azul",
+            "https": "https://ecommerce.analisevirtual.com.br/outlet/tenis-azul"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      },
+      {
+        "ProductsSold": {
+          "product_kit_id": "0",
+          "product_kit_id_kit": "0",
+          "id_campaign": "",
+          "product_id": "508",
+          "quantity": "2",
+          "id": "11902",
+          "order_id": "1190",
+          "name": "bone vermelho aba reta (Ref. ref508)",
+          "original_name": "bone vermelho aba reta",
+          "virtual_product": "0",
+          "ean": "",
+          "availability_days": "0",
+          "availability": "",
+          "Sku": [],
+          "price": "59.90",
+          "cost_price": "19.50",
+          "original_price": "59.90",
+          "weight": "120",
+          "weight_cubic": "875",
+          "brand": "",
+          "model": "",
+          "reference": "ref508",
+          "length": "25",
+          "width": "20",
+          "height": "12",
+          "variant_id": "0",
+          "additional_information": "",
+          "text_variant": "",
+          "warranty": "",
+          "bought_together_id": "0",
+          "ncm": "",
+          "included_items": "",
+          "release_date": "0000-00-00",
+          "commissioner_value": "",
+          "comissao": "0.00",
+          "is_giveaway_by_coupon": "",
+          "ProductSoldImage": [
+            {
+              "http": "http://images.tcdn.com.br/img/img_prod/1098664/bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "https": "https://images.tcdn.com.br/img/img_prod/1098664/bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+              "thumbs": {
+                "30": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/30_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/30_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "90": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/90_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/90_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                },
+                "180": {
+                  "http": "http://images.tcdn.com.br/img/img_prod/1098664/180_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg",
+                  "https": "https://images.tcdn.com.br/img/img_prod/1098664/180_bone_vermelho_aba_reta_508_1_387b5f42afaac09b5647da7df330d40c.jpg"
+                }
+              }
+            }
+          ],
+          "Category": [
+            {
+              "id": "3",
+              "name": "Acessorios",
+              "main_category": "1"
+            }
+          ],
+          "is_giveaway": "",
+          "BoughtTogether": [],
+          "ProductSoldPackage": [],
+          "ProductSoldCard": [],
+          "url": {
+            "http": "http://danilooliveiraalbergardi.commercesuite.com.br/acessorios/bone-vermelho-aba-reta",
+            "https": "https://ecommerce.analisevirtual.com.br/acessorios/bone-vermelho-aba-reta"
+          },
+          "Discount": [],
+          "Stock": {
+            "id": "1",
+            "name": "Loja"
+          }
+        }
+      }
+    ],
+    "OrderInvoice": [
+      {
+        "id": "1190",
+        "link": ""
+      }
+    ],
+    "Payment": [
+      {
+        "Payment": {
+          "created": "2025-05-02 09:15:20",
+          "modified": "2025-05-02 09:15:20",
+          "id": "744",
+          "order_id": "1190",
+          "payment_method_id": "",
+          "method": "Cartao de Credito",
+          "payment_place": "",
+          "value": "942.32",
+          "date": "2025-04-25",
+          "note": "",
+          "unique_number": "Bagy__744__24210-1"
+        }
+      }
+    ],
+    "MlOrder": [],
+    "MarketplaceOrder": [],
+    "OrderTransactions": [],
+    "OrderInvoiceAmount": [],
+    "OtherInvoiceAmounts": [],
+    "ExtraTabs": [],
+    "OrderChilds": [],
+    "PaymentMethodMessage": {
+      "text": "",
+      "text_pag": "",
+      "text_confirm": "",
+      "confirmation": "0"
+    },
+    "payments_notification": {
+      "notification": "https://1098664.commercesuite.com.br/loja/retorno_pagamento.php?loja=1098664&gateway=5&codigoAcesso=0C74AE28B6F91D3&notification=true"
+    },
+    "partner_name": "",
+    "coupon": {
+      "code": "outono10",
+      "discount": "101.98"
+    },
+    "DistributionCenter": {
+      "status": "completed",
+      "type": "child_order",
+      "group_id": "27927",
+      "Package": {
+        "id": "22861",
+        "created_at": "2025-04-25T12:46:24.000000Z",
+        "updated_at": "2025-04-25T12:57:46.000000Z",
+        "order_id": "1190",
+        "DistributionCenter": {
+          "id": "799",
+          "name": "Rio preto - SP",
+          "document": "",
+          "postal_code": "15010011",
+          "country": "Brasil",
+          "state": "SP",
+          "city": "Sao Jose do Rio Preto",
+          "address": "Praca Paul S. Harris",
+          "number": "158",
+          "neighborhood": "Centro",
+          "complement": "",
+          "updated_at": "2025-01-15T13:50:42.000000Z",
+          "created_at": "2025-01-15T13:47:57.000000Z"
+        },
+        "Products": [
+          {
+            "product_id": "351",
+            "variant_id": "0",
+            "product_sold_id": "11901",
+            "quantity": "1"
+          },
+          {
+            "product_id": "508",
+            "variant_id": "0",
+            "product_sold_id": "11902",
+            "quantity": "2"
+          }
+        ]
+      }
+    }
+  },
+  "Extensions": [],
+  "User": [],
+  "Confirmation": []
+}

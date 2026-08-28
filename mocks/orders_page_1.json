@@ -1,0 +1,250 @@
+{
+  "paging": {
+    "total": 8,
+    "page": 1,
+    "offset": 0,
+    "limit": 3,
+    "maxLimit": 50
+  },
+  "sort": [
+    {
+      "id": "asc"
+    }
+  ],
+  "availableFilters": [
+    "id",
+    "status",
+    "partner_id",
+    "session_id",
+    "sending_code",
+    "customer_id",
+    "shipment",
+    "point_sale",
+    "payment_form",
+    "access_code",
+    "external_code",
+    "has_payment",
+    "has_invoice",
+    "has_shipment",
+    "with_statuses",
+    "printed",
+    "payment_method_id",
+    "store_note",
+    "discount_coupon",
+    "dc_id",
+    "modified",
+    "date",
+    "shipment_date",
+    "payment_date"
+  ],
+  "appliedFilters": [],
+  "Orders": [
+    {
+      "Order": {
+        "status": "A ENVIAR",
+        "id": "5",
+        "date": "2020-12-07",
+        "customer_id": "5",
+        "partial_total": "35999.00",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "Correios Expresso",
+        "shipment_value": "28.35",
+        "shipment_date": "",
+        "store_note": "07/12/2020 11:55:22 Pedido em 1 vez de R$ 27,027.60 atraves do Boleto - Yapay - Boleto",
+        "discount_coupon": "natal25/8999.75",
+        "payment_method_rate": "0.00",
+        "value_1": "0.00",
+        "sending_code": "",
+        "session_id": "rdlq7ogripa61r33p75bei8cj2",
+        "total": "27027.60",
+        "payment_date": "2020-12-07",
+        "access_code": "DB91EEA5D671CA2",
+        "shipment_integrator": "Frete Facil",
+        "modified": "2020-12-21 11:21:52",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2020-12-22",
+        "external_code": "",
+        "has_payment": "1",
+        "has_shipment": "0",
+        "has_invoice": "1",
+        "dc_id": "611",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "",
+        "payment_form": "Boleto - Yapay",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "coupon": {
+          "code": "natal25",
+          "discount": "8999.75"
+        },
+        "OrderStatus": {
+          "id": "1",
+          "default": "1",
+          "type": "open",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "A ENVIAR",
+          "show_status_central": "",
+          "background": "#CAFAD1",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "51"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [
+          {
+            "id": "5",
+            "link": ""
+          }
+        ],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    },
+    {
+      "Order": {
+        "status": "FINALIZADO",
+        "id": "15",
+        "date": "2021-02-10",
+        "customer_id": "1",
+        "partial_total": "59900.00",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "Correios Expresso",
+        "shipment_value": "38.91",
+        "shipment_date": "",
+        "store_note": "10/02/2021 11:28:28 Pedido em 1 vez de R$ 62,935.86 atraves do Boleto - Yapay - Boleto Link da transacao: https://intermediador.yapay.com.br/orders/billet/17471d7cd90f7d3jk54643e1da0f15",
+        "discount_coupon": "",
+        "payment_method_rate": "2996.95",
+        "value_1": "0.00",
+        "sending_code": "",
+        "session_id": "k8ku3icuvb5uge2qj7u8gbtli6",
+        "total": "62935.86",
+        "payment_date": "2021-02-10",
+        "access_code": "38D071AEFEF4960",
+        "shipment_integrator": "Frete Facil",
+        "modified": "2021-05-06 10:38:45",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2021-02-15",
+        "external_code": "",
+        "has_payment": "1",
+        "has_shipment": "0",
+        "has_invoice": "0",
+        "dc_id": "611",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "",
+        "payment_form": "Boleto - Yapay",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "OrderStatus": {
+          "id": "69",
+          "default": "1",
+          "type": "closed",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "FINALIZADO",
+          "show_status_central": "",
+          "background": "#85CC8D",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "151"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    },
+    {
+      "Order": {
+        "status": "A ENVIAR",
+        "id": "1167",
+        "date": "2025-02-06",
+        "customer_id": "21",
+        "partial_total": "900.00",
+        "taxes": "0.00",
+        "discount": "0.00",
+        "point_sale": "LOJA VIRTUAL",
+        "shipment": "PAC Bagy",
+        "shipment_value": "15.39",
+        "shipment_date": "",
+        "store_note": "Criado a partir do pedido: 1163\n\nCD ref: Rio preto - SP\n",
+        "discount_coupon": "",
+        "payment_method_rate": "-90.00",
+        "value_1": "0.00",
+        "sending_code": "",
+        "session_id": "",
+        "total": "825.39",
+        "payment_date": "2025-02-06",
+        "access_code": "2EA95D335ECB6F9",
+        "shipment_integrator": "Correios",
+        "modified": "2025-02-06 09:57:58",
+        "printed": "",
+        "interest": "0.00",
+        "id_quotation": "",
+        "estimated_delivery_date": "2025-02-13",
+        "external_code": "Bagy__1163-1",
+        "has_payment": "1",
+        "has_shipment": "0",
+        "has_invoice": "0",
+        "dc_id": "799",
+        "total_comission_user": "0.00",
+        "total_comission": "0.00",
+        "is_traceable": "",
+        "payment_form": "Pix - Vindi",
+        "progressive_discount": "0.00",
+        "shipping_progressive_discount": "0.00",
+        "OrderStatus": {
+          "id": "1",
+          "default": "1",
+          "type": "open",
+          "show_backoffice": "1",
+          "allow_edit_order": "0",
+          "description": "",
+          "status": "A ENVIAR",
+          "show_status_central": "",
+          "background": "#CAFAD1",
+          "display_name": "",
+          "font_color": ""
+        },
+        "PickupLocation": [],
+        "ProductsSold": [
+          {
+            "id": "11671"
+          }
+        ],
+        "Payment": [],
+        "OrderInvoice": [],
+        "MlOrder": [],
+        "OrderTransactions": [],
+        "MarketplaceOrder": [],
+        "Extensions": []
+      }
+    }
+  ]
+}

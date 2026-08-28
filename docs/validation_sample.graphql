@@ -1,0 +1,168 @@
+﻿# Amostra usada so para validar os nomes de campo contra o schema da Admin API.
+# Reproduz literalmente o payload que transform.py monta em variaveis.
+# Nao e executada pelo migrador: o runtime usa a versao com variaveis em
+# bagy2shopify/shopify_client.py.
+
+mutation OrderCreateLiteralCheck {
+  orderCreate(
+    order: {
+      currency: BRL
+      financialStatus: PAID
+      processedAt: "2025-02-06T09:46:09-03:00"
+      email: "danilo.carlos123@bagy.net.br"
+      phone: "+5518999898989"
+      note: "=== Importado da Bagy - pedido #1167 ==="
+      tags: ["bagy-import", "bagy-id-1167", "bagy-status-a-enviar"]
+      sourceIdentifier: "bagy-1167"
+      test: false
+      customer: {
+        toUpsert: {
+          email: "danilo.carlos123@bagy.net.br"
+          firstName: "Danilo"
+          lastName: "Carlos Ribeiro"
+          note: "CPF: 004.747.800-40 | RG: 364787958 | ID Bagy: 21"
+          tags: ["bagy-import", "bagy-customer-21"]
+        }
+      }
+      shippingAddress: {
+        firstName: "Danilo"
+        lastName: "O"
+        address1: "Rua Cristiano Olsen, 1067"
+        address2: "apto 44 - Jardim Sumare"
+        city: "Aracatuba"
+        provinceCode: "SP"
+        zip: "16015-244"
+        countryCode: BR
+        phone: "+5518999898989"
+      }
+      billingAddress: {
+        firstName: "Danilo"
+        lastName: "O"
+        address1: "Rua Cristiano Olsen, 1067"
+        address2: "apto 44 - Jardim Sumare"
+        city: "Aracatuba"
+        provinceCode: "SP"
+        zip: "16015-244"
+        countryCode: BR
+        phone: "+5518999898989"
+      }
+      lineItems: [
+        {
+          title: "tenis azul"
+          quantity: 1
+          sku: "ref351"
+          vendor: "Bagy"
+          requiresShipping: true
+          taxable: false
+          priceSet: { shopMoney: { amount: "900.00", currencyCode: BRL } }
+          properties: [{ name: "bagy_product_id", value: "351" }]
+          weight: { value: 100.0, unit: GRAMS }
+        }
+      ]
+      shippingLines: [
+        {
+          title: "PAC Bagy"
+          source: "Correios"
+          priceSet: { shopMoney: { amount: "15.39", currencyCode: BRL } }
+        }
+      ]
+      discountCode: {
+        itemFixedDiscountCode: {
+          code: "DESCONTO-BAGY"
+          amountSet: { shopMoney: { amount: "90.00", currencyCode: BRL } }
+        }
+      }
+      transactions: [
+        {
+          kind: SALE
+          status: SUCCESS
+          gateway: "manual"
+          test: false
+          processedAt: "2025-02-06T00:00:00-03:00"
+          amountSet: { shopMoney: { amount: "825.39", currencyCode: BRL } }
+        }
+      ]
+      fulfillment: {
+        locationId: "gid://shopify/Location/1234567890"
+        notifyCustomer: false
+        trackingNumber: "BR123456789BR"
+        trackingCompany: "Correios"
+        shipmentStatus: DELIVERED
+      }
+    }
+    options: {
+      inventoryBehaviour: BYPASS
+      sendReceipt: false
+      sendFulfillmentReceipt: false
+    }
+  ) {
+    userErrors {
+      field
+      message
+    }
+    order {
+      id
+      name
+      processedAt
+      displayFinancialStatus
+      displayFulfillmentStatus
+      totalPriceSet {
+        shopMoney {
+          amount
+          currencyCode
+        }
+      }
+      customer {
+        id
+        defaultEmailAddress {
+          emailAddress
+        }
+      }
+    }
+  }
+}
+
+query PrimaryLocation {
+  locations(first: 10, includeInactive: false) {
+    nodes {
+      id
+      name
+      isActive
+      fulfillsOnlineOrders
+    }
+  }
+}
+
+query ShopInfo {
+  shop {
+    id
+    name
+    myshopifyDomain
+    currencyCode
+    ianaTimezone
+  }
+}
+
+
+mutation OrderCreateMinimal($order: OrderCreateOrderInput!, $options: OrderCreateOptionsInput) {
+  orderCreate(order: $order, options: $options) {
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+query OrdersCount($query: String) {
+  ordersCount(query: $query) {
+    count
+  }
+}
+
+query OrderReadProbe {
+  orders(first: 1) {
+    nodes {
+      id
+    }
+  }
+}

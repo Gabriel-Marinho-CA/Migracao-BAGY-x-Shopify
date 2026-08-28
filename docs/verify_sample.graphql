@@ -1,0 +1,72 @@
+# Operacao usada por tools/verify_migration.py para conferir, pedido a pedido,
+# o que de fato entrou na Shopify contra o que veio da Bagy.
+
+query VerifyBagyOrder($query: String!) {
+  orders(first: 1, query: $query) {
+    nodes {
+      id
+      name
+      processedAt
+      note
+      tags
+      displayFinancialStatus
+      displayFulfillmentStatus
+      currencyCode
+      totalPriceSet {
+        shopMoney {
+          amount
+          currencyCode
+        }
+      }
+      subtotalPriceSet {
+        shopMoney {
+          amount
+        }
+      }
+      totalShippingPriceSet {
+        shopMoney {
+          amount
+        }
+      }
+      totalDiscountsSet {
+        shopMoney {
+          amount
+        }
+      }
+      customer {
+        id
+        displayName
+        defaultEmailAddress {
+          emailAddress
+        }
+      }
+      shippingAddress {
+        city
+        provinceCode
+        zip
+        countryCodeV2
+      }
+      lineItems(first: 50) {
+        nodes {
+          title
+          quantity
+          sku
+          originalUnitPriceSet {
+            shopMoney {
+              amount
+            }
+          }
+        }
+      }
+      fulfillments(first: 5) {
+        id
+        status
+        totalQuantity
+        trackingInfo {
+          company
+          number
+        }
+      }
+    }
+  }
+}

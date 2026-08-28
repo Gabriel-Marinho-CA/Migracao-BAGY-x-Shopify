@@ -1,0 +1,80 @@
+# Operacoes usadas por fix_fulfillment.py, que roda depois da aprovacao de
+# Protected Customer Data para despachar os pedidos ja migrados.
+
+query FindBagyOrder($query: String!) {
+  orders(first: 1, query: $query) {
+    nodes {
+      id
+      name
+      displayFulfillmentStatus
+      displayFinancialStatus
+      fulfillmentOrders(first: 10) {
+        nodes {
+          id
+          status
+          assignedLocation {
+            location {
+              id
+              name
+            }
+          }
+          lineItems(first: 100) {
+            nodes {
+              id
+              remainingQuantity
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation FulfillmentCreate($fulfillment: FulfillmentInput!) {
+  fulfillmentCreate(fulfillment: $fulfillment) {
+    fulfillment {
+      id
+      status
+      totalQuantity
+      trackingInfo {
+        company
+        number
+        url
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+mutation FulfillmentCreateLiteralCheck {
+  fulfillmentCreate(
+    fulfillment: {
+      notifyCustomer: false
+      trackingInfo: {
+        company: "Correios"
+        number: "BR123456789BR"
+        url: "https://rastreamento.correios.com.br/app/index.php?objeto=BR123456789BR"
+      }
+      lineItemsByFulfillmentOrder: [
+        {
+          fulfillmentOrderId: "gid://shopify/FulfillmentOrder/5018595819542"
+          fulfillmentOrderLineItems: [
+            { id: "gid://shopify/FulfillmentOrderLineItem/10926793228310", quantity: 3 }
+          ]
+        }
+      ]
+    }
+  ) {
+    fulfillment {
+      id
+      status
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
