@@ -1,10 +1,236 @@
-# Migração de pedidos Bagy → Shopify
+# Migração Bagy → Shopify
 
-Scripts em Python para importar pedidos da Bagy (CommerceSuite/Tray) na Shopify
-via **Admin GraphQL API**, usando a mutation `orderCreate`.
+Migração completa da loja: pedidos, produtos, clientes, coleções, posts de blog,
+redirecionamentos e tudo mais que a API da Bagy expõe.
 
-Estado atual: **funcionando end-to-end**. Os 15 pedidos de teste já foram criados
-na loja `turbo-starter.myshopify.com`, confirmados pela tag `bagy-import`.
+| Fase | O quê | Estado |
+|---|---|---|
+| **1. Extração** | Ler tudo da Bagy e guardar local (`bagy_extract/`, `run_extraction.py`) | pronta |
+| 2. Transformação | Converter os dados extraídos em payloads da Shopify (`bagy_transform/`, `run_transform.py`) | pronta |
+| 3. Carga | Enviar para a Shopify resolvendo as referências | a fazer (carga de pedidos testada com mocks em `bagy2shopify/`) |
+
+---
+
+## Fase 1 — Extração
+
+**`run_extraction.py`** — dá play aqui. Lê todos os dados da loja na Bagy e grava
+em `data/bagy.sqlite`. **Só leitura**: nada é alterado na Bagy e nada vai para a
+Shopify.
+
+```bash
+python run_extraction.py --plan              # totais e requisições previstas
+python run_extraction.py --export            # extrai tudo + um JSON por recurso
+python run_extraction.py --list              # catálogo e o que já está no banco
+python run_extraction.py --only pedidos      # um grupo ou recurso
+python run_extraction.py --fresh             # ignora checkpoints
+python run_extraction.py --assets-only       # backup local das imagens (opcional)
+python tools/inspect_extraction.py           # resumo do que foi extraído
+python tools/test_extract_storage.py         # testes do armazenamento (sem rede)
+```
+
+> ⚠️ `data/` contém **dados pessoais** de clientes (CPF, e-mail, telefone,
+> endereço). Está no `.gitignore` — não copie para lugar compartilhado.
+
+### Qual API é essa (importante)
+
+A API desta loja é **`https://api.dooca.store`** (a Bagy é a antiga Dooca),
+autenticada com o token JWT via `Authorization: Bearer`.
+
+**Não é** a API documentada em [developers.bagy.com.br](https://developers.bagy.com.br/).
+Aquela documenta a plataforma **antiga** (formato Tray/CommerceSuite: `web_api`,
+OAuth com `consumer_key`, `?access_token=`) — testado: o token não funciona lá.
+Foi nesse formato antigo que os mocks do `bagy2shopify` foram montados, então **a
+fase de transformação precisa ser refeita sobre o formato real** (ex.: pedido
+real tem `items`, `payment`, `shipping`, `customer.cgc`, `histories`).
+
+A documentação certa é a [base de conhecimento](https://basedeconhecimento.bagy.com.br/hc/pt-br/categories/23326946048660-Documenta%C3%A7%C3%A3o-da-API)
+(o site bloqueia acesso automatizado; os artigos saem pela API do Zendesk). Mesmo
+ela está incompleta — estes recursos existem mas **não estão documentados** e
+foram achados por sondagem: `posts`, `posts/categories`, `pages`, `redirects`,
+`hotsites`, `menus`, `carriers`, `domains`, `customers/addresses` (a doc fala em
+`/customers/:id/adress`, que não existe).
+
+### Como a API se comporta
+
+| Ponto | Comportamento verificado |
+|---|---|
+| Paginação | Laravel: `?limit=&page=`, com `meta.total` e `meta.last_page` |
+| Tamanho da página | `limit` máximo **150** na maioria; **100** em `mailings/all`; `checkout/abandoned` **ignora** e devolve 25 |
+| Ordenação | `?sort=id`. Sem ele, **clientes vêm fora de ordem** — e uma paginação instável pula registros se a loja mudar durante a extração |
+| Listagem x detalhe | A listagem já traz o objeto completo (pedido com cliente, itens, pagamento, frete e histórico) — sem precisar de uma chamada por registro |
+| Rate limit | **Não é público** (vem num checklist de parceiro) e a API não expõe headers de limite. O extrator usa 60 req/min espaçadas uniformemente, com backoff em 429/5xx |
+| Sem permissão | `store/scripts`, `gateways`, `payments`, `users` devolvem 403 para este token |
+
+### O que é extraído
+
+39 recursos em 6 grupos (`python run_extraction.py --list`). Totais na API em
+2026-09-12:
+
+| Grupo | Recursos (total) |
+|---|---|
+| loja | settings, domains, sidebar, carriers (22), webhooks (10), scripts/gateways/payments/users (403) |
+| catálogo | products (32), variations (32), stocks (32), categories (14) + árvore, brands (2), features (5) + valores (22), attributes/colors/component groups (0), showcase (23) |
+| clientes | customers (2.166), customer_addresses (2.096), customer_groups (1), cashback_entries (3.182) |
+| pedidos | orders (3.545), abandoned_checkouts (95) |
+| marketing | discounts (256), mailings (2.943), mailings_all (3.773), variation_requests (352), contact_forms (73) |
+| conteúdo | pages (6), post_categories (8), posts (24), hotsites (24), menus (5), redirects (31) |
+
+São 168 requisições no total.
+
+### Como os dados ficam guardados
+
+SQLite, e não só JSON, por quatro motivos: **extração retomável** (checkpoint por
+página — uma rodada interrompida retoma de onde parou), **idempotência** (upsert
+pela chave do registro), **detecção de mudança** (hash do conteúdo: cada rodada
+diz quantos registros são novos, alterados ou iguais) e **consulta com SQL** na
+fase de transformação.
+
+| Tabela | Conteúdo |
+|---|---|
+| `records` | Um registro por linha: `resource`, `record_key`, `payload` (JSON cru da API), `hash`, `first_seen_at`, `last_seen_at` |
+| `resource_state` | Checkpoint e estatísticas por recurso: próxima página, total da API, novos/alterados/iguais |
+| `runs` | Histórico de rodadas |
+| `assets` | Imagens encontradas nos dados e status do backup |
+| `v_<recurso>` | Uma view por recurso, ex.: `SELECT payload FROM v_orders` |
+
+Ao final de cada rodada o relatório compara, por recurso, o total da API com o
+que foi visto e com o que está no banco — e aponta registros que estão no banco
+mas não apareceram mais na API (removidos na Bagy).
+
+O `--export` gera `data/export/<recurso>.json` (um registro por linha) mais um
+`_manifest.json`. O SQLite continua sendo a fonte da verdade.
+
+**Imagens.** As URLs apontam para `cdn.dooca.store` e `api4.dooca.store`, hosts
+da Bagy que deixam de responder quando a loja for desligada. O upload para a
+Shopify vai ser feito via CLI; o backup local (`--assets-only`) é opcional e só
+é necessário se as URLs da Bagy saírem do ar antes disso. Ele varre todo o JSON
+extraído, inclusive o HTML de descrições, e nunca envia o token da Bagy ao CDN.
+
+Erros (incluindo os 403) vão para o mesmo `logs/errors.jsonl` da carga, com o
+request id da borda (`X-Azion-Request-Id`).
+
+---
+
+## Fase 2 — Transformação
+
+**`run_transform.py`** — dá play aqui. Lê `data/bagy.sqlite` e gera, para cada
+registro, as variáveis exatas da mutation da Shopify que vai criá-lo. **Só
+local**: nada é enviado para a Shopify.
+
+```bash
+python run_transform.py                  # transforma tudo (~9 s)
+python run_transform.py --only pedidos   # grupos: catalogo, clientes, marketing, conteudo, pedidos
+python run_transform.py --strict         # sai com erro se algum payload for inválido
+python tools/test_transform.py           # 73 checagens, sem rede e sem dados reais
+```
+
+Rodar de novo é seguro: cada rodada refaz as entidades do zero (é determinística).
+Na virada, refaça extração + transformação para pegar pedidos e cashback novos.
+
+### Resultado sobre a extração de 12/09/2026
+
+| Entidade | Prontos | Pulados | Mutation |
+|---|---:|---:|---|
+| Definições de metafield | 12 | 0 | `metafieldDefinitionCreate` |
+| Coleções (categorias) | 14 | 0 | `collectionCreate` |
+| Produtos | 32 | 0 | `productSet` |
+| Clientes | 2.166 | 0 | `customerSet` |
+| Leads da newsletter | 1.884 | 0 | `customerSet` |
+| Crédito (cashback) | 80 | 51 | `storeCreditAccountCredit` |
+| Descontos | 218 | 38 | `discountCodeBasicCreate`, `discountCodeFreeShippingCreate` |
+| Blog / artigos | 1 / 24 | 0 | `blogCreate` / `articleCreate` |
+| Políticas | 3 | 0 | `shopPolicyUpdate` |
+| Páginas e hotsites | 25 | 2 | `pageCreate` |
+| Menus | 5 | 0 | `menuCreate` |
+| Redirecionamentos | 141 | 0 | `urlRedirectCreate` |
+| Pedidos | 3.545 | 0 | `orderCreate` |
+| **Total** | **8.150** | **91** | **0 inválidos no schema** |
+
+Pedidos: **R$ 954.808,82 na Bagy = R$ 954.808,82 a enviar, 0 divergentes.**
+Cashback migrado: R$ 247,54 (80 créditos; 51 ainda não liberados ficam para a virada).
+
+### Saída
+
+| Arquivo | Conteúdo |
+|---|---|
+| `data/shopify.sqlite` → `payloads` | Uma linha por payload: status, `mutation`, `variables`, `post_actions`, `provides`, `depends_on`, avisos, erros de schema. É a entrada da fase de carga. |
+| `data/shopify/<entidade>.jsonl` | O mesmo, um payload por linha |
+| `data/shopify/mutations.graphql` | Documentos GraphQL usados — validados com `tools/validate_gql.mjs` |
+| `data/shopify/_report.json` | Contagens, avisos agrupados, estatísticas |
+| `data/shopify/checklist_manual.md` | **O que precisa de ação manual** — ler antes da carga |
+
+### Referências entre registros
+
+IDs que só vão existir depois da carga entram como placeholder
+`bagy-ref:<tipo>:<chave>`. Exemplo: o item de pedido aponta para
+`bagy-ref:variant:21032185`, que o payload do produto declara em `provides`.
+`bagy-ref:self` nas pós-ações é o ID criado pela mutation principal do próprio
+payload. `depends_on` dá a ordem de carga.
+
+### Validação
+
+Cada payload, e cada pós-ação, é validado **offline contra o schema da Admin API
+2026-07**: nome de argumento e de campo, obrigatórios, enum e tipo de escalar. O
+`validate.mjs` da skill valida só o documento GraphQL, não as variáveis — daí o
+validador próprio em `bagy_transform/schema.py`. Foi ele que pegou o
+`collectionCreate(input:)` deprecado. Mensagens de erro nunca imprimem o valor
+no console (pode ser dado pessoal).
+
+### Mapeamento e decisões
+
+| Bagy | Shopify | Observação |
+|---|---|---|
+| Produto + variação (todos simples) | `productSet` por handle, variante padrão | preço do produto, estoque (`balance`), NCM → HS code, peso em kg, imagens por URL |
+| Características (5) | metafields `list.single_line_text_field` fixados | para filtros no Search & Discovery |
+| Hotsite ligado ao produto (15) | metafield `custom.conteudo_pagina` | referência à página gerada |
+| Categorias | coleções, ordenação por mais vendidos | a hierarquia fica nos menus |
+| Marca | `vendor` | "Mad 4 Life" e "Mad4life" são duas grafias |
+| Cliente | `customerSet` por e-mail + `metafieldsSet` + aceite de marketing | o `customerSet` não aceita metafields nem consentimento |
+| CPF/CNPJ, nascimento, gênero, IE | metafields `custom.*` do cliente | |
+| Telefone repetido (16 clientes) | só no metafield `custom.telefone` | a Shopify exige telefone único |
+| Newsletter sem cadastro (1.884) | cliente com aceite, tag `lead-newsletter` | `TRANSFORM_INCLUDE_LEADS` |
+| Cashback disponível | `storeCreditAccountCredit` com a mesma expiração | saldo = `value − used` (confere com os débitos) |
+| Cupom ativo e vigente | desconto por código | inativos e vencidos não migram (`TRANSFORM_INCLUDE_INACTIVE_DISCOUNTS`) |
+| Frete grátis automático (3) | checklist manual | na Shopify é taxa de frete |
+| Posts | um blog, categoria vira tag | `/categoria` → `/blogs/blog/tagged/categoria` |
+| Privacidade, trocas, entrega | políticas da loja | |
+| Hotsites (23) | páginas com HTML gerado do editor visual | revisar o visual; `media://` vira URL do CDN |
+| Menus | itens tipados (coleção, página, política, blog) | |
+| 110 URLs antigas + 31 redirects da Bagy | `urlRedirectCreate` | destinos `bagypro.com` reescritos; 3 produtos renomeados achados por similaridade |
+| Links internos no HTML | reescritos direto para a URL nova | 58 links, sem salto de redirect |
+
+**Pedidos** — reescritos sobre o formato real; substituem o mapeamento dos mocks:
+
+| Ponto | Regra |
+|---|---|
+| Desconto | derivado do total (`subtotal + frete − total`): o `discount` da Bagy arredonda o Pix de outro jeito e fica 1 centavo acima em 177 pedidos |
+| Código de desconto | cupom + cashback + Pix somados num só (`VIP20+PIX`) — limite de um por pedido |
+| Pagamento | `approved`→PAID, `refunded`→REFUNDED (venda + estorno), `denied`→VOIDED, `expired`→EXPIRED, `pending`→PENDING |
+| Itens | ligados à variante real (6.490 de 6.490) |
+| Envio | `shipped`/`delivered` com rastreio e transportadora normalizada. **NF-e emitida sem envio registrado há mais de 30 dias → enviado, sem rastreio** (1.458 pedidos; `TRANSFORM_FULFILL_INVOICED_AFTER_DAYS`) |
+| Cancelados (282) | pós-ação `orderCancel`, sem devolver estoque e sem notificar |
+| Arquivados (16) | `closedAt` |
+| Número do pedido | código da Bagy, ex. `#17309030526534` (`TRANSFORM_ORDER_NAME_FROM_CODE`) |
+| CPF/CNPJ | pós-ação `orderUpdate` com `TAX_CREDENTIAL_BR` |
+| Informações adicionais | até 35 atributos: documento, NF-e, UTM, dispositivo, pagamento, frete, endereço |
+| Nota | histórico de status da Bagy |
+| Horário | `-03:00` — confirmado comparando com o Pagar.me, que grava as mesmas transações em UTC |
+
+### Antes da carga
+
+1. Ler `data/shopify/checklist_manual.md`.
+2. Instalar o app na loja de destino com os escopos do checklist. O app de teste
+   atual **não tem** os de produtos, conteúdo, páginas, navegação, descontos,
+   publicações, políticas e crédito de loja.
+3. Obter a aprovação de Protected Customer Data.
+
+---
+
+## Fase 3 — Carga de pedidos (testada com mocks)
+
+Scripts em Python para importar pedidos na Shopify via **Admin GraphQL API**,
+usando a mutation `orderCreate`. Os 15 pedidos de teste foram criados na loja
+`turbo-starter.myshopify.com`, confirmados pela tag `bagy-import`.
 
 ---
 
