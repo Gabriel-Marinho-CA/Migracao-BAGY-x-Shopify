@@ -6,6 +6,24 @@ Selecoes minimas: o ID criado (para resolver as refs) e os userErrors.
 """
 
 DOCUMENTS = {
+    "metaobjectDefinitionCreate": """mutation MetaobjectDefinitionCreate($definition: MetaobjectDefinitionCreateInput!) {
+  metaobjectDefinitionCreate(definition: $definition) {
+    metaobjectDefinition { id type }
+    userErrors { field message code }
+  }
+}""",
+    "metaobjectUpsert": """mutation MetaobjectUpsert($handle: MetaobjectHandleInput!, $metaobject: MetaobjectUpsertInput!) {
+  metaobjectUpsert(handle: $handle, metaobject: $metaobject) {
+    metaobject { id handle }
+    userErrors { field message code }
+  }
+}""",
+    "fileCreate": """mutation FileCreate($files: [FileCreateInput!]!) {
+  fileCreate(files: $files) {
+    files { id fileStatus alt }
+    userErrors { field message code }
+  }
+}""",
     "metafieldDefinitionCreate": """mutation MetafieldDefinitionCreate($definition: MetafieldDefinitionInput!) {
   metafieldDefinitionCreate(definition: $definition) {
     createdDefinition { id namespace key }

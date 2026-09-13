@@ -370,6 +370,113 @@ def test_content() -> None:
             check(f"schema ok: {payload.source_key}", not errors, errors[:3])
 
 
+def test_product_content() -> None:
+    print("\nConteudo dos hotsites de produto (metaobjetos)\n")
+    import json
+
+    from bagy_transform.entities import catalog, product_content
+    from bagy_transform.richtext import html_to_rich_text, nutrition_table
+
+    rich = json.loads(html_to_rich_text('<p>Porção: <b>10 g</b></p><ul class="x"><li>Um</li>'
+                                        '<li>Dois <a href="/p">link</a></li></ul><h2>Dicas</h2><style>.a{}</style>'))
+    kinds = [child["type"] for child in rich["children"]]
+    check("rich text: paragrafo com negrito, lista, titulo; style some",
+          kinds == ["paragraph", "list", "heading"]
+          and rich["children"][0]["children"][1] == {"type": "text", "value": "10 g", "bold": True}, rich)
+    check("rich text: link dentro do item da lista",
+          rich["children"][1]["children"][1]["children"][1]["type"] == "link", rich["children"][1])
+
+    table = nutrition_table('<br><p>Porções por embalagem: 40 <br>Porção: 5g (Uma colher de chá)</p><table><thead>'
+                            '<tr><th></th><th>100g</th><th>5g</th><th>%VD*</th></tr></thead><tbody><tr>'
+                            '<td>Valor Energ&eacute;tico (kcal)</td><td>40</td><td>2</td><td>0</td></tr></tbody>'
+                            '</table><p class="nota">*%VD com base<br>Ingredientes: <b>Guaraná</b>.</p>'
+                            '<style>.t{}</style>')
+    check("tabela nutricional: colunas, linhas, porcao, porcoes e observacao",
+          table["colunas"] == ["100g", "5g", "%VD*"]
+          and table["linhas"] == [{"nutriente": "Valor Energético (kcal)", "valores": ["40", "2", "0"]}]
+          and table["porcao"] == "5g (Uma colher de chá)" and table["porcoes_por_embalagem"] == "40"
+          and "Ingredientes: Guaraná." in (table["observacao"] or ""), table)
+
+    hotsite = {"id": 40, "slug": "guarana-pdp", "name": "Guarana PDP", "active": True, "content": {
+        "content_for_index": ["a", "b", "c", "d", "e"],
+        "sections": {
+            "a": {"type": "image-text", "blocks": [
+                {"settings": {"title": "Tabela Nutricional", "text": "<p>Porção: 5g</p><table><tr><th></th>"
+                              "<th>100g</th></tr><tr><td>Sódio (mg)</td><td>3</td></tr></table>"}},
+                {"settings": {"title": "COMO CONSUMIR", "text": "<ul><li>5g por dia</li></ul>"}}]},
+            "b": {"type": "image-text", "blocks": [
+                {"settings": {"title": "Ingredientes<br><br>", "text": "<p>100% guaraná</p>"}},
+                {"settings": {"title": "Insira um título", "text": "Insira um subtítulo"}}]},
+            "c": {"type": "banners-commercial", "blocks": [
+                {"settings": {"image": {"src": "media://files/selo-vegan.jpg?v=1"}}},
+                {"settings": {"title": "Peso líquido", "description": "225g", "image": {"src": None}}}]},
+            "d": {"type": "reviews", "blocks": [
+                {"settings": {"client": "Carla M.", "description": "Muita energia", "star_rating": "6",
+                              "image": {"src": "media://files/carla.jpg"}}}]},
+            "e": {"type": "image-text", "blocks": [
+                {"settings": {"title": "O que é?", "text": "<p>Livre</p>", "image": {"src": "media://files/x.jpg"}}}]},
+        }}}
+    data = {
+        "products": [{"id": 8, "slug": "guarana-250g", "name": "Guaraná 250g", "active": True, "hotsite_id": 40},
+                     {"id": 7, "slug": "guarana-100g", "name": "Guaraná 100g", "active": True, "hotsite_id": 40}],
+        "hotsites": [hotsite], "pages": [], "features": [], "categories": [], "brands": [], "posts": [],
+        "post_categories": [], "redirects": [],
+        "menus": [{"id": 1, "name": "M", "handle": "m", "values": [
+            {"active": True, "menu_type": "hotsite", "hotsite_id": 40, "name": "Guaraná"}]}],
+    }
+    src = FakeSource(data)
+    built = product_content.build(src, SETTINGS)
+    contents = built["product_content"]
+    keys = [value["key"] for value in contents[0].variables["metafields"]]
+    check("um metafieldsSet por produto do hotsite, com os 6 campos",
+          len(contents) == 2 and keys == ["tabela_nutricional", "modo_de_uso", "ingredientes", "selos",
+                                          "especificacoes", "depoimentos"]
+          and contents[0].variables["metafields"][0]["ownerId"] == "bagy-ref:product:7", (len(contents), keys))
+    types = sorted(p.variables["handle"]["type"] for p in built["metaobject"])
+    check("metaobjetos: tabela, especificacoes e depoimentos (selo nao e mais metaobjeto; placeholder fora)",
+          types == ["depoimentos", "especificacoes", "tabela_nutricional"] and len(built["file"]) == 2, types)
+    by_type = {p.variables["handle"]["type"]: {f["key"]: f["value"] for f in p.variables["metaobject"]["fields"]}
+               for p in built["metaobject"]}
+    check("tabela: linhas como lista de texto 'Nutriente | valor'",
+          json.loads(by_type["tabela_nutricional"]["linhas"]) == ["Sódio (mg) | 3"], by_type["tabela_nutricional"])
+    check("especificacoes em listas paralelas (titulos e conteudos)",
+          json.loads(by_type["especificacoes"]["titulos"]) == ["Peso líquido"]
+          and json.loads(by_type["especificacoes"]["conteudos"]) == ["225g"], by_type["especificacoes"])
+    reviews = by_type["depoimentos"]
+    check("depoimentos em listas: clientes, textos, notas (6 vira 5, com aviso) e fotos",
+          json.loads(reviews["clientes"]) == ["Carla M."] and json.loads(reviews["textos"]) == ["Muita energia"]
+          and json.loads(reviews["notas"])[0]["value"] == "5.0"
+          and json.loads(reviews["fotos"])[0].startswith("bagy-ref:file:")
+          and any("acima de 5" in w for w in contents[0].warnings), reviews)
+    seals = next(value for value in contents[0].variables["metafields"] if value["key"] == "selos")
+    check("selos: lista de imagens direto no produto",
+          seals["type"] == "list.file_reference" and len(json.loads(seals["value"])) == 1
+          and json.loads(seals["value"])[0].startswith("bagy-ref:file:"), seals)
+    check("secao livre avisada para o tema", any("ficam para o tema" in w for w in contents[0].warnings))
+    check("hotsite de produto nao vira pagina", content.hotsite_pages(src, SETTINGS)[0].status == "skipped")
+    check("URL antiga do hotsite leva ao produto (o primeiro ativo)",
+          content.path_map(src, SETTINGS).get("/guarana-pdp") == "/products/guarana-100g")
+    menu_item = content.menus(src, SETTINGS, content.path_map(src, SETTINGS))[0].variables["items"][0]
+    check("menu que apontava para o hotsite aponta para o produto",
+          menu_item["type"] == "PRODUCT" and menu_item["resourceId"] == "bagy-ref:product:7", menu_item)
+    definitions = {p.source_key: p for p in catalog.metafield_definitions(src)}
+    selos = definitions["product.custom.selos"].variables["definition"]
+    reviews_definition = definitions["product.custom.depoimentos"].variables["definition"]
+    check("definicoes do produto: selos lista de imagens; depoimentos valida pelo ID da definicao do metaobjeto; "
+          "conteudo_pagina saiu",
+          selos["type"] == "list.file_reference"
+          and selos["validations"] == [{"name": "file_type_options", "value": '["Image"]'}]
+          and reviews_definition["type"] == "metaobject_reference"
+          and reviews_definition["validations"] == [{"name": "metaobject_definition_id",
+                                                     "value": "bagy-ref:metaobject_definition:depoimentos"}]
+          and "product.custom.conteudo_pagina" not in definitions, (selos, reviews_definition))
+    for payload in [*built["metaobject_definition"], *built["metaobject"], *built["file"], *contents,
+                    definitions["product.custom.selos"], definitions["product.custom.depoimentos"],
+                    definitions["product.custom.modo_de_uso"]]:
+        errors = schema_errors(payload)
+        check(f"schema ok: {payload.source_key}", not errors, errors[:3])
+
+
 def test_schema_validator() -> None:
     print("\nValidador de schema\n")
     errors, _ = VALIDATOR.validate("menuCreate", {"handle": "x", "items": []})
@@ -422,6 +529,7 @@ def main() -> int:
     test_store_credits()
     test_discounts()
     test_content()
+    test_product_content()
     test_links_and_approximate_redirects()
     print("\n" + ("Tudo passou." if not FAILURES else f"{FAILURES} falha(s)."))
     return 1 if FAILURES else 0

@@ -20,7 +20,7 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 
 from .config import get_settings
-from .entities import catalog, content, customers, manual, marketing, orders
+from .entities import catalog, content, customers, manual, marketing, orders, product_content
 from .mutations import DOCUMENTS
 from .schema import SchemaValidator
 from .source import Source
@@ -28,9 +28,13 @@ from .store import TransformStore
 
 # Ordem = ordem de carga (dependencias primeiro).
 ENTITIES = {
+    "metaobject_definition": "Definicoes de metaobjeto",
     "metafield_definition": "Definicoes de metafield",
     "collection": "Colecoes (categorias)",
+    "file": "Arquivos (imagens de selos e depoimentos)",
+    "metaobject": "Metaobjetos (tabela, selos, especificacoes, depoimentos)",
     "product": "Produtos",
+    "product_content": "Conteudo dos hotsites nos produtos",
     "customer": "Clientes",
     "lead": "Leads da newsletter",
     "store_credit": "Credito (cashback)",
@@ -45,7 +49,8 @@ ENTITIES = {
 }
 
 GROUPS = {
-    "catalogo": ["metafield_definition", "collection", "product"],
+    "catalogo": ["metaobject_definition", "metafield_definition", "collection", "file", "metaobject", "product",
+                 "product_content"],
     "clientes": ["customer", "lead", "store_credit"],
     "marketing": ["discount"],
     "conteudo": ["blog", "article", "policy", "page", "menu", "redirect"],
@@ -99,9 +104,14 @@ def build_all(src, settings, reference) -> tuple:
     # politicas e paginas passam a apontar direto para o caminho novo.
     mapping = content.path_map(src, settings)
     payloads = []
+    rich = product_content.build(src, settings)
+    payloads += rich["metaobject_definition"]
     payloads += catalog.metafield_definitions(src)
     payloads += catalog.collections(src)
+    payloads += rich["file"]
+    payloads += rich["metaobject"]
     payloads += catalog.products(src, mapping)
+    payloads += rich["product_content"]
     customer_payloads, used_phones = customers.customers(src, settings)
     payloads += customer_payloads
     payloads += customers.leads(src, settings, used_phones)

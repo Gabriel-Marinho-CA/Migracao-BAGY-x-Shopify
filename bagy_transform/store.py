@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS payloads (
     schema_errors TEXT,
     hash          TEXT,
     run_id        INTEGER NOT NULL,
+    meta          TEXT,
     PRIMARY KEY (entity, source_key)
 );
 CREATE INDEX IF NOT EXISTS idx_payloads_status ON payloads (entity, status);
@@ -61,6 +62,10 @@ class TransformStore:
         self.conn = sqlite3.connect(str(self.path))
         self.conn.execute("PRAGMA journal_mode=WAL")
         self.conn.executescript(SCHEMA)
+        # Bancos gerados antes da coluna meta (total do pedido, usado no diff).
+        columns = {row[1] for row in self.conn.execute("PRAGMA table_info(payloads)")}
+        if "meta" not in columns:
+            self.conn.execute("ALTER TABLE payloads ADD COLUMN meta TEXT")
         self.conn.commit()
 
     def close(self) -> None:
@@ -87,11 +92,12 @@ class TransformStore:
                 self.conn.execute(
                     "INSERT INTO payloads (entity, source_key, position, status, skip_reason, "
                     "mutation, variables, post_actions, provides, depends_on, warnings, "
-                    "schema_errors, hash, run_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    "schema_errors, hash, run_id, meta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     (entity, payload.source_key, position, payload.status, payload.skip_reason,
                      payload.mutation,
                      _json(payload.variables) if payload.mutation else None,
                      _json(payload.post_actions), _json(payload.provides),
                      _json(payload.depends_on), _json(payload.warnings),
                      _json(payload.schema_errors + [f"aviso: {n}" for n in payload.schema_notices]),
-                     hashlib.sha256(body.encode("utf-8")).hexdigest(), run_id))
+                     hashlib.sha256(body.encode("utf-8")).hexdigest(), run_id,
+                     _json(payload.meta)))

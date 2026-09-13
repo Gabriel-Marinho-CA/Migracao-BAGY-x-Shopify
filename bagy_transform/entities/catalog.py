@@ -10,12 +10,11 @@ from ..common import (
     rewrite_links, slugify, strip_html, truncate,
 )
 from ..model import Payload, publish_action, skipped
+from .product_content import PRODUCT_CONTENT_FIELDS
 
 PRODUCT_FIELDS = (
     ("descricao_curta", "Descrição curta", "multi_line_text_field",
      "Descrição curta do produto na Bagy"),
-    ("conteudo_pagina", "Conteúdo extra", "page_reference",
-     "Página com o conteúdo rico que acompanhava o produto na Bagy (hotsite)"),
 )
 
 CUSTOMER_FIELDS = (
@@ -42,13 +41,13 @@ def definition_ref(owner: str, key: str) -> str:
 def metafield_definitions(src) -> list:
     payloads = []
 
-    def add(owner: str, key: str, name: str, type_: str, description: str) -> None:
+    def add(owner: str, key: str, name: str, type_: str, description: str, validations=None) -> None:
         source_key = f"{owner.lower()}.custom.{key}"
         payloads.append(Payload(
             "metafield_definition", source_key, "metafieldDefinitionCreate",
-            {"definition": {"ownerType": owner, "namespace": "custom", "key": key,
-                            "name": name, "description": description, "type": type_,
-                            "pin": True}},
+            {"definition": compact({"ownerType": owner, "namespace": "custom", "key": key,
+                                    "name": name, "description": description, "type": type_,
+                                    "pin": True, "validations": validations})},
             provides=[ref("metafield_definition", source_key)]))
 
     for feature in src.all("features"):
@@ -56,6 +55,11 @@ def metafield_definitions(src) -> list:
             "list.single_line_text_field", "Característica do produto na Bagy")
     for key, name, type_, description in PRODUCT_FIELDS:
         add("PRODUCT", key, name, type_, description)
+    # Conteudo dos hotsites de produto (product_content.py). Referencia a
+    # metaobjeto valida pelo tipo do metaobjeto; lista de imagens, pelo tipo de arquivo.
+    for key, name, type_, validations, description in PRODUCT_CONTENT_FIELDS:
+        add("PRODUCT", key, name, type_, description,
+            [{"name": v_name, "value": v_value} for v_name, v_value in validations] or None)
     for key, name, type_, description in CUSTOMER_FIELDS:
         add("CUSTOMER", key, name, type_, description)
     return payloads
@@ -168,13 +172,10 @@ def products(src, mapping: dict | None = None) -> list:
                                         short_description))
             payload.extra_depends.append(definition_ref("PRODUCT", "descricao_curta"))
 
-        hotsite_id = product.get("hotsite_id")
-        if hotsite_id and hotsite_id in active_hotsites:
-            metafields.append(metafield("custom", "conteudo_pagina", "page_reference",
-                                        ref("page", f"hotsite:{hotsite_id}")))
-            payload.extra_depends.append(definition_ref("PRODUCT", "conteudo_pagina"))
-        elif hotsite_id:
-            payload.warn("hotsite ligado ao produto esta inativo - vinculo nao migrado")
+        # O hotsite do produto vira metaobjetos/metafields em product_content.py
+        # (payload separado, com metafieldsSet: nao mexe no produto ja carregado).
+        if product.get("hotsite_id") and product["hotsite_id"] not in active_hotsites:
+            payload.warn("hotsite ligado ao produto esta inativo - conteudo nao migrado")
 
         metafields.append(metafield("bagy", "product_id", "number_integer", product["id"]))
 

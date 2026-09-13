@@ -70,11 +70,12 @@ def checklist(src, settings, grouped: dict, context: dict) -> str:
         item(f"Revisar o visual das {len(hotsites)} páginas convertidas dos hotsites (editor visual da Bagy).")
         for warning in unsupported:
             item(f"Hotsites: {warning}.")
-    linked = sum(1 for p in grouped.get("product", [])
-                 if any(m.get("key") == "conteudo_pagina" for m in (p.variables.get("input") or {}).get("metafields") or []))
+    linked = sum(1 for p in grouped.get("product_content", []) if p.status != "skipped")
     if linked:
-        item(f"Exibir no template de produto o metafield `custom.conteudo_pagina` ({linked} produto(s) "
-             "tinham um hotsite com conteúdo rico).")
+        item(f"Exibir no template de produto o conteúdo dos hotsites ({linked} produto(s)): metafields "
+             "`custom.tabela_nutricional`, `custom.modo_de_uso`, `custom.ingredientes`, `custom.selos`, "
+             "`custom.especificacoes` e `custom.depoimentos` (metaobjetos). As seções livres dos hotsites "
+             "(imagem + texto, banners) ficam para o tema.")
     item("Configurar filtros no app Search & Discovery com os metafields de características "
          "(a Bagy usava como filtro na barra lateral).")
 

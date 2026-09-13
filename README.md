@@ -7,7 +7,8 @@ redirecionamentos e tudo mais que a API da Bagy expõe.
 |---|---|---|
 | **1. Extração** | Ler tudo da Bagy e guardar local (`bagy_extract/`, `run_extraction.py`) | pronta |
 | 2. Transformação | Converter os dados extraídos em payloads da Shopify (`bagy_transform/`, `run_transform.py`) | pronta |
-| 3. Carga | Enviar para a Shopify resolvendo as referências | a fazer (carga de pedidos testada com mocks em `bagy2shopify/`) |
+| 2.5 Snapshot + diff | Ler o que já existe na loja de destino e marcar cada payload como criar, atualizar, já existe, conflito ou não conferido (`shopify_snapshot/`, `run_shopify_snapshot.py`) | pronto, rodando na MAD 4 Life |
+| 3. Carga | Enviar para a Shopify resolvendo as referências (`shopify_load/`, `run_load.py`) | em andamento: piloto, catálogo e conteúdo dos produtos carregados |
 
 ---
 
@@ -182,7 +183,7 @@ no console (pode ser dado pessoal).
 |---|---|---|
 | Produto + variação (todos simples) | `productSet` por handle, variante padrão | preço do produto, estoque (`balance`), NCM → HS code, peso em kg, imagens por URL |
 | Características (5) | metafields `list.single_line_text_field` fixados | para filtros no Search & Discovery |
-| Hotsite ligado ao produto (15) | metafield `custom.conteudo_pagina` | referência à página gerada |
+| Hotsite ligado ao produto (12 hotsites, 15 produtos) | metaobjetos + metafields do produto | tabela nutricional, modo de uso, ingredientes, selos, especificações, depoimentos — ver "Conteúdo dos hotsites de produto" na fase 3 |
 | Categorias | coleções, ordenação por mais vendidos | a hierarquia fica nos menus |
 | Marca | `vendor` | "Mad 4 Life" e "Mad4life" são duas grafias |
 | Cliente | `customerSet` por e-mail + `metafieldsSet` + aceite de marketing | o `customerSet` não aceita metafields nem consentimento |
@@ -194,7 +195,7 @@ no console (pode ser dado pessoal).
 | Frete grátis automático (3) | checklist manual | na Shopify é taxa de frete |
 | Posts | um blog, categoria vira tag | `/categoria` → `/blogs/blog/tagged/categoria` |
 | Privacidade, trocas, entrega | políticas da loja | |
-| Hotsites (23) | páginas com HTML gerado do editor visual | revisar o visual; `media://` vira URL do CDN |
+| Hotsites institucionais (11 ativos) | páginas com HTML gerado do editor visual | revisar o visual; `media://` vira URL do CDN. Hotsites de produto não viram página (ver linha acima) |
 | Menus | itens tipados (coleção, página, política, blog) | |
 | 110 URLs antigas + 31 redirects da Bagy | `urlRedirectCreate` | destinos `bagypro.com` reescritos; 3 produtos renomeados achados por similaridade |
 | Links internos no HTML | reescritos direto para a URL nova | 58 links, sem salto de redirect |
@@ -223,10 +224,200 @@ no console (pode ser dado pessoal).
    atual **não tem** os de produtos, conteúdo, páginas, navegação, descontos,
    publicações, políticas e crédito de loja.
 3. Obter a aprovação de Protected Customer Data.
+4. Rodar `run_shopify_snapshot.py` e revisar conflitos e não conferidos (a loja
+   já teve uma tentativa de migração — ver abaixo).
 
 ---
 
-## Fase 3 — Carga de pedidos (testada com mocks)
+## Fase 2.5 — Snapshot da loja de destino e diff
+
+**`run_shopify_snapshot.py`** — dá play aqui antes da carga. A loja de destino já
+passou por uma tentativa de migração: este passo lê o que existe lá e decide,
+payload a payload, o que a carga pode criar sem duplicar. **Só leitura na
+Shopify**: nada é criado, alterado ou apagado.
+
+```bash
+python run_shopify_snapshot.py                  # lê a loja e faz o diff
+python run_shopify_snapshot.py --only pedidos   # grupos: catalogo, clientes, marketing, conteudo, pedidos
+python run_shopify_snapshot.py --diff-only      # refaz só o diff, sem rede (ex.: depois de run_transform.py)
+python run_shopify_snapshot.py --list           # o que já foi lido e quando
+python tools/test_shopify_diff.py               # testes sem rede + consultas validadas no schema
+```
+
+**Credencial:** `SHOPIFY_CLIENT_ID` e `SHOPIFY_CLIENT_SECRET` no `.env` (o
+*Client id* e a *chave secreta* `shpss_` do app), e depende da loja:
+
+| Loja | Como sai o token |
+|---|---|
+| **De cliente** (fora da organização do app — é o caso da `igna-8078`) | **`run_shopify_auth.py`**, uma vez: autoriza pelo navegador (authorization code grant), salva em `state/shopify_oauth.json` e já testa lendo o pedido mais recente. Os scripts renovam sozinhos pelo refresh token (90 dias). Client credentials aqui responde `Client credentials cannot be performed on this shop`. |
+| Da mesma organização do app (dev store do Dev Dashboard) | client credentials com o par do `.env`, pedido em memória a cada rodada (vale 24 h — o `shpca_` fixo dava 401 por isso) |
+
+Para o `run_shopify_auth.py`: no Dev Dashboard, a versão ativa do app precisa ter
+`http://localhost:3456/callback` em *Allowed redirection URL(s)*, os escopos de
+`SHOPIFY_SCOPES` e distribuição que permita instalar na loja. `--renew` autoriza
+de novo (ex.: depois de adicionar escopos).
+
+### Ações
+
+| Ação | Quando | O que a carga faz |
+|---|---|---|
+| `create` | nada correspondente na loja | cria |
+| `update` | já existe e a mutation é upsert (`productSet`, `customerSet`, `shopPolicyUpdate`) | atualiza **pelo ID** do registro existente |
+| `skip` | já existe | não recria; as referências apontam para o existente (`ref_map`) |
+| `conflict` | mais de um candidato, ou dados que se contradizem | **não envia** — revisar |
+| `unverified` | não deu para conferir (sem permissão de leitura, ou pedido sem `read_all_orders`) | **não envia** |
+
+### Como casa
+
+| Entidade | Chaves fortes (em ordem) | Fracas (marcadas "conferir") |
+|---|---|---|
+| Produto | `bagy.product_id`, handle, SKU | título |
+| Coleção | `bagy.category_id`, handle | título |
+| Cliente / lead | `bagy.customer_id`, e-mail | — |
+| Crédito | saldo atual do cliente casado: igual → `skip`; zero → `create`; diferente → `conflict` | — |
+| Desconto | código (sem diferenciar maiúsculas) | — |
+| Blog, página, menu | handle | título |
+| Artigo | blog casado + handle | handle em outro blog, título |
+| Política | tipo; texto igual → `skip`, diferente → `update` | — |
+| Redirect | caminho; destino diferente → `conflict` | — |
+| Pedido | `sourceIdentifier`, tag `bagy-id-`, código da Bagy em qualquer campo (nome, tags, nota, atributos) | data (minuto, UTC) + total |
+| Definição de metafield | tipo de dono + namespace + key; tipo diferente → `conflict` | — |
+
+- Chave fraca só vale para registro que nenhum payload casou por chave forte.
+- Registro que já carrega o ID de **outro** produto, categoria ou cliente da Bagy
+  nunca casa. Se ele ocupa o handle do payload, vira `conflict`: atualizar por
+  aquele handle mexeria no registro errado.
+- Casou por SKU ou título com handle diferente: nota "a carga deve usar
+  identifier.id".
+- Duplicatas da tentativa anterior (outro registro com o mesmo SKU, título...)
+  aparecem na nota e em `candidates`. **Nada é apagado.**
+- Telefone do cliente já usado por outro cliente na loja: nota para enviar sem
+  telefone (a Shopify recusaria).
+- **Pedidos:** sem `read_all_orders` a Shopify só mostra os últimos 60 dias, então
+  pedido sem par fica `unverified` — a não ser que a loja tenha menos de 60 dias.
+
+### O que é lido
+
+| Recurso | Método | Escopo de leitura |
+|---|---|---|
+| Loja e escopos do app | 1 chamada | — |
+| Produtos + variantes, clientes + saldo de crédito, pedidos | **bulk operation** (JSONL, sem limite de custo) | `read_products`; `read_customers`; `read_orders` + `read_all_orders` — clientes e pedidos também pedem Protected Customer Data |
+| Coleções, definições de metafield, descontos, blogs, artigos, páginas, menus, redirects, locais, canais | paginado | `read_products`, `read_discounts`, `read_content`, `read_online_store_pages`, `read_online_store_navigation`, `read_locations`, `read_publications` |
+| Políticas | 1 chamada | `read_legal_policies` |
+
+Recurso sem permissão não derruba a rodada: fica `SEM PERMISSAO` no `--list` e
+os payloads dele saem `unverified`. Se o script cair no meio de uma exportação
+em massa, a próxima rodada retoma a mesma. O JSONL é baixado da URL assinada da
+Shopify **sem** o token.
+
+### Saída
+
+| Arquivo | Conteúdo |
+|---|---|
+| `data/shopify_existing.sqlite` | O snapshot (registros normalizados, estado por recurso, escopos). **Tem e-mail e telefone** |
+| `data/shopify.sqlite` → `existing` | Uma linha por payload pronto: ação, ID na Shopify, chave que casou, candidatos, notas, hash do payload |
+| `data/shopify.sqlite` → `ref_map` | `bagy-ref` → ID na Shopify do que já existe (inclui local padrão e canal Online Store) |
+| `data/shopify/_diff.json` | Contagens por ação, chaves usadas, o que está na Shopify sem par nos payloads |
+| `data/shopify/diff_revisar.jsonl` | Conflitos, não conferidos, casamentos fracos e casos com nota |
+
+As duas tabelas são refeitas a cada diff. Depois de rodar `run_transform.py` de
+novo, rode `--diff-only` (o `payload_hash` mostra se o diff ficou velho).
+
+---
+
+## Fase 3 — Carga (`run_load.py`)
+
+**`run_load.py`** — dá play aqui. **Escreve na loja.** Sem argumentos só mostra o
+estado de cada entidade (prontos, resultado do diff, o que já foi carregado).
+
+```bash
+python run_shopify_auth.py                 # 1x por loja: autoriza o app pelo navegador (token em state/)
+python run_shopify_snapshot.py             # antes de cada rodada: lê a loja e refaz o diff
+python run_load.py                         # estado, sem enviar nada
+python run_load.py --pilot [--dry-run]     # piloto: poucos pedidos com casos diferentes + dependências
+python run_load.py --only product          # entidades ou grupos; dependências pendentes entram sozinhas
+python run_load.py --all                   # tudo o que falta, na ordem de carga
+python run_load.py --images                # imagens de produto que estão na loja sem imagem (não duplica)
+python run_load.py --cleanup [--dry-run]   # apaga páginas/definições que a carga criou e a transformação não gera mais
+python tools/test_load.py                  # testes sem rede
+```
+
+- **Segue o diff:** só envia `create`/`update`. `conflict` e `unverified` ficam
+  bloqueados, e diff de outra loja ou desatualizado (hash do payload diferente)
+  impede a rodada.
+- **Ordem:** definições de metaobjeto → definições de metafield → políticas,
+  blog, páginas, coleções → arquivos e metaobjetos → produtos → conteúdo dos
+  produtos → clientes, leads, cashback → pedidos → descontos, artigos, menus,
+  redirecionamentos. `--only` inclui sozinho as dependências referenciadas que
+  ainda não subiram (ex.: `--only product` traz coleções e páginas).
+- **Referências:** cada `bagy-ref` vira o ID real, vindo do `ref_map` (o que já
+  existia) ou do `load_refs` (o que a carga criou).
+- **Retomada:** progresso item a item em `data/shopify.sqlite` → `load_items`.
+  Rodar de novo continua de onde parou, inclusive nas pós-ações. Item
+  `incerto` (pode ter sido criado sem a resposta chegar) nunca é reenviado até
+  um novo snapshot conferir.
+- **Sem e-mail para cliente:** recibo, aviso de envio e aviso de crédito
+  desligados; pedidos não mexem no estoque.
+- **Imagens de produto:** vão no `productSet` e a Shopify baixa do CDN da Bagy
+  (`LOAD_PRODUCT_IMAGES=1`). O CDN entrega WebP, então a loja guarda `.webp`.
+- Erros da API em `logs/errors.jsonl`.
+
+### Conteúdo dos hotsites de produto → metaobjetos
+
+Na Bagy o produto aponta para um hotsite do editor visual. Só o que tem
+estrutura vira dado (`bagy_transform/entities/product_content.py`). As seções
+livres (imagem + texto, banners, carrossel) ficam para o tema novo.
+
+Pensado para o tema fazer loop em Liquid: um metaobjeto por produto, com listas
+paralelas (o item `i` de cada lista forma um registro).
+
+| Metaobjeto | Campos | Campo do produto |
+|---|---|---|
+| `tabela_nutricional` | nome, porção, porções por embalagem, `colunas[]`, `linhas[]` no padrão `Nutriente \| valor \| valor \| %VD`, observação | `custom.tabela_nutricional` |
+| `especificacoes` | nome, `titulos[]`, `conteudos[]` | `custom.especificacoes` |
+| `depoimentos` | nome, `clientes[]`, `textos[]`, `notas[]` (1 a 5), `fotos[]` | `custom.depoimentos` |
+| — | lista de imagens (Files) | `custom.selos` |
+| — | texto rico | `custom.modo_de_uso`, `custom.ingredientes` |
+
+```liquid
+{% assign d = product.metafields.custom.depoimentos.value %}
+{% for cliente in d.clientes.value %}
+  {{ cliente }}: {{ d.textos.value[forloop.index0] }} ({{ d.notas.value[forloop.index0].rating }})
+{% endfor %}
+{% for linha in product.metafields.custom.tabela_nutricional.value.linhas.value %}
+  {% assign colunas = linha | split: ' | ' %}
+{% endfor %}
+```
+
+- Os campos do produto validam o metaobjeto pelo **ID da definição** (a Shopify
+  recusa criar só com o tipo). Se a definição do metaobjeto for recriada, o
+  `--cleanup` recria os campos que dependem dela, em cascata.
+- Conteúdo idêntico entre produtos vira uma entrada só (`metaobjectUpsert` por
+  handle), ex.: o guaraná 100g e 250g usam o mesmo hotsite.
+- Mudou o formato de uma definição que a carga criou? `run_shopify_snapshot.py`
+  → `run_load.py --cleanup` apaga as incompatíveis → a carga recria (e reenvia
+  metaobjetos e campos, que são upsert).
+- Nota 6 da Bagy vira 5 (a loja exibia 5 estrelas). Blocos de modelo do editor
+  ("Insira um título") e seções só com CSS não migram.
+- Produto sem conteúdo estruturado fica sem os campos, e o conteúdo vai como está
+  na Bagy (o hotsite da spirulina, por exemplo, tem os ingredientes do guaraná).
+- Hotsites de produto não viram página: a URL antiga redireciona para o produto e
+  o item de menu aponta para o produto. Os institucionais continuam páginas.
+
+### Estado na MAD 4 Life (13/09/2026)
+
+- Piloto conferido: 6 pedidos com os 12 casos (pago, estornado, cancelado,
+  enviado...), 6 clientes, 3 produtos e 1 cashback.
+- Catálogo: 32 produtos com imagens, 14 coleções, 17 definições de metafield.
+- Conteúdo dos hotsites: 4 definições de metaobjeto, 19 metaobjetos, 7 arquivos,
+  campos preenchidos em 8 produtos. As 12 páginas de hotsite de produto e o campo
+  `custom.conteudo_pagina` foram removidos com `--cleanup`.
+- Falta: clientes, leads, cashback, pedidos, políticas, blog e artigos, páginas
+  institucionais, descontos, menus e redirecionamentos.
+
+---
+
+## Carga legada de pedidos (testada com mocks)
 
 Scripts em Python para importar pedidos na Shopify via **Admin GraphQL API**,
 usando a mutation `orderCreate`. Os 15 pedidos de teste foram criados na loja

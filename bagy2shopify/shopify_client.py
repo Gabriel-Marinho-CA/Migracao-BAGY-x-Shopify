@@ -325,11 +325,17 @@ class ShopifyClient:
         max_retries: int = 5,
         timeout: int = 60,
         logger=None,
+        token_provider=None,
     ):
+        # token_provider: callable(force=False) -> token (ver bagy2shopify/auth.py).
+        # Com ele o token e pedido na hora e renovado sozinho quando expira.
+        self.token_provider = token_provider
+        if not admin_token and token_provider:
+            admin_token = token_provider()
         if not store_domain or not admin_token:
             raise ShopifyError(
                 "Faltam credenciais da Shopify. Defina SHOPIFY_STORE_DOMAIN e "
-                "SHOPIFY_ADMIN_TOKEN (token shpat_... de custom app)."
+                "SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET (ou SHOPIFY_ADMIN_TOKEN)."
             )
         self.url = f"https://{store_domain}/admin/api/{api_version}/graphql.json"
         self.max_retries = max_retries
@@ -340,6 +346,8 @@ class ShopifyClient:
         self.can_read_orders = True
         # X-Request-Id da ultima resposta: e o que o suporte da Shopify pede.
         self.last_request_id: str | None = None
+        # `extensions` da ultima resposta (custo da query e throttleStatus).
+        self.last_extensions: dict = {}
         self.session = requests.Session()
         self.session.headers.update({
             "X-Shopify-Access-Token": admin_token,
@@ -353,9 +361,13 @@ class ShopifyClient:
     def execute(self, query: str, variables: dict | None = None, *, throttled: bool = False) -> dict:
         payload = {"query": query, "variables": variables or {}}
         attempt = 0
+        refreshed = False
 
         while True:
             attempt += 1
+            if self.token_provider:
+                # O provider guarda o token e so vai na Shopify quando ele expira.
+                self.session.headers["X-Shopify-Access-Token"] = self.token_provider()
             if throttled:
                 waited = self.limiter.wait()
                 if waited:
@@ -386,6 +398,11 @@ class ShopifyClient:
                 continue
 
             if response.status_code == 401:
+                if self.token_provider and not refreshed:
+                    refreshed = True
+                    self.token_provider(force=True)
+                    self.log("    HTTP 401: token renovado, repetindo a chamada")
+                    continue
                 raise ShopifyError(
                     "HTTP 401: token invalido ou sem permissao. Confirme que e um "
                     "Admin API access token e nao a chave secreta (shpss_) do app.",
@@ -398,6 +415,7 @@ class ShopifyClient:
                 )
 
             body = response.json()
+            self.last_extensions = body.get("extensions") or {}
             errors = body.get("errors")
             if errors:
                 if self._is_throttled(errors):

@@ -128,14 +128,24 @@ def hotsite_handles(src) -> dict:
             for hotsite in src.all("hotsites")}
 
 
+def product_hotsite_targets(src) -> dict:
+    """hotsite_id -> produto que o representa (o primeiro ativo)."""
+    from .product_content import product_hotsites
+    return {hotsite_id: products[0] for hotsite_id, products in product_hotsites(src).items()}
+
+
 def hotsite_pages(src, settings, mapping: dict | None = None) -> list:
     shop_id = src.shop_id
     handles = hotsite_handles(src)
+    of_products = product_hotsite_targets(src)
     payloads = []
     for hotsite in src.all("hotsites"):
         key = f"hotsite:{hotsite['id']}"
         if not hotsite.get("active"):
             payloads.append(skipped("page", key, "hotsite inativo na Bagy"))
+            continue
+        if hotsite["id"] in of_products:
+            payloads.append(skipped("page", key, "hotsite de produto - o conteudo virou metaobjetos do produto"))
             continue
         body, warnings = render_hotsite(hotsite, shop_id)
         payload = Payload("page", key, "pageCreate", provides=[ref("page", key)], warnings=warnings)
@@ -347,8 +357,12 @@ def path_map(src, settings) -> dict:
         else:
             add(page["slug"], f"/pages/{page['slug']}")
     handles = hotsite_handles(src)
+    of_products = product_hotsite_targets(src)
     for hotsite in src.all("hotsites"):
-        if hotsite.get("active"):
+        if hotsite["id"] in of_products:
+            # Hotsite de produto nao vira pagina: a URL antiga leva ao produto.
+            add(hotsite["slug"], f"/products/{of_products[hotsite['id']]['slug']}")
+        elif hotsite.get("active"):
             add(hotsite["slug"], f"/pages/{handles[hotsite['id']]}")
     # Destino usado pelos redirects da propria Bagy.
     add("produtos", "/collections/all")
@@ -358,6 +372,7 @@ def path_map(src, settings) -> dict:
 def menus(src, settings, mapping: dict) -> list:
     pages_by_id = {page["id"]: page for page in src.all("pages")}
     active_hotsites = {hotsite["id"] for hotsite in src.all("hotsites") if hotsite.get("active")}
+    of_products = product_hotsite_targets(src)
     categories = {category["id"] for category in src.all("categories")}
     hosts = src.store_hosts
     payloads = []
@@ -381,6 +396,8 @@ def menus(src, settings, mapping: dict) -> list:
                     node = {"type": "BLOG", "resourceId": ref("blog", "main")}
                 else:
                     node = {"type": "PAGE", "resourceId": ref("page", f"page:{value['page_id']}")}
+            elif kind == "hotsite" and value.get("hotsite_id") in of_products:
+                node = {"type": "PRODUCT", "resourceId": ref("product", of_products[value["hotsite_id"]]["id"])}
             elif kind == "hotsite" and value.get("hotsite_id") in active_hotsites:
                 node = {"type": "PAGE", "resourceId": ref("page", f"hotsite:{value['hotsite_id']}")}
             else:
