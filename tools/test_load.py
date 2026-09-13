@@ -450,6 +450,28 @@ def test_metaobjects_and_cleanup(tmp: Path) -> None:
     load_store.close()
 
 
+def test_phone_rejected(tmp: Path) -> None:
+    print("\nTelefone recusado pela Shopify")
+    store, grouped = setup(tmp)
+    client = FakeClient()
+    client.fail["customerSet"] = [{"field": ["input", "phone"], "message": "Phone is invalid"}]
+    grouped["customer"][0].variables["input"]["phone"] = "+551188887777"
+    results = Loader(client, store, log=lambda *_: None).run({"customer": grouped["customer"]})
+    sent = calls_of(client, "customerSet")
+    row = store.items()[("customer", "customer:100")]
+    check("reenvia uma vez sem telefone e cria o cliente, com aviso",
+          len(sent) == 2 and "phone" not in json.dumps(sent[1]) and results["customer"]["criado"] == 1
+          and "telefone recusado" in (row["warnings"] or ""), (sent, dict(results), row))
+
+    client = FakeClient()
+    client.fail["orderCreate"] = [{"field": ["order", "email"], "message": "Email is invalid"}]
+    from shopify_load.loader import phone_only
+    check("erro que nao e de telefone nao dispara o reenvio",
+          not phone_only([{"field": ["order", "email"], "message": "Email is invalid"}])
+          and phone_only([{"field": ["order", "shippingAddress", "phone"], "message": "is invalid"}]))
+    store.close()
+
+
 def test_invalidate_values(tmp: Path) -> None:
     print("\nValores apagados junto com a definicao")
     from shopify_load.cleanup import invalidate_values
@@ -510,7 +532,7 @@ def test_documents(tmp: Path) -> None:
 def main() -> int:
     test_resolve()
     for test in (test_dry_run, test_pilot, test_load, test_resume_and_uncertain, test_media, test_dependencies,
-                 test_metaobjects_and_cleanup, test_invalidate_values, test_documents):
+                 test_metaobjects_and_cleanup, test_invalidate_values, test_phone_rejected, test_documents):
         with tempfile.TemporaryDirectory() as tmp:
             test(Path(tmp))
     print(f"\n{'TUDO OK' if FAILURES == 0 else f'{FAILURES} FALHA(S)'}")

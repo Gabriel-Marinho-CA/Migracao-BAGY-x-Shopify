@@ -141,13 +141,35 @@ def format_cnpj(cnpj: str) -> str:
     return cnpj or ""
 
 
+# DDDs brasileiros validos (Anatel).
+DDDS = {11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 27, 28, 31, 32, 33, 34, 35, 37, 38,
+        41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 53, 54, 55, 61, 62, 63, 64, 65, 66, 67, 68, 69,
+        71, 73, 74, 75, 77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97,
+        98, 99}
+
+
 def e164_br(number: str) -> str | None:
-    """Telefone brasileiro em E.164, que e o formato que a Shopify aceita."""
-    digits = re.sub(r"\D", "", number or "")
+    """Telefone brasileiro em E.164 (+55DDDNUMERO), so se for um numero valido.
+
+    A Shopify valida o telefone de verdade ("Phone is invalid"). Aqui:
+    * celular antigo, sem o 9 (DDD + 8 digitos comecando com 6-9): ganha o 9,
+      como na migracao das operadoras em 2016;
+    * fixo (DDD + 8 digitos comecando com 2-5) fica como esta;
+    * DDD inexistente, ou celular de 11 digitos que nao comeca com 9: None
+      (nao da para adivinhar - o numero original fica guardado no metafield).
+    """
+    digits = re.sub(r"\D", "", number or "").lstrip("0")
     if digits.startswith("55") and len(digits) in (12, 13):
-        return f"+{digits}"
-    if len(digits) in (10, 11):
-        return f"+55{digits}"
+        digits = digits[2:]
+    if len(digits) not in (10, 11) or int(digits[:2]) not in DDDS:
+        return None
+    ddd, local = digits[:2], digits[2:]
+    if len(local) == 9:
+        return f"+55{ddd}{local}" if local[0] == "9" else None
+    if local[0] in "6789":
+        return f"+55{ddd}9{local}"
+    if local[0] in "2345":
+        return f"+55{ddd}{local}"
     return None
 
 

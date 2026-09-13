@@ -477,6 +477,24 @@ def test_product_content() -> None:
         check(f"schema ok: {payload.source_key}", not errors, errors[:3])
 
 
+def test_phones() -> None:
+    print("\nTelefones (a Shopify valida o numero)\n")
+    from bagy2shopify.transform import e164_br
+
+    cases = {
+        "(11) 98888-7777": "+5511988887777",      # celular atual
+        "11 8888-7777": "+5511988887777",         # celular antigo sem o 9: ganha o 9
+        "+55 (21) 7777-6666": "+5521977776666",   # com codigo do pais, celular antigo
+        "011 3333-4444": "+551133334444",         # fixo com zero na frente
+        "(20) 98888-7777": None,                  # DDD inexistente
+        "(11) 38888-7777": None,                  # 11 digitos que nao comecam com 9
+        "8888-7777": None,                        # sem DDD
+        "": None,
+    }
+    for raw, expected in cases.items():
+        check(f"telefone {raw!r} -> {expected}", e164_br(raw) == expected, e164_br(raw))
+
+
 def test_schema_validator() -> None:
     print("\nValidador de schema\n")
     errors, _ = VALIDATOR.validate("menuCreate", {"handle": "x", "items": []})
@@ -523,6 +541,7 @@ def test_links_and_approximate_redirects() -> None:
 
 
 def main() -> int:
+    test_phones()
     test_schema_validator()
     test_orders()
     test_customers()

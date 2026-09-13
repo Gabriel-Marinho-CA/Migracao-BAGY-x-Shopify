@@ -126,6 +126,23 @@ def short(exc) -> str:
     return " ".join(str(exc).split())[:300]
 
 
+def phone_only(user_errors: list) -> bool:
+    """Todos os userErrors sao de telefone (a Shopify valida o numero de verdade)."""
+    return bool(user_errors) and all(
+        any("phone" in str(part).lower() for part in (error.get("field") or []))
+        or "phone" in str(error.get("message") or "").lower()
+        for error in user_errors)
+
+
+def without_phones(value):
+    """Tira toda chave `phone` (cliente, pedido e enderecos)."""
+    if isinstance(value, dict):
+        return {key: without_phones(item) for key, item in value.items() if key != "phone"}
+    if isinstance(value, list):
+        return [without_phones(item) for item in value]
+    return value
+
+
 def ref_kinds(refs) -> str:
     return ", ".join(sorted({ref.split(":")[1] if ref.count(":") >= 2 else ref for ref in refs}))
 
@@ -257,20 +274,32 @@ class Loader:
             return "ok", fake, []
 
         self._mark(item, "sending", attempt=True, error=None)
-        try:
-            data = self.client.execute(document(item.mutation), variables,
-                                       throttled=item.mutation == "orderCreate")
-        except ShopifyError as exc:
-            if exc.status == 401:
-                self._mark(item, "failed", error=short(exc))
-                raise
-            self._record(item, item.mutation, exc, variables)
-            uncertain = item.mutation not in UPSERT_MUTATIONS and maybe_executed(exc)
-            self._mark(item, "uncertain" if uncertain else "failed", error=short(exc))
-            return "stop", "incerto" if uncertain else "falhou", short(exc)
+        early_warnings = []
+        for attempt in (1, 2):
+            try:
+                data = self.client.execute(document(item.mutation), variables,
+                                           throttled=item.mutation == "orderCreate")
+            except ShopifyError as exc:
+                if exc.status == 401:
+                    self._mark(item, "failed", error=short(exc))
+                    raise
+                self._record(item, item.mutation, exc, variables)
+                uncertain = item.mutation not in UPSERT_MUTATIONS and maybe_executed(exc)
+                self._mark(item, "uncertain" if uncertain else "failed", error=short(exc))
+                return "stop", "incerto" if uncertain else "falhou", short(exc)
 
-        result = data.get(item.mutation) or {}
-        user_errors = result.get("userErrors") or result.get("orderCancelUserErrors") or []
+            result = data.get(item.mutation) or {}
+            user_errors = result.get("userErrors") or result.get("orderCancelUserErrors") or []
+            # Telefone recusado (numero antigo, fixo sem DDD...): manda de novo sem telefone.
+            # userErrors = nada foi criado, entao reenviar nao duplica. O numero original
+            # fica no metafield custom.telefone do cliente e nas informacoes adicionais do pedido.
+            if attempt == 1 and phone_only(user_errors) and without_phones(variables) != variables:
+                self._record(item, item.mutation, ShopifyUserError(user_errors, request_id=self.client.last_request_id),
+                             variables)
+                variables = without_phones(variables)
+                early_warnings.append("telefone recusado pela Shopify - enviado sem telefone")
+                continue
+            break
         if user_errors:
             if item.mutation == "metafieldDefinitionCreate" and all(e.get("code") == "TAKEN" for e in user_errors):
                 self._mark(item, "existing", error=None)
@@ -294,7 +323,7 @@ class Loader:
 
         mapping = self._refs_for(item, result, shopify_id)
         self._register(item, mapping)
-        warnings = []
+        warnings = list(early_warnings)
         unmapped = [ref for ref in item.provides if ref not in mapping]
         if unmapped:
             warnings.append("sem ID para " + ref_kinds(unmapped))
