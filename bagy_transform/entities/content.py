@@ -329,7 +329,7 @@ def render_hotsite(hotsite: dict, shop_id) -> tuple:
 # ------------------------------------------------------- URLs e redirects
 
 
-def path_map(src, settings) -> dict:
+def path_map(src, settings, vendor_names: dict | None = None) -> dict:
     """URL antiga da Bagy (namespace plano /<slug>) -> caminho na Shopify."""
     blog_handle = settings.blog_handle
     mapping: dict = {}
@@ -344,7 +344,8 @@ def path_map(src, settings) -> dict:
     for category in src.all("categories"):
         add(category["slug"], f"/collections/{category['slug']}")
     for brand in src.all("brands"):
-        add(brand["slug"], f"/collections/vendors?q={quote(brand['name'])}")
+        vendor = (vendor_names or {}).get(brand["name"], brand["name"])
+        add(brand["slug"], f"/collections/vendors?q={quote(vendor)}")
     for post in src.all("posts"):
         add(post["slug"], f"/blogs/{blog_handle}/{post['slug']}")
     for category in src.all("post_categories"):

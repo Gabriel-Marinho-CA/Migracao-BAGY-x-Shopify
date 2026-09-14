@@ -43,6 +43,9 @@ class TransformSettings:
     blog_title: str
     blog_handle: str
     article_author: str
+    # Grafia preferida das marcas: variacoes que so mudam espaco, caixa ou
+    # pontuacao ("Mad4life") viram este fornecedor na Shopify.
+    vendor_names: tuple = ()
 
 
 def get_settings() -> TransformSettings:
@@ -68,4 +71,6 @@ def get_settings() -> TransformSettings:
         blog_title=os.getenv("TRANSFORM_BLOG_TITLE", "Blog").strip(),
         blog_handle=os.getenv("TRANSFORM_BLOG_HANDLE", "blog").strip(),
         article_author=os.getenv("TRANSFORM_ARTICLE_AUTHOR", "Mad 4 Life").strip(),
+        vendor_names=tuple(name.strip() for name in os.getenv("TRANSFORM_VENDOR_NAMES", "").split(",")
+                           if name.strip()),
     )

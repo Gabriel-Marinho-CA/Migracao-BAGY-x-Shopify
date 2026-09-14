@@ -6,13 +6,14 @@ Uso: python tools/test_transform.py
 """
 
 import sys
+from dataclasses import replace
 from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from bagy_transform.config import TransformSettings, _schema_path
-from bagy_transform.entities import content, customers, marketing, orders
+from bagy_transform.entities import catalog, content, customers, marketing, orders
 from bagy_transform.schema import SchemaValidator
 from bagy_transform.transform import validate
 
@@ -295,6 +296,21 @@ def test_discounts() -> None:
         check(f"schema ok: {key}", not errors, errors[:3])
 
 
+def test_vendors() -> None:
+    print("\nFornecedores\n")
+    src = FakeSource({"brands": [{"id": 1, "name": "Mad 4 Life", "slug": "mad-4-life"},
+                                 {"id": 2, "name": "Mad4life", "slug": "mad4life"},
+                                 {"id": 3, "name": "Outra Marca", "slug": "outra-marca"}]})
+    check("sem TRANSFORM_VENDOR_NAMES as grafias ficam como na Bagy",
+          set(catalog.vendors(src, SETTINGS).values()) == {"Mad 4 Life", "Mad4life", "Outra Marca"})
+    settings = replace(SETTINGS, vendor_names=("Mad 4 Life",))
+    names = catalog.vendors(src, settings)
+    check("grafias da mesma marca viram um fornecedor so", names["Mad4life"] == names["Mad 4 Life"] == "Mad 4 Life")
+    check("marca diferente nao e afetada", names["Outra Marca"] == "Outra Marca")
+    check("URL antiga da marca aponta para o fornecedor unificado",
+          content.path_map(src, settings, names).get("/mad4life") == "/collections/vendors?q=Mad%204%20Life")
+
+
 def test_content() -> None:
     print("\nConteudo\n")
     hotsite = {
@@ -569,6 +585,7 @@ def main() -> int:
     test_customers()
     test_store_credits()
     test_discounts()
+    test_vendors()
     test_content()
     test_product_content()
     test_links_and_approximate_redirects()

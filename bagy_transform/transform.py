@@ -102,7 +102,8 @@ def reference_moment(value, src, settings) -> datetime:
 def build_all(src, settings, reference) -> tuple:
     # O mapa de URLs vem primeiro: os links internos no HTML de produtos, posts,
     # politicas e paginas passam a apontar direto para o caminho novo.
-    mapping = content.path_map(src, settings)
+    vendor_names = catalog.vendors(src, settings)
+    mapping = content.path_map(src, settings, vendor_names)
     payloads = []
     rich = product_content.build(src, settings)
     payloads += rich["metaobject_definition"]
@@ -110,7 +111,7 @@ def build_all(src, settings, reference) -> tuple:
     payloads += catalog.collections(src)
     payloads += rich["file"]
     payloads += rich["metaobject"]
-    payloads += catalog.products(src, mapping)
+    payloads += catalog.products(src, mapping, vendor_names)
     payloads += rich["product_content"]
     customer_payloads, used_phones = customers.customers(src, settings)
     payloads += customer_payloads

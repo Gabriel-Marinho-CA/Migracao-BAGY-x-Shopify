@@ -34,6 +34,21 @@ def feature_key(feature: dict) -> str:
     return ("caracteristica_" + base.strip("_"))[:64]
 
 
+def brand_key(name) -> str:
+    return re.sub(r"[^a-z0-9]", "", slugify(name or ""))
+
+
+def vendors(src, settings) -> dict:
+    """Nome da marca na Bagy -> fornecedor na Shopify.
+
+    Grafias que so diferem em espaco, caixa ou pontuacao ("Mad4life", "Mad 4 Life")
+    viram um fornecedor so quando a grafia preferida esta em TRANSFORM_VENDOR_NAMES.
+    """
+    preferred = {brand_key(name): name for name in settings.vendor_names}
+    return {brand["name"]: preferred.get(brand_key(brand["name"]), brand["name"])
+            for brand in src.all("brands") if clean(brand.get("name"))}
+
+
 def definition_ref(owner: str, key: str) -> str:
     return ref("metafield_definition", f"{owner.lower()}.custom.{key}")
 
@@ -93,7 +108,7 @@ def collections(src) -> list:
     return payloads
 
 
-def products(src, mapping: dict | None = None) -> list:
+def products(src, mapping: dict | None = None, vendor_names: dict | None = None) -> list:
     shop_id = src.shop_id
     features = {feature["id"]: feature for feature in src.all("features")}
     active_hotsites = {hotsite["id"] for hotsite in src.all("hotsites") if hotsite.get("active")}
@@ -185,11 +200,12 @@ def products(src, mapping: dict | None = None) -> list:
             if rewritten:
                 payload.meta["links_rewritten"] = rewritten
 
+        brand = clean((product.get("brand") or {}).get("name"))
         product_input = compact({
             "title": product["name"],
             "handle": product["slug"],
             "descriptionHtml": description,
-            "vendor": clean((product.get("brand") or {}).get("name")),
+            "vendor": (vendor_names or {}).get(brand, brand),
             "productType": clean((product.get("category_default") or {}).get("name")),
             "status": "ACTIVE" if product_active and variation_active else "DRAFT",
             "seo": compact({

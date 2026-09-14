@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from .catalog import brand_key, vendors
 from .orders import INVOICED_AS_SHIPPED
 
 
@@ -104,9 +105,17 @@ def checklist(src, settings, grouped: dict, context: dict) -> str:
     if leads:
         item(f"{len(leads)} inscrito(s) na newsletter sem cadastro viram clientes com aceite de "
              "marketing (TRANSFORM_INCLUDE_LEADS).")
-    brands = sorted({brand.get("name") for brand in src.all("brands") if brand.get("name")})
-    if len(brands) > 1:
-        item("Marcas com grafias diferentes viram fornecedores diferentes: " + ", ".join(brands) + " — unificar?")
+    vendor_names = vendors(src, settings)
+    spellings: dict = {}
+    for name, vendor in vendor_names.items():
+        spellings.setdefault(brand_key(name), set()).add(vendor)
+    loose = sorted(vendor for group in spellings.values() if len(group) > 1 for vendor in group)
+    if loose:
+        item("Marcas com grafias diferentes viram fornecedores diferentes: " + ", ".join(loose)
+             + " — unificar com TRANSFORM_VENDOR_NAMES?")
+    unified = sorted(f"{name} → {vendor}" for name, vendor in vendor_names.items() if name != vendor)
+    if unified:
+        item("Marcas unificadas num fornecedor só (TRANSFORM_VENDOR_NAMES): " + ", ".join(unified) + ".")
     not_migrated = sum(1 for p in grouped.get("discount", [])
                        if p.skip_reason in ("inativo na Bagy", "vencido na Bagy"))
     if not_migrated:
