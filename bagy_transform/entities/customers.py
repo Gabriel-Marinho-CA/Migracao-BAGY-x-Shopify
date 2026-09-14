@@ -14,6 +14,22 @@ from .catalog import definition_ref
 
 GENDER = {"female": "Feminino", "male": "Masculino"}
 
+# Provedor digitado sem o final do dominio ("fulano@hotmail"): a Shopify recusa
+# ("Email is invalid"). So corrige dominio sem ponto de provedor conhecido.
+BARE_DOMAINS = {
+    "gmail": "gmail.com", "gail": "gmail.com", "gmial": "gmail.com", "gmai": "gmail.com",
+    "icloud": "icloud.com", "hotmail": "hotmail.com", "outlook": "outlook.com", "live": "live.com",
+}
+
+
+def fix_email(value) -> tuple:
+    """(e-mail normalizado, corrigido?) - completa o dominio de provedor sem ".com"."""
+    email = (value or "").strip().lower()
+    local, at, domain = email.partition("@")
+    if at and local and domain in BARE_DOMAINS:
+        return f"{local}@{BARE_DOMAINS[domain]}", True
+    return email, False
+
 
 def consent_action(created_at, offset: str) -> dict:
     """customerSet nao aceita consentimento de marketing: vai numa chamada propria."""
@@ -44,11 +60,13 @@ def customers(src, settings) -> tuple:
     # Ordem por ID: quem cadastrou primeiro fica com o telefone quando ha repeticao.
     for customer in sorted(src.all("customers"), key=lambda c: c["id"]):
         key = f"customer:{customer['id']}"
-        email = (customer.get("email") or "").strip().lower()
+        email, email_fixed = fix_email(customer.get("email"))
         if not email:
             payloads.append(skipped("customer", key, "cliente sem e-mail"))
             continue
         payload = Payload("customer", key, "customerSet", provides=[ref("customer", customer["id"])])
+        if email_fixed:
+            payload.warn("e-mail com dominio incompleto corrigido (ex.: @hotmail -> @hotmail.com)")
 
         phone = e164_br(customer.get("phone") or "")
         phone_digits = only_digits(customer.get("phone") or "")
@@ -106,16 +124,20 @@ def leads(src, settings, used_phones: set) -> list:
     if not settings.include_leads:
         return []
     offset = settings.timezone_offset
-    customer_emails = {(c.get("email") or "").strip().lower() for c in src.all("customers")}
+    customer_emails = {fix_email(c.get("email"))[0] for c in src.all("customers")}
     payloads = []
 
     for entry in src.all("mailings_all"):
-        email = (entry.get("email") or "").strip().lower()
+        original = (entry.get("email") or "").strip().lower()
+        email, email_fixed = fix_email(original)
         if not email or entry.get("is_customer") or email in customer_emails:
             continue
-        # Chave sem o e-mail em claro: aparece em relatorio e log.
-        digest = hashlib.sha1(email.encode("utf-8")).hexdigest()[:16]
+        # Chave sem o e-mail em claro: aparece em relatorio e log. Calculada sobre o
+        # e-mail ORIGINAL, para a correcao do dominio nao trocar a chave do lead.
+        digest = hashlib.sha1(original.encode("utf-8")).hexdigest()[:16]
         payload = Payload("lead", f"lead:{digest}", "customerSet", provides=[ref("lead", digest)])
+        if email_fixed:
+            payload.warn("e-mail com dominio incompleto corrigido (ex.: @hotmail -> @hotmail.com)")
 
         first_name, last_name = split_name(clean(entry.get("name")) or "")
         phone = e164_br(entry.get("phone") or "")

@@ -495,6 +495,22 @@ def test_phones() -> None:
         check(f"telefone {raw!r} -> {expected}", e164_br(raw) == expected, e164_br(raw))
 
 
+def test_emails() -> None:
+    print("\nE-mails com dominio incompleto\n")
+    from bagy_transform.entities.customers import fix_email
+
+    cases = {
+        "Fulano99@gail": ("fulano99@gmail.com", True),
+        "fulano@icloud": ("fulano@icloud.com", True),
+        "fulano_x@hotmail": ("fulano_x@hotmail.com", True),
+        "fulano@hotmail.com": ("fulano@hotmail.com", False),
+        "fulano@empresa": ("fulano@empresa", False),       # dominio desconhecido: nao inventa
+        "": ("", False),
+    }
+    for raw, expected in cases.items():
+        check(f"e-mail {raw!r} -> {expected[0]!r}", fix_email(raw) == expected, fix_email(raw))
+
+
 def test_schema_validator() -> None:
     print("\nValidador de schema\n")
     errors, _ = VALIDATOR.validate("menuCreate", {"handle": "x", "items": []})
@@ -542,6 +558,7 @@ def test_links_and_approximate_redirects() -> None:
 
 def main() -> int:
     test_phones()
+    test_emails()
     test_schema_validator()
     test_orders()
     test_customers()
