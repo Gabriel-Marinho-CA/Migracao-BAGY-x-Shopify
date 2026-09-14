@@ -109,7 +109,11 @@ def discounts(src, settings, reference) -> tuple:
         if value <= 0:
             if discount.get("is_free_freight"):
                 payload.mutation = "discountCodeFreeShippingCreate"
-                payload.variables = {"freeShippingCodeDiscount": dict(base, destination={"all": True})}
+                # Frete gratis nao combina com outro desconto de frete: a Shopify recusa
+                # shippingDiscounts=true nessa classe ("combinesWith settings are not valid").
+                combines = dict(base["combinesWith"], shippingDiscounts=False)
+                payload.variables = {"freeShippingCodeDiscount": dict(base, destination={"all": True},
+                                                                      combinesWith=combines)}
                 payloads.append(payload)
             else:
                 payloads.append(skipped("discount", key, "desconto com valor zero"))

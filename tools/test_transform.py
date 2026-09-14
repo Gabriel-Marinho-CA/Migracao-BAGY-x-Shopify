@@ -271,6 +271,7 @@ def test_discounts() -> None:
             coupon(5, entitled_product_ids=[7]), coupon(6, entitled_product_ids=[999]),
             {**base, "id": 7, "type": "freight", "name": "Frete", "codes": [], "value": "100.00",
              "min_purchase": "300.00"},
+            coupon(8, value="0.00", is_free_freight=True),
         ],
     }
     payloads, manual_items = marketing.discounts(FakeSource(data), SETTINGS, REFERENCE)
@@ -285,7 +286,11 @@ def test_discounts() -> None:
           == {"products": {"productsToAdd": ["bagy-ref:product:7"]}})
     check("cupom de produto inexistente nao vira desconto na loja toda", by_key["discount:6"].status == "skipped")
     check("frete automatico vai para o checklist", by_key["discount:7"].status == "skipped" and len(manual_items) == 1)
-    for key in ("discount:1", "discount:5"):
+    free = by_key["discount:8"]
+    check("cupom de frete gratis nao combina com outro desconto de frete",
+          free.mutation == "discountCodeFreeShippingCreate"
+          and free.variables["freeShippingCodeDiscount"]["combinesWith"]["shippingDiscounts"] is False)
+    for key in ("discount:1", "discount:5", "discount:8"):
         errors = schema_errors(by_key[key])
         check(f"schema ok: {key}", not errors, errors[:3])
 
