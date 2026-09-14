@@ -47,6 +47,15 @@ CREATE TABLE IF NOT EXISTS load_refs (
     created_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS load_assets (
+    source_url TEXT PRIMARY KEY,
+    shopify_id TEXT,
+    cdn_url    TEXT,
+    status     TEXT NOT NULL,
+    error      TEXT,
+    updated_at TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS load_runs (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
     started_at   TEXT NOT NULL,
@@ -123,6 +132,22 @@ class LoadStore:
             self.conn.executemany(
                 "INSERT OR REPLACE INTO load_refs (ref, shopify_id, entity, source_key, created_at) VALUES (?, ?, ?, ?, ?)",
                 [(ref, gid, entity, source_key, _now()) for ref, gid in mapping.items()])
+
+    def asset(self, source_url: str) -> dict | None:
+        """Imagem da Bagy ja enviada ao Files da Shopify (content_images.py)."""
+        row = self.conn.execute("SELECT shopify_id, cdn_url, status, error FROM load_assets WHERE source_url = ?",
+                                (source_url,)).fetchone()
+        return dict(zip(("shopify_id", "cdn_url", "status", "error"), row)) if row else None
+
+    def save_asset(self, source_url: str, status: str, **fields) -> None:
+        current = self.asset(source_url) or {}
+        row = {**current, **{k: v for k, v in fields.items() if k in ("shopify_id", "cdn_url", "error")},
+               "status": status}
+        with self.conn:
+            self.conn.execute(
+                "INSERT OR REPLACE INTO load_assets (source_url, shopify_id, cdn_url, status, error, updated_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (source_url, row.get("shopify_id"), row.get("cdn_url"), status, row.get("error"), _now()))
 
     def forget_refs(self, entity: str, source_key: str) -> None:
         with self.conn:

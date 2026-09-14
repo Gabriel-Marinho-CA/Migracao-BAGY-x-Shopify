@@ -104,7 +104,7 @@ class FakeClient:
              "storeCreditAccountCredit", "orderCreate", "metafieldsSet", "customerEmailMarketingConsentUpdate",
              "orderUpdate", "orderCancel", "publishablePublish", "productUpdate", "metaobjectDefinitionCreate",
              "metaobjectUpsert", "fileCreate", "pageDelete", "metafieldDefinitionDelete", "metaobjectDefinitionDelete",
-             "metaobjectDelete", "product")
+             "metaobjectDelete", "articleUpdate", "article", "node", "product")
 
     def __init__(self):
         self.calls = []
@@ -113,10 +113,20 @@ class FakeClient:
         self.last_request_id = None
         self.counter = 0
         self.media = {}       # product gid -> lista de nodes de midia
+        self.bodies = {}      # article gid -> HTML do texto
 
     def execute(self, query, variables=None, throttled=False):
         root = next(name for name in self.ROOTS if f"{name}(" in query)
         self.calls.append((root, variables))
+        if root == "article":
+            return {"article": {"id": variables["id"], "title": "Artigo", "body": self.bodies.get(variables["id"], "")}}
+        if root == "articleUpdate":
+            self.bodies[variables["id"]] = variables["article"]["body"]
+            return {"articleUpdate": {"article": {"id": variables["id"]}, "userErrors": []}}
+        if root == "node":
+            number = variables["id"].rsplit("/", 1)[1]
+            return {"node": {"id": variables["id"], "fileStatus": "READY",
+                             "image": {"url": f"https://cdn.shopify.com/s/files/imagem-{number}.webp"}}}
         if root == "product":
             nodes = self.media.get(variables["id"], [])
             return {"product": {"id": variables["id"], "mediaCount": {"count": len(nodes)}, "media": {"nodes": nodes}}}
@@ -472,6 +482,56 @@ def test_phone_rejected(tmp: Path) -> None:
     store.close()
 
 
+def test_content_images(tmp: Path) -> None:
+    print("\nImagens da Bagy no texto dos artigos")
+    from shopify_load.content_images import ContentImages
+
+    store, _ = setup(tmp)
+    store.mark("article", "post:1", "done", shopify_id="gid://shopify/Article/1")
+    store.mark("article", "post:2", "done", shopify_id="gid://shopify/Article/2")
+    client = FakeClient()
+    banner = "https://api4.dooca.store/uploads/banner-1.webp"
+    client.bodies = {
+        "gid://shopify/Article/1": f'<p><a href="/p"><img src="{banner}" data-image="x"></a></p><img src="{banner}">',
+        "gid://shopify/Article/2": "<p>Sem imagem da Bagy</p>",
+    }
+    available = lambda url: (True, None)
+    dry = ContentImages(client, store, dry_run=True, log=lambda *_: None, probe=available).run(("article",))
+    check("dry-run le o texto e nao sobe nada", dry["enviaria"] == 1 and not calls_of(client, "fileCreate"), dict(dry))
+
+    missing = "https://api4.dooca.store/uploads/apagada.webp"
+    client.bodies["gid://shopify/Article/3"] = f'<img src="{missing}">'
+    store.mark("article", "post:3", "done", shopify_id="gid://shopify/Article/3")
+    gone = ContentImages(client, store, log=lambda *_: None, poll_seconds=0,
+                         probe=lambda url: (url != missing, "imagem nao existe mais na Bagy (HTTP 404)")).run(("article",))
+    check("imagem que nao existe mais na Bagy: nao cria arquivo e o texto fica como esta",
+          gone["falhou"] == 1 and "apagada.webp" in client.bodies["gid://shopify/Article/3"]
+          and "404" in ((store.asset(missing) or {}).get("error") or ""), dict(gone))
+    with store.conn:
+        store.conn.execute("DELETE FROM load_items WHERE entity = 'article' AND source_key = 'post:3'")
+    client.calls.clear()
+    for key in list(client.bodies):
+        if key.endswith("/1"):
+            client.bodies[key] = f'<p><a href="/p"><img src="{banner}" data-image="x"></a></p><img src="{banner}">'
+    with store.conn:
+        store.conn.execute("DELETE FROM load_assets WHERE source_url = ?", (banner,))
+
+    results = ContentImages(client, store, log=lambda *_: None, poll_seconds=0, probe=available).run(("article",))
+    body = client.bodies["gid://shopify/Article/1"]
+    check("mesma imagem repetida sobe uma vez e as duas ocorrencias sao trocadas",
+          results["corrigido"] == 1 and len(calls_of(client, "fileCreate")) == 1
+          and "dooca.store" not in body and body.count("cdn.shopify.com") == 2, (dict(results), body))
+    check("artigo sem imagem da Bagy nao e tocado",
+          results["sem imagem"] == 1 and len(calls_of(client, "articleUpdate")) == 1)
+    check("imagem enviada fica registrada", (store.asset(banner) or {}).get("status") == "ready")
+
+    client.bodies["gid://shopify/Article/2"] = f'<img src="{banner}">'
+    again = ContentImages(client, store, log=lambda *_: None, poll_seconds=0, probe=available).run(("article",))
+    check("imagem ja enviada e reaproveitada em outro artigo, sem novo fileCreate",
+          again["corrigido"] == 1 and len(calls_of(client, "fileCreate")) == 1, dict(again))
+    store.close()
+
+
 def test_invalidate_values(tmp: Path) -> None:
     print("\nValores apagados junto com a definicao")
     from shopify_load.cleanup import invalidate_values
@@ -519,8 +579,15 @@ def test_documents(tmp: Path) -> None:
     if not shutil.which("node"):
         print("  [pulado] node nao encontrado")
         return
+    from shopify_load import content_images
     for name, document in (("productSet com metafield da variante", PRODUCT_SET),
-                           ("productUpdate(media:)", MEDIA_ADD), ("status das imagens", MEDIA_STATUS)):
+                           ("productUpdate(media:)", MEDIA_ADD), ("status das imagens", MEDIA_STATUS),
+                           ("leitura do texto do artigo", content_images.READ["article"]),
+                           ("leitura do texto da pagina", content_images.READ["page"]),
+                           ("articleUpdate(body)", content_images.UPDATE["article"][2]),
+                           ("pageUpdate(body)", content_images.UPDATE["page"][2]),
+                           ("fileCreate das imagens do texto", content_images.FILE_CREATE),
+                           ("status da imagem do texto", content_images.FILE_STATUS)):
         path = tmp / "doc.graphql"
         path.write_text(document, encoding="utf-8")
         result = subprocess.run(["node", str(ROOT / "tools" / "validate_gql.mjs"), str(path)],
@@ -532,7 +599,8 @@ def test_documents(tmp: Path) -> None:
 def main() -> int:
     test_resolve()
     for test in (test_dry_run, test_pilot, test_load, test_resume_and_uncertain, test_media, test_dependencies,
-                 test_metaobjects_and_cleanup, test_invalidate_values, test_phone_rejected, test_documents):
+                 test_metaobjects_and_cleanup, test_invalidate_values, test_phone_rejected, test_content_images,
+                 test_documents):
         with tempfile.TemporaryDirectory() as tmp:
             test(Path(tmp))
     print(f"\n{'TUDO OK' if FAILURES == 0 else f'{FAILURES} FALHA(S)'}")

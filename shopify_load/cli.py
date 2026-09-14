@@ -25,6 +25,7 @@ from shopify_snapshot.storage import SnapshotStore
 from . import pilot
 from .cleanup import cleanup, retired
 from .config import get_settings
+from .content_images import ContentImages
 from .loader import LOAD_ORDER, RESEND_ON_CHANGE, Loader
 from .media import MediaBackfill
 from .store import LoadStore
@@ -106,6 +107,9 @@ def main(argv: list | None = None) -> int:
                         help="so as imagens dos produtos ja carregados que estao sem imagem (com --pilot: so os do piloto)")
     parser.add_argument("--cleanup", action="store_true",
                         help="apaga paginas e definicoes de metafield que a carga criou e a transformacao nao gera mais")
+    parser.add_argument("--content-images", action="store_true",
+                        help="sobe para o Files da Shopify as imagens da Bagy no texto de artigos e paginas ja "
+                             "carregados e troca os enderecos (com --only article|page: so esses)")
     parser.add_argument("--limit", type=int, help="no maximo N itens pendentes por entidade")
     parser.add_argument("--dry-run", action="store_true", help="resolve e mostra, sem enviar nada")
     args = parser.parse_args(argv)
@@ -165,6 +169,35 @@ def main(argv: list | None = None) -> int:
             print("\n" + ", ".join(f"{name} {count}" for name, count in results.most_common()))
             print("Rode run_shopify_snapshot.py de novo antes da proxima carga.")
             return 1 if results["falhou"] else 0
+
+        if args.content_images:
+            entities = [entity for entity in ("article", "page") if not only or entity in only]
+            provider, token, label = token_provider(
+                settings.store_domain, client_id=settings.client_id, client_secret=settings.client_secret,
+                admin_token=settings.admin_token, token_file=settings.token_file)
+            try:
+                client = ShopifyClient(settings.store_domain, token, settings.api_version, orders_per_minute=0,
+                                       max_retries=settings.max_retries, logger=print, token_provider=provider)
+                info = client.shop_info()
+            except (AuthError, ShopifyError) as exc:
+                print(f"ERRO de autenticacao: {exc}")
+                return 2
+            if info.get("myshopifyDomain") != settings.store_domain:
+                print(f"ERRO: o token e da loja {info.get('myshopifyDomain')}, nao de {settings.store_domain}.")
+                return 2
+            print(f"Modo   : imagens da Bagy no texto de {', '.join(entities)} (le o texto atual na loja)")
+            errors = ErrorLog(settings.log_dir, include_payload=settings.log_payloads)
+            runner = ContentImages(client, store, dry_run=args.dry_run, errors=errors)
+            started = time.monotonic()
+            results = runner.run(entities)
+            print("\n" + "=" * 72)
+            print("itens: " + (", ".join(f"{name} {count}" for name, count in results.most_common()) or "nenhum"))
+            if runner.images:
+                print("imagens: " + ", ".join(f"{name} {count}" for name, count in runner.images.most_common()))
+            print(f"Tempo: {time.monotonic() - started:.0f}s")
+            if errors.count:
+                print(errors.summary())
+            return 1 if results["falhou"] and not args.dry_run else 0
 
         if not (args.pilot or args.all or only or args.images):
             print_status(grouped, existing, state)
