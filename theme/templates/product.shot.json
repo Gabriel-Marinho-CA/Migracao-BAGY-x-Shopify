@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Mix exclusivo com os 3 ativos mais indicados para shots medicinais:",
+        "heading_size": 40,
+        "text_html": "<p>Guaraná Cipó, Cúrcuma e Gengibre juntos promovem energia, foco, ação anti-inflamatória, fortalecimento imunológico, melhora na digestão e proteção antioxidante.</p>\n<p><b>Dica de uso:</b><br>\n✓ Shots matinais\n<br>✓ Shakes\n<br>✓ Chás</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/shot.webp"
+      }
+    },
+    "bagy_2_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Sobre o uso de cúrcuma em alimentos e suplementos",
+            "html": "<div style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">\n\n  <h3 style=\"font-size: 18px; margin-bottom: 10px;\">\n     </h3>\n\n  <p>\n    A cúrcuma (Curcuma longa), também conhecida como açafrão-da-terra, é tradicionalmente utilizada na alimentação e em preparações culinárias, sendo considerada segura quando consumida nessas condições.\n  </p>\n\n  <p>\n    De acordo com atualizações recentes da ANVISA, incluindo a Instrução Normativa nº 438/2026, foram estabelecidos novos critérios para o uso de cúrcuma em suplementos alimentares, com definição de limites de ingestão e exigência de advertências nos rótulos, com o objetivo de ampliar a proteção ao consumidor.\n  </p>\n\n  <p>\n    Essas medidas foram adotadas após a identificação de casos raros de efeitos adversos hepáticos associados ao consumo de suplementos contendo cúrcuma em altas concentrações ou com tecnologias que aumentam sua absorção.\n  </p>\n\n   \n      O risco identificado está relacionado principalmente a extratos concentrados e suplementos, e não ao uso alimentar tradicional da cúrcuma.\n  </p>\n      Produtos alimentícios convencionais que utilizam cúrcuma como ingrediente não apresentam evidência de risco quando consumidos dentro de padrões alimentares usuais.\n      <p>\n<p>\n    Por precaução, recomenda-se atenção ao consumo de produtos concentrados e a busca de orientação profissional em caso de dúvidas, especialmente para pessoas com histórico de sensibilidade ou condições hepáticas.\n  </p>\n\n  <p>\n    Caso ocorram sintomas como cansaço incomum, desconforto abdominal ou alterações na coloração da pele ou urina, a orientação é interromper o uso e procurar avaliação de um profissional de saúde.\n  </p>\n\n  <p style=\"margin-top: 15px;\">\n    A MAD reforça seu compromisso com a transparência, segurança e conformidade regulatória, acompanhando continuamente as diretrizes da ANVISA.\n  </p>\n\n</div>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "bagy_1_1",
+    "bagy_2_text",
+    "seals",
+    "reviews",
+    "nutrition"
+  ]
+}

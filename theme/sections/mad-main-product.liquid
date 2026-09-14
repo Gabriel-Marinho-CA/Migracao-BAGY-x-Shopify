@@ -1,0 +1,170 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign form_id = 'MadProductForm-' | append: section.id
+  assign short_description = product.metafields.custom.descricao_curta.value
+  assign featured = current_variant.featured_media | default: product.featured_media
+  assign button_label = section.settings.button_label | default: 'Comprar'
+-%}
+<script type="application/ld+json">
+  {{ product | structured_data }}
+</script>
+
+<div class="mad-pdp" data-mad-product>
+  <div class="mad-pdp__grid">
+    <div class="mad-pdp__gallery" data-mad-gallery>
+      {%- if featured -%}
+        <img
+          class="mad-pdp__main-image"
+          data-mad-main
+          src="{{ featured | image_url: width: 1240 }}"
+          srcset="{{ featured | image_url: width: 620 }} 620w, {{ featured | image_url: width: 930 }} 930w, {{ featured | image_url: width: 1240 }} 1240w"
+          sizes="(min-width: 990px) 620px, 100vw"
+          width="620"
+          height="620"
+          alt="{{ featured.alt | default: product.title | escape }}"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'mad-pdp__main-image placeholder-svg' }}
+      {%- endif -%}
+      {%- if product.media.size > 1 -%}
+        <ul class="mad-pdp__thumbs" role="list">
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              <li>
+                <button
+                  type="button"
+                  class="mad-pdp__thumb"
+                  data-mad-thumb
+                  data-src="{{ media | image_url: width: 1240 }}"
+                  data-srcset="{{ media | image_url: width: 620 }} 620w, {{ media | image_url: width: 930 }} 930w, {{ media | image_url: width: 1240 }} 1240w"
+                  data-alt="{{ media.alt | default: product.title | escape }}"
+                  aria-label="Ver imagem {{ forloop.index }}"
+                  aria-current="{% if media.id == featured.id %}true{% else %}false{% endif %}"
+                >
+                  {{ media | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class="mad-pdp__info">
+      <h1 class="mad-pdp__title">{{ product.title | escape }}</h1>
+      {%- if short_description != blank -%}
+        <div class="mad-pdp__desc">{{ short_description | escape | newline_to_br }}</div>
+      {%- endif -%}
+
+      <div class="mad-pdp__prices">
+        <s
+          class="mad-pdp__compare"
+          data-mad-compare
+          {% unless current_variant.compare_at_price > current_variant.price %}
+            hidden
+          {% endunless %}
+        >
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            {{ current_variant.compare_at_price | money }}
+          {%- endif -%}
+        </s>
+        <span class="mad-pdp__price" data-mad-price>{{ current_variant.price | money }}</span>
+      </div>
+
+      {%- unless product.has_only_default_variant -%}
+        <div class="mad-pdp__variants">
+          <label for="MadVariant-{{ section.id }}">{{ product.options | join: ' / ' }}</label>
+          <select id="MadVariant-{{ section.id }}" data-mad-variant-select>
+            {%- for variant in product.variants -%}
+              <option
+                value="{{ variant.id }}"
+                {% if variant.id == current_variant.id %}
+                  selected
+                {% endif %}
+                {% unless variant.available %}
+                  disabled
+                {% endunless %}
+              >
+                {{ variant.title | escape }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+        <script type="application/json" data-mad-variants>
+          [
+            {%- for variant in product.variants -%}
+              {
+                "id": {{ variant.id }},
+                "available": {{ variant.available | json }},
+                "price": {{ variant.price | money | json }},
+                "compare": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %}
+              }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        </script>
+      {%- endunless -%}
+
+      <product-form class="mad-pdp__product-form" data-hide-errors="false">
+        {%- form 'product',
+          product,
+          id: form_id,
+          class: 'mad-pdp__form',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
+          <div class="mad-qty">
+            <button type="button" class="mad-qty__btn" data-mad-qty="-1" aria-label="Diminuir quantidade">
+              {%- render 'mad-icon', name: 'minus' -%}
+            </button>
+            <input class="mad-qty__input" type="number" name="quantity" value="1" min="1" aria-label="Quantidade">
+            <button type="button" class="mad-qty__btn" data-mad-qty="1" aria-label="Aumentar quantidade">
+              {%- render 'mad-icon', name: 'plus' -%}
+            </button>
+          </div>
+          <button
+            type="submit"
+            name="add"
+            class="mad-btn"
+            data-mad-submit
+            data-label-available="{{ button_label | escape }}"
+            data-label-sold-out="Esgotado"
+            {% unless current_variant.available %}
+              disabled
+            {% endunless %}
+          >
+            <span>
+              {%- if current_variant.available -%}
+                {{ button_label | escape }}
+              {%- else -%}
+                Esgotado
+              {%- endif -%}
+            </span>
+            {%- render 'loading-spinner' -%}
+          </button>
+        {%- endform -%}
+        <div class="product-form__error-message-wrapper mad-pdp__error" role="alert" hidden>
+          <span class="product-form__error-message"></span>
+        </div>
+      </product-form>
+
+      {%- if section.settings.note != blank -%}
+        <div class="mad-pdp__note">{{ section.settings.note | escape }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "MAD - Produto",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Comprar" },
+    { "type": "text", "id": "note", "label": "Aviso abaixo do botão", "default": "Envio imediato" }
+  ]
+}
+{% endschema %}

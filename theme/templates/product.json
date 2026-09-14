@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "seals",
+    "reviews",
+    "nutrition"
+  ]
+}

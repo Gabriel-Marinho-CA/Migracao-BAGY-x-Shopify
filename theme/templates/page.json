@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-page",
+      "settings": {
+        "layout": "sidebar",
+        "menu": "mad-institucional",
+        "show_contact_form": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

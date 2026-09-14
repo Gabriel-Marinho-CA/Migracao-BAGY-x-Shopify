@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-article",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

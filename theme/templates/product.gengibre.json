@@ -1,0 +1,102 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Gengibre Selvagem em pó Mangarataia: raiz nativa com energia natural para o seu dia-a-dia",
+        "heading_size": 40,
+        "text_html": "<p>Planta medicinal que fortalece o sistema imunológico, acelera o metabolismo e combate o estresse.</p>\n<p>Possui propriedades anti-inflamatórias e antifúngicas, melhora a circulação, promove a saúde cardiovascular e regula os níveis de açúcar no sangue.</p>\n<p>Recomenda-se o uso culinário de forma versátil </p>\n<p>Ou </p>\n\n<p>1 colher de café misturado com meio limão e um pouco de água</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/gengibre-mangarataia-selvagem-mad.webp"
+      }
+    },
+    "bagy_2_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Benefícios",
+        "heading_size": 40,
+        "text_html": "<ul class=\"checklist\">\n  <li>Rico em gingerol, composto natural do gengibre</li>\n  <li>Ingrediente ancestral, usado há séculos em práticas de bem-estar</li>\n  <li>Energia e vitalidade natural para o dia a dia</li>\n  <li>100% natural, vegano e amazônico</li>\n  <li>Cultivo sustentável em sistemas agroflorestais</li>\n  <li>Sabor picante e aromático que combina com shots, chás e pratos variados</li>\n</ul>\n\n<!-- CSS -->",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/gengibre-em-po-mangarataia-mad.webp"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "O Processo MAD",
+        "heading_size": 40,
+        "text_html": "<p>O Gengibre Selvagem MAD é cultivado e colhido de forma regenerativa por comunidades locais da Amazônia. \nA Terra Preta, solo fértil e ancestral, potencializa sua riqueza natural. \nRico em gingerol e compostos bioativos, é uma raiz que aquece, purifica e energiza em equilíbrio, \nunindo a força da floresta à sabedoria ancestral para um cuidado diário mais consciente e poderoso.</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/colher-com-gengibre-em-po-mangarataia-mad.webp"
+      }
+    },
+    "bagy_4_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "A riqueza da Terra Preta",
+        "heading_size": 40,
+        "text_html": "<p>A Terra Preta de Índio é um solo amazônico único, criado por comunidades indígenas há séculos. \nSua fertilidade excepcional vem da combinação de matéria orgânica, minerais e carvão vegetal. \nEsse ambiente rico garante ao gengibre MAD:</p>\n<ul class=\"checklist\">\n  <li>Maior intensidade de compostos naturais (como o gingerol)</li>\n  <li>Aroma e sabor mais marcantes</li>\n  <li>Crescimento sustentável em equilíbrio com a floresta</li>\n</ul>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/terra-preta-de-indio-amazonia-mad.webp"
+      }
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "bagy_1_1",
+    "bagy_2_1",
+    "bagy_3_1",
+    "bagy_4_1",
+    "seals",
+    "reviews",
+    "nutrition"
+  ]
+}

@@ -1,0 +1,103 @@
+{% doc %}
+  Renders the MAD product card: image with discount badge, title, prices,
+  quantity selector and an AJAX add to cart button (Dawn product-form).
+
+  @param {product} card_product - The product to render
+  @param {string} [layout] - stacked (quantity above the button) or inline (side by side)
+  @param {string} [section_id] - Section id, used to build unique form ids
+  @param {boolean} [lazy] - Lazy load the product image
+  @param {string} [button_label] - Buy button label
+
+  @example
+  {% render 'mad-product-card', card_product: product, layout: 'inline', section_id: section.id %}
+{% enddoc %}
+{%- liquid
+  assign variant = card_product.selected_or_first_available_variant
+  assign form_id = 'MadCard-' | append: section_id | append: '-' | append: card_product.id
+  assign label = button_label | default: 'Comprar'
+  assign discount = 0
+  if variant.compare_at_price > variant.price
+    assign discount = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round
+  endif
+  assign layout_class = 'mad-card--stacked'
+  if layout == 'inline'
+    assign layout_class = 'mad-card--inline'
+  endif
+  assign loading = 'eager'
+  if lazy
+    assign loading = 'lazy'
+  endif
+-%}
+<div class="mad-card {{ layout_class }}">
+  <a href="{{ card_product.url }}" class="mad-card__media" tabindex="-1" aria-hidden="true">
+    {%- if discount > 0 -%}
+      <span class="mad-card__badge">{{ discount }}%<br>OFF</span>
+    {%- endif -%}
+    {%- if card_product.featured_media -%}
+      {{
+        card_product.featured_media
+        | image_url: width: 520
+        | image_tag:
+          loading: loading,
+          widths: '260, 390, 520',
+          sizes: '(min-width: 990px) 260px, (min-width: 750px) 30vw, 45vw',
+          alt: card_product.title
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </a>
+  <a href="{{ card_product.url }}" class="mad-card__title">{{ card_product.title | escape }}</a>
+  <div class="mad-card__prices">
+    {%- if variant.compare_at_price > variant.price -%}
+      <s class="mad-card__compare">{{ variant.compare_at_price | money }}</s>
+    {%- endif -%}
+    <span class="mad-card__price">{{ variant.price | money }}</span>
+  </div>
+  <div class="mad-card__buy">
+    <product-form class="mad-card__product-form" data-hide-errors="true">
+      {%- form 'product',
+        card_product,
+        id: form_id,
+        class: 'mad-card__form',
+        novalidate: 'novalidate',
+        data-type: 'add-to-cart-form'
+      -%}
+        <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+        <div class="mad-qty">
+          <button type="button" class="mad-qty__btn" data-mad-qty="-1" aria-label="Diminuir quantidade">
+            {%- render 'mad-icon', name: 'minus' -%}
+          </button>
+          <input
+            class="mad-qty__input"
+            type="number"
+            name="quantity"
+            value="1"
+            min="1"
+            aria-label="Quantidade de {{ card_product.title | escape }}"
+          >
+          <button type="button" class="mad-qty__btn" data-mad-qty="1" aria-label="Aumentar quantidade">
+            {%- render 'mad-icon', name: 'plus' -%}
+          </button>
+        </div>
+        <button
+          type="submit"
+          name="add"
+          class="mad-btn mad-card__submit"
+          {% unless variant.available %}
+            disabled
+          {% endunless %}
+        >
+          <span>
+            {%- if variant.available -%}
+              {{ label | escape }}
+            {%- else -%}
+              Esgotado
+            {%- endif -%}
+          </span>
+          {%- render 'loading-spinner' -%}
+        </button>
+      {%- endform -%}
+    </product-form>
+  </div>
+</div>

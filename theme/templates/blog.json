@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-blog",
+      "settings": {
+        "per_page": 12
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

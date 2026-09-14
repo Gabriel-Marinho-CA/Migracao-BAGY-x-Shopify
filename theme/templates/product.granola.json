@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Granola Amazônica: a melhor aliada para saúde e saciedade.",
+        "heading_size": 40,
+        "text_html": "<p>Nossa Granola Nutritiva é perfeita para equilibrar sua microbiota, além de garantir mais saciedade. Com uma mistura poderosa de ingredientes como Spirulina, Castanha do Pará, Chia, Gergelim, Linhaça, Farinha de Coco, Farinha de Tapioca, Sementes de Girassol, Sementes de Melancia e Cacau, ela oferece sabor e saúde em cada porção</p>\n\n<p><b>Dica de uso:</b><br>\n✓ Topping para Smoothies<br>\n✓ Topping para frutas<br>\n✓ Como snack</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/granola.webp"
+      }
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "bagy_1_1",
+    "seals",
+    "reviews",
+    "nutrition"
+  ]
+}

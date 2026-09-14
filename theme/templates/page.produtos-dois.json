@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Guaraná Cipó - energético 100% natural.",
+        "heading_size": 26,
+        "text_html": "<p>Descubra o poder do Guaraná Cipó MAD, um energético 100% natural que potencializa sua disposição física e mental sem causar taquicardia. Rico em propriedades termogênicas, ele aumenta a concentração, combate a fadiga e eleva a libido, proporcionando mais vigor para o seu dia a dia.\n<br><br>\nAlém de estimular a atividade intelectual e combater a fraqueza orgânica (astenia), o Guaraná Cipó MAD auxilia no alívio da depressão nervosa, melhora a digestão e reduz sintomas como azia, queimação, flatulências e diarreias. Seu uso também contribui para a prevenção da arteriosclerose, tromboembolismo e cefaleias, promovendo mais saúde e bem-estar.\n</p><br><br>\n<details>\n  <summary>Ingredientes</summary>\n<br>  <p>100% puro Guaraná Paullinia Cupana em pó\n Sem aditivos, conservantes ou ingredientes artificiais<br>\n Certificado orgânico e cultivado de forma sustentável</p><br>\n</details>\n<details>\n  <summary>Como consumir ?</summary><br>\n  <p>Recomenda-se o consumo de até 5g por dia. Experimente:<br><br>\n✔ Shot matinal – Misture com água ou suco para um começo de dia revigorante.<br>\n✔ Pré-treino – Adicione a shakes ou smoothies para aumentar a energia antes do exercício.<br>\n✔ Chás e infusões – Combine com ervas naturais para um efeito revitalizante.</p><br>\n</details>\n<details>\n  <summary>Tabela Nutricional</summary>\n<p>Porções por embalagem: 40 <br>Porção: 5g (Uma colher de chá)</p>\n<table class=\"blueTable\">\n<thead>\n<tr>\n<th></th>\n<th>100g</th>\n<th>5g</th>\n<th>%VD*</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Valor Energ&eacute;tico (kcal)</td>\n<td>40</td>\n<td>2</td>\n<td>0</td>\n</tr>\n<tr>\n<td>C&aacute;lcio (mg)</td>\n<td>34</td>\n<td>1,7</td>\n<td>0</td>\n</tr>\n<tr>\n<td>Ferro (mg)</td>\n<td>2,4</td>\n<td>0,12</td>\n<td>0</td>\n</tr>\n<tr>\n<td>S&oacute;dio (mg)</td>\n<td>3,4</td>\n<td>0,17</td>\n<td>0</td>\n</tr>\n<tr>\n<td>Pot&aacute;ssio (mg)</td>\n<td>440</td>\n<td>22</td>\n<td>0</td>\n</tr>\n<tr>\n<td>Cafe&iacute;na (mg)</td>\n<td>420</td>\n<td>201</td>\n<td>&nbsp;</td>\n</tr>\n</tbody>\n</table>\n\n</details>",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/guaranacipobebida.webp"
+      }
+    },
+    "bagy_2_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "O que é o\nGuaraná Cipó?",
+        "heading_size": 26,
+        "text_html": "<p>O Guaraná Cipó é um cipó lenhoso nativo da bacia amazônica, cultivado de forma sustentável no coração da floresta. Utilizado há séculos pelos povos indígenas, é um potente energético natural, capaz de melhorar a disposição física e mental sem causar os desconfortos associados a estimulantes artificiais.</p>",
+        "min_height": 470,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/guarana.webp"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "overlay",
+        "heading": "",
+        "heading_size": 26,
+        "text_html": "<p>\nNosso Guaraná Cipó é cultivado de forma orgânica na região de Maués, Amazonas, em um sistema agroflorestal que respeita a biodiversidade local. A colheita é feita por pequenos produtores, garantindo qualidade superior e impacto positivo na economia local.</p>",
+        "min_height": 600,
+        "background": "#0C0C0C",
+        "image": "shopify://shop_images/amazonia-horizontal.webp"
+      }
+    },
+    "bagy_4_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Por que escolher o\nGuaraná Cipó MAD?",
+        "heading_size": 26,
+        "text_html": "<p>\n    • Mais energia, sem taquicardia – Estimula naturalmente o corpo e a mente, sem os efeitos colaterais do café.<br><br>\n    • Aumenta a concentração – Perfeito para estudos, trabalho ou momentos que exigem foco.\n    •  Potencializa treinos – Ativa o metabolismo e melhora o desempenho físico.<br><br>\n    • Favorece o bem-estar – Auxilia na digestão e na prevenção de dores de cabeça.<br><br>\n    • Orgânico e sustentável – Produzido de maneira agroflorestal, com respeito ao meio ambiente e às comunidades locais.</p>",
+        "min_height": 470,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/embalagem.jpg"
+      }
+    },
+    "bagy_5_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Certificações e Qualidade",
+        "heading_size": 26,
+        "text_html": "<div class=\"selossustentaveis\"><img src=\"https://cdn.shopify.com/s/files/1/0726/1896/7093/files/selos-mad-1.webp?v=1789344041\" alt=\"selos\"></div><br><br>\n<p> ✔ Produto agroflorestal 100% amazônico <br><br>\n✔ Matéria-prima selecionada e livre de agrotóxicos<br><br>\n✔ Agricultura regenerativa e extrativismo familiar<br><br>\n✔ Colheita selvagem – respeitando os ciclos naturais da floresta<br></p></p>",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/certificados.webp"
+      }
+    }
+  },
+  "order": [
+    "bagy_1_1",
+    "bagy_2_1",
+    "bagy_3_1",
+    "bagy_4_1",
+    "bagy_5_1"
+  ]
+}

@@ -1,0 +1,88 @@
+{%- paginate blog.articles by section.settings.per_page -%}
+  <div class="mad-blog">
+    <div class="mad-blog__grid">
+      <div>
+        <h1 class="mad-title mad-blog__title">
+          {%- if current_tags -%}
+            {{ current_tags.first | escape }}
+          {%- else -%}
+            {{ blog.title | escape }}
+          {%- endif -%}
+        </h1>
+        <ul class="mad-blog__posts" role="list">
+          {%- for article in blog.articles -%}
+            <li class="mad-post-card">
+              <a href="{{ article.url }}" class="mad-post-card__image" tabindex="-1" aria-hidden="true">
+                {%- if article.image -%}
+                  {{
+                    article.image
+                    | image_url: width: 800
+                    | image_tag: loading: 'lazy', widths: '400, 600, 800', sizes: '(min-width: 990px) 385px, 100vw', alt: article.image.alt
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </a>
+              <h2 class="mad-post-card__title"><a href="{{ article.url }}">{{ article.title | escape }}</a></h2>
+              <span class="mad-post-card__bar" aria-hidden="true"></span>
+              <div class="mad-post-card__meta">
+                <a href="{{ article.url }}">Ler mais</a>
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%d/%m/%Y' }}</time>
+              </div>
+            </li>
+          {%- else -%}
+            <li>Nenhum post publicado ainda.</li>
+          {%- endfor -%}
+        </ul>
+        {%- if paginate.pages > 1 -%}
+          <nav class="mad-blog__pagination" aria-label="Paginação">
+            <span>Página: {{ paginate.current_page }} de {{ paginate.pages }}</span>
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" aria-label="Página anterior">&lsaquo;</a>
+            {%- endif -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" aria-label="Próxima página">&rsaquo;</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      </div>
+      <aside>
+        <form action="{{ routes.search_url }}" method="get" role="search" class="mad-blog__search">
+          <input type="hidden" name="type" value="article">
+          <label class="visually-hidden" for="MadBlogSearch">Buscar postagens</label>
+          <input id="MadBlogSearch" type="search" name="q" placeholder="Buscar postagens">
+          <button type="submit" aria-label="Buscar">{%- render 'mad-icon', name: 'search' -%}</button>
+        </form>
+        {%- if blog.all_tags.size > 0 -%}
+          <h2 class="mad-blog__cats-title">Categorias</h2>
+          <ul class="mad-blog__cats" role="list">
+            {%- for tag in blog.all_tags -%}
+              <li>
+                <a
+                  href="{{ blog.url }}/tagged/{{ tag | handleize }}"
+                  {% if current_tags contains tag %}
+                    aria-current="true"
+                  {% endif %}
+                >
+                  {{- tag | escape -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </aside>
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "MAD - Blog",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["blog"] },
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Posts por página", "min": 6, "max": 24, "step": 2, "default": 12 }
+  ]
+}
+{% endschema %}

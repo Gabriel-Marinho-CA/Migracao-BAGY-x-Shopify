@@ -1,0 +1,80 @@
+{%- liquid
+  assign collection = section.settings.collection
+  assign title_link = section.settings.title_link | default: collection.url
+  assign per_view = section.settings.per_view
+  assign tablet_view = per_view | at_most: 3
+-%}
+{%- capture swiper_config -%}
+  {"slidesPerView":2,"slidesPerGroup":2,"spaceBetween":16,"speed":500,"breakpoints":{"750":{"slidesPerView":{{ tablet_view }},"slidesPerGroup":{{ tablet_view }},"spaceBetween":24},"990":{"slidesPerView":{{ per_view }},"slidesPerGroup":{{ per_view }},"spaceBetween":42}}}
+{%- endcapture -%}
+<div
+  class="mad-showcase"
+  style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;{% if section.settings.background != blank %} background: {{ section.settings.background }};{% endif %}"
+>
+  <div class="mad-container">
+    {%- if section.settings.title != blank -%}
+      <h2 class="mad-title mad-showcase__title">
+        {%- if title_link != blank -%}
+          <a href="{{ title_link }}">{{ section.settings.title | escape }}</a>
+        {%- else -%}
+          {{ section.settings.title | escape }}
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+    <div class="mad-carousel" data-mad-swiper="{{ swiper_config | strip | escape }}">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          {%- if collection != blank -%}
+            {%- for product in collection.products limit: section.settings.limit -%}
+              <div class="swiper-slide">
+                {%- render 'mad-product-card',
+                  card_product: product,
+                  layout: 'stacked',
+                  section_id: section.id,
+                  lazy: true,
+                  button_label: section.settings.button_label
+                -%}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..5) -%}
+              <div class="swiper-slide">
+                <div class="mad-card">
+                  <div class="mad-card__media">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+                  <span class="mad-card__title">Produto</span>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+      <button type="button" class="mad-carousel__arrow mad-carousel__arrow--prev" data-mad-prev aria-label="Produtos anteriores">
+        {%- render 'mad-icon', name: 'chevron-left' -%}
+      </button>
+      <button type="button" class="mad-carousel__arrow mad-carousel__arrow--next" data-mad-next aria-label="Próximos produtos">
+        {%- render 'mad-icon', name: 'chevron-right' -%}
+      </button>
+      <div class="mad-carousel__dots" data-mad-dots></div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "MAD - Vitrine",
+  "tag": "section",
+  "class": "section mad-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Superalimentos" },
+    { "type": "url", "id": "title_link", "label": "Link do título" },
+    { "type": "collection", "id": "collection", "label": "Coleção" },
+    { "type": "range", "id": "limit", "label": "Quantidade de produtos", "min": 4, "max": 24, "step": 1, "default": 10 },
+    { "type": "range", "id": "per_view", "label": "Produtos por vez (desktop)", "min": 3, "max": 6, "step": 1, "default": 5 },
+    { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Comprar" },
+    { "type": "color", "id": "background", "label": "Cor de fundo" },
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 140, "step": 10, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 140, "step": 10, "unit": "px", "default": 60 }
+  ],
+  "presets": [{ "name": "MAD - Vitrine" }]
+}
+{% endschema %}

@@ -1,0 +1,119 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Guaraná Cipó\nEnergético 100% Natural.",
+        "heading_size": 40,
+        "text_html": "<p>Descubra o poder do Guaraná Cipó MAD, um energético 100% natural que potencializa sua disposição física e mental sem causar taquicardia. Rico em propriedades termogênicas, ele aumenta a concentração, combate a fadiga e eleva a libido, proporcionando mais vigor para o seu dia a dia.\n<br><br>\nAlém de estimular a atividade intelectual e combater a fraqueza orgânica (astenia), o Guaraná Cipó MAD auxilia no alívio da depressão nervosa, melhora a digestão e reduz sintomas como azia, queimação, flatulências e diarreias. Seu uso também contribui para a prevenção da arteriosclerose, tromboembolismo e cefaleias, promovendo mais saúde e bem-estar.\n</p>",
+        "min_height": 720,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/guarana-em-po-cipo-mad.svg"
+      }
+    },
+    "bagy_2_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "O que é o\nGuaraná Cipó?",
+        "heading_size": 40,
+        "text_html": "<p>O Guaraná Cipó é um cipó lenhoso nativo da bacia amazônica, cultivado de forma sustentável no coração da floresta. Utilizado há séculos pelos povos indígenas, é um potente energético natural, capaz de melhorar a disposição física e mental sem causar os desconfortos associados a estimulantes artificiais.</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/guarana.webp",
+        "heading_color": "#1C3D15",
+        "text_color": "#1C3D15"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "overlay",
+        "heading": "",
+        "heading_size": 40,
+        "text_html": "<p> Nosso Guaraná Cipó é cultivado de forma orgânica na região de Maués, Amazonas, em um sistema agroflorestal que respeita a biodiversidade local. A colheita é feita por pequenos produtores, garantindo qualidade superior e impacto positivo na economia local.</p>",
+        "min_height": 1200,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/amazonia-horizontal.webp"
+      }
+    },
+    "bagy_6_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Por que escolher o\nGuaraná Cipó MAD?",
+        "heading_size": 40,
+        "text_html": "<p>\n    • Mais energia, sem taquicardia – Estimula naturalmente o corpo e a mente, sem os efeitos colaterais do café.</p>\n  <p>  • Aumenta a concentração – Perfeito para estudos, trabalho ou momentos que exigem foco.</p>\n <p>   •  Potencializa treinos – Ativa o metabolismo e melhora o desempenho físico.</p>\n <p>   • Favorece o bem-estar – Auxilia na digestão e na prevenção de dores de cabeça.</p>\n <p>   • Orgânico e sustentável – Produzido de maneira agroflorestal, com respeito ao meio ambiente e às comunidades locais.</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/mulher-correndo-guarana-mad.webp",
+        "heading_color": "#1C3D15",
+        "text_color": "#1C3D15"
+      }
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "bagy_8_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Produtos que você\npode confiar",
+        "heading_size": 40,
+        "text_html": "<p> ✔ Produto agroflorestal 100% amazônico </p>\n<p>✔ Matéria-prima selecionada e livre de agrotóxicos</p>\n<p>✔ Agricultura regenerativa e extrativismo familiar</p>\n<p>✔ Colheita selvagem – respeitando os ciclos naturais da floresta<br></p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/certificados.webp"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "bagy_1_1",
+    "bagy_2_1",
+    "bagy_3_1",
+    "bagy_6_1",
+    "seals",
+    "bagy_8_1",
+    "reviews",
+    "nutrition"
+  ]
+}

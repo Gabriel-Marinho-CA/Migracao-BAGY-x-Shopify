@@ -1,0 +1,61 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "mad_footer": {
+      "type": "mad-footer",
+      "settings": {
+        "logo": "shopify://shop_images/mad-cor.webp",
+        "facebook": "https://pt-br.facebook.com/mad4.life1/",
+        "instagram": "https://www.instagram.com/mad4life/",
+        "show_newsletter": true,
+        "newsletter_title": "Receba novidades e promoções",
+        "payments_title": "Pagamento",
+        "payments_image": "shopify://shop_images/pagamentos.png",
+        "security_title": "Segurança",
+        "seal_1": "shopify://shop_images/seguranca.png",
+        "seo_text": "Mad 4 Life | Superalimentos direto da Amazônia | Da Floresta ao Consumidor",
+        "copyright": "© MAD 4 Life - Todos os direitos reservados. | CNPJ: 28.728.198/0001-43 | Rodovia Doutor Everaldo de Sousa Martins, s/n, Alter do Chão - Santarém/PA | CEP - 68020-991"
+      },
+      "blocks": {
+        "menu_novo": {
+          "type": "menu",
+          "settings": {
+            "heading": "Menu Novo",
+            "menu": "mad-menu-novo"
+          }
+        },
+        "suporte": {
+          "type": "menu",
+          "settings": {
+            "heading": "Suporte",
+            "menu": "mad-suporte"
+          }
+        },
+        "sobre": {
+          "type": "menu",
+          "settings": {
+            "heading": "Sobre Nós",
+            "menu": "mad-sobre-nos"
+          }
+        },
+        "atendimento": {
+          "type": "contact",
+          "settings": {
+            "heading": "Central de Atendimento",
+            "email": "contato@mad4.life"
+          }
+        }
+      },
+      "block_order": [
+        "menu_novo",
+        "suporte",
+        "sobre",
+        "atendimento"
+      ]
+    }
+  },
+  "order": [
+    "mad_footer"
+  ]
+}

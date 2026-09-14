@@ -1,0 +1,144 @@
+{
+  "sections": {
+    "banners": {
+      "type": "mad-banner-carousel",
+      "settings": {
+        "autoplay": true,
+        "speed": 5,
+        "show_arrows": true,
+        "show_dots": true
+      },
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-bp0djuycv4ptwzxmkztr-post-mad4life-out25-4-1920x500-03-1.webp",
+            "image_mobile": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-n49jedbirf4wdwjewtik-post-mad4life-out25-4-600x700-04-1.webp",
+            "link": "/collections/spirulina-1"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-dcqpzsmoiz7yrrexe97i-post-mad4life-out25-1-1920x500-03-3.webp",
+            "image_mobile": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-smnzj18o7xvunmjsrjbf-post-mad4life-out25-1-600x700-3.webp",
+            "link": "/collections/guarana-cipo"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-snjsmzbr3ewidnev8tld-post-mad4life-out25-1-1920x500-15-2.webp",
+            "image_mobile": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-9dedoz1dbf061phmps4k-post-mad4life-out25-1-600x700-16-2.webp",
+            "link": "/products/shot-mad-guarana-cipo-curcuma-gengibre-100gr-mad"
+          }
+        },
+        "slide_4": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-r6zz5qh0parpdqyxt03o-post-mad4life-out25-1-1920x500-07-4.webp",
+            "image_mobile": "shopify://shop_images/drive-po8sxdkf7g2qnsibm7d6-2go8z53ltgvwsnmm4f30-post-mad4life-out25-1-600x700-08-4.webp",
+            "link": "/products/cacau-selvagem-puro-em-po-100g-mad"
+          }
+        },
+        "slide_5": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/banner-mad-terra-preta-amazonica-htf1v.webp",
+            "image_mobile": "shopify://shop_images/banner-mad-terra-preta-mobile-enpw8.webp",
+            "link": "/pages/terra-preta-amazonica"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "slide_4",
+        "slide_5"
+      ]
+    },
+    "showcase_superalimentos": {
+      "type": "mad-product-carousel",
+      "settings": {
+        "title": "Superalimentos",
+        "collection": "superalimentos",
+        "limit": 10,
+        "per_view": 5,
+        "button_label": "Comprar",
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
+    "showcase_biocosmeticos": {
+      "type": "mad-product-carousel",
+      "settings": {
+        "title": "Biocosméticos",
+        "collection": "biocosmeticos",
+        "limit": 10,
+        "per_view": 5,
+        "button_label": "Comprar",
+        "padding_top": 100,
+        "padding_bottom": 60
+      }
+    },
+    "showcase_kits": {
+      "type": "mad-product-carousel",
+      "settings": {
+        "title": "Kits",
+        "collection": "kits",
+        "limit": 10,
+        "per_view": 5,
+        "button_label": "Comprar",
+        "padding_top": 100,
+        "padding_bottom": 60
+      }
+    },
+    "image_text_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "image": "shopify://shop_images/24-09-mad-bannerdestaquesuperalimentos.webp",
+        "min_height": 470,
+        "heading": "Rotina de autocuidado de dentro para fora com alto valor nutricional.",
+        "heading_size": 26,
+        "text_html": "<p>✓ supernutrientes<br>✓ 100% puros<br>✓ potencializa sua saúde física e mental<br>✓ riqueza biológica</p>",
+        "button_label": "Saiba mais",
+        "button_link": "/collections/superalimentos",
+        "background": "#FFFFFF"
+      }
+    },
+    "image_text_2": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "image": "shopify://shop_images/24-09-mad-bannerdestaquemarca.webp",
+        "min_height": 470,
+        "heading": "A ciência da natureza a favor do seu corpo",
+        "heading_size": 26,
+        "text_html": "<p>Com produtos que purificam o organismo, regeneram o planeta e geram impacto social positivo, a MAD se destaca.</p><p>Desenvolvemos supernutrientes que promovem o bem-estar, sempre com respeito ao meio ambiente.</p>",
+        "button_label": "Saiba mais",
+        "button_link": "/pages/sobre",
+        "background": "#FFFFFF"
+      }
+    },
+    "instagram": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<br><br><br><script src=\"https://cdn.lightwidget.com/widgets/lightwidget.js\"></script><iframe src=\"https://cdn.lightwidget.com/widgets/3956ead8d1cc53f9877828943d8777ce.html\" scrolling=\"no\" allowtransparency=\"true\" class=\"lightwidget-widget\" style=\"width:100%;border:0;overflow:hidden;\"></iframe>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "banners",
+    "showcase_superalimentos",
+    "showcase_biocosmeticos",
+    "showcase_kits",
+    "image_text_1",
+    "image_text_2",
+    "instagram"
+  ]
+}

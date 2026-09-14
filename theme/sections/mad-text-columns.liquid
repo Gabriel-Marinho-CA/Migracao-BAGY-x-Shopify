@@ -1,0 +1,61 @@
+{%- liquid
+  assign s = section.settings
+  assign columns = section.blocks.size | at_least: 1 | at_most: 4
+-%}
+<div
+  class="mad-text-cols mad-text-cols--{{ s.alignment }}"
+  style="--tc-bg: {{ s.background | default: 'transparent' }}; --tc-cols: {{ columns }}; --pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;"
+>
+  <div class="mad-container">
+    {%- if s.heading != blank -%}
+      <h2 class="mad-title mad-title--lg mad-text-cols__heading">{{ s.heading | escape | newline_to_br }}</h2>
+    {%- endif -%}
+    <div class="mad-text-cols__grid">
+      {%- for block in section.blocks -%}
+        <div class="mad-text-cols__col" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h3 class="mad-text-cols__title">{{ block.settings.heading | escape | newline_to_br }}</h3>
+          {%- endif -%}
+          {%- if block.settings.html != blank -%}
+            <div class="mad-rte">{{ block.settings.html }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "MAD - Texto",
+  "tag": "section",
+  "class": "section mad-section",
+  "settings": [
+    { "type": "textarea", "id": "heading", "label": "Título" },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alinhamento",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" }
+      ]
+    },
+    { "type": "color", "id": "background", "label": "Cor de fundo" },
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 140, "step": 10, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 140, "step": 10, "unit": "px", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Coluna",
+      "settings": [
+        { "type": "textarea", "id": "heading", "label": "Título" },
+        { "type": "html", "id": "html", "label": "Conteúdo (HTML)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "MAD - Texto", "blocks": [{ "type": "column" }] }]
+}
+{% endschema %}

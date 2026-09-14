@@ -1,0 +1,111 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Cúrcuma: Tradição e natureza em sua forma mais pura – direto da floresta amazônica",
+        "heading_size": 40,
+        "text_html": "<h2>Benefícios</h2>\n<p>Ingrediente ancestral presente em culturas que valorizam a imunidade natural</p>\n<ul class=\"checklist\">\n  <li>Antioxidante natural para integrar à alimentação diária</li>\n  <li>100% vegana e livre de aditivos</li>\n  <li>Origem sustentável: sistemas agroflorestais da Amazônia</li>\n  <li>Sabor marcante e cor intensa que enriquecem receitas doces e salgadas</li>\n</ul>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/5.webp"
+      }
+    },
+    "bagy_2_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "O Processo MAD",
+        "heading_size": 40,
+        "text_html": "<p>Nossa cúrcuma vem de cultivos agroflorestais na Amazônia, respeitando o ciclo natural da floresta. \nO resultado é uma raiz com alto teor de curcuminoides e compostos naturais. Cada escolha com a MAD \nfortalece famílias locais, une saberes ancestrais e ciência, e apoia práticas agrícolas regenerativas.</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/flor-curcuma-selvagem-da-amazonia-mad.webp"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "A riqueza da Terra Preta",
+        "heading_size": 40,
+        "text_html": "<p>A Terra Preta de Índio é um dos solos mais férteis do planeta, criada há séculos por comunidades \nindígenas amazônicas a partir da mistura de matéria orgânica, restos vegetais e carvão vegetal. \nRica em minerais, carbono estável e micro-organismos, ela garante um ambiente único para o cultivo da cúrcuma.</p>\n<p>Por crescer nesse solo ancestral, a nossa cúrcuma apresenta:</p>\n<ul class=\"checklist\">\n  <li>Maior vitalidade e intensidade de sabor</li>\n  <li>Alta concentração de curcuminoides naturais</li>\n  <li>Sustentabilidade e respeito ao ciclo da floresta</li>\n</ul>\n<p>Ao consumir a cúrcuma MAD, você leva para casa não apenas um alimento, mas também o legado cultural da Amazônia.</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/terra-preta-de-indio-amazonia-mad.webp"
+      }
+    },
+    "bagy_6_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Sobre o uso de cúrcuma em alimentos e suplementos",
+            "html": "<div style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">\n\n  <h3 style=\"font-size: 18px; margin-bottom: 10px;\">\n     </h3>\n\n  <p>\n    A cúrcuma (Curcuma longa), também conhecida como açafrão-da-terra, é tradicionalmente utilizada na alimentação e em preparações culinárias, sendo considerada segura quando consumida nessas condições.\n  </p>\n\n  <p>\n    De acordo com atualizações recentes da ANVISA, incluindo a Instrução Normativa nº 438/2026, foram estabelecidos novos critérios para o uso de cúrcuma em suplementos alimentares, com definição de limites de ingestão e exigência de advertências nos rótulos, com o objetivo de ampliar a proteção ao consumidor.\n  </p>\n\n  <p>\n    Essas medidas foram adotadas após a identificação de casos raros de efeitos adversos hepáticos associados ao consumo de suplementos contendo cúrcuma em altas concentrações ou com tecnologias que aumentam sua absorção.\n  </p>\n\n   \n      O risco identificado está relacionado principalmente a extratos concentrados e suplementos, e não ao uso alimentar tradicional da cúrcuma.\n  </p>\n      Produtos alimentícios convencionais que utilizam cúrcuma como ingrediente não apresentam evidência de risco quando consumidos dentro de padrões alimentares usuais.\n      <p>\n<p>\n    Por precaução, recomenda-se atenção ao consumo de produtos concentrados e a busca de orientação profissional em caso de dúvidas, especialmente para pessoas com histórico de sensibilidade ou condições hepáticas.\n  </p>\n\n  <p>\n    Caso ocorram sintomas como cansaço incomum, desconforto abdominal ou alterações na coloração da pele ou urina, a orientação é interromper o uso e procurar avaliação de um profissional de saúde.\n  </p>\n\n  <p style=\"margin-top: 15px;\">\n    A MAD reforça seu compromisso com a transparência, segurança e conformidade regulatória, acompanhando continuamente as diretrizes da ANVISA.\n  </p>\n\n</div>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "bagy_1_1",
+    "bagy_2_1",
+    "bagy_3_1",
+    "bagy_6_text",
+    "seals",
+    "reviews",
+    "nutrition"
+  ]
+}

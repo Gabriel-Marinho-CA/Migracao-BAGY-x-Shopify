@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "title": {
+      "type": "mad-main-page",
+      "settings": {
+        "layout": "title_only",
+        "heading": "Quem Somos"
+      }
+    },
+    "bagy_2_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Cuidando do seu corpo e do planeta",
+        "heading_size": 26,
+        "text_html": "Nossa missão é desenvolver produtos que\n<b>purificam</b> o <b>organismo</b>, <b>regeneram</b> o <b>planeta</b> e criam impacto social positivo",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/24-09-mad-bannerdestaquemarca-1.webp"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Da Amazônia ao Consumidor",
+        "heading_size": 26,
+        "text_html": "Nossos produtos são feitos seguindo as tradições dos povos nativos da Amazônia, com a participação ativa dessas comunidades em cada etapa de nossa produção.",
+        "min_height": 470,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/sobre2.webp"
+      }
+    },
+    "bagy_4_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "O que nos move?",
+        "heading_size": 26,
+        "text_html": "<p>✓ Pureza<br>\n✓ Alta valor nutricional<br>\n✓ Produtos florestais<br>\n✓ Agricultura regenerativa<br>\n✓ Política handmade<br>\n✓ Insumos fair trade<br>\n✓ Embalagens reutilizáveis e biodegradáveis<br>\n✓ Movimentação da economia local</p>\n<p><b>A ciência da natureza a favor do seu corpo\n</b></p>",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/nosmove.webp"
+      }
+    }
+  },
+  "order": [
+    "title",
+    "bagy_2_1",
+    "bagy_3_1",
+    "bagy_4_1"
+  ]
+}

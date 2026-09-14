@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Spirulina Amazônica:",
+        "heading_size": 26,
+        "text_html": "<p>A proteína mais absorvível pelo corpo humano.</p>\n<p>Com alto poder antioxidante, elimina toxinas, fortalece o sistema imunológico e aumenta a energia e o bem-estar.</p>\n<p><b>Recomenda-se consumir até 8 g diários:</b><br>\n✓ Misture em smoothie\n<br>✓ Incremente saladas\n<br>✓ Adicione em shots</p>",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/spirulina.webp"
+      }
+    }
+  },
+  "order": [
+    "bagy_1_1"
+  ]
+}

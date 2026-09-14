@@ -1,0 +1,171 @@
+{%- paginate collection.products by section.settings.per_page -%}
+  {%- liquid
+    assign sort_by = collection.sort_by | default: collection.default_sort_by
+    assign active_filters = false
+    for filter in collection.filters
+      if filter.active_values.size > 0
+        assign active_filters = true
+      endif
+    endfor
+    assign total_pages = paginate.pages | at_least: 1
+  -%}
+  {%- capture pages -%}
+    <div class="mad-toolbar__pages">
+      <span>Página: {{ paginate.current_page }} de {{ total_pages }}</span>
+      {%- if paginate.previous -%}
+        <a href="{{ paginate.previous.url }}" aria-label="Página anterior">{%- render 'mad-icon', name: 'chevron-left' -%}</a>
+      {%- else -%}
+        <span class="is-disabled" aria-hidden="true">{%- render 'mad-icon', name: 'chevron-left' -%}</span>
+      {%- endif -%}
+      {%- if paginate.next -%}
+        <a href="{{ paginate.next.url }}" aria-label="Próxima página">{%- render 'mad-icon', name: 'chevron-right' -%}</a>
+      {%- else -%}
+        <span class="is-disabled" aria-hidden="true">{%- render 'mad-icon', name: 'chevron-right' -%}</span>
+      {%- endif -%}
+    </div>
+  {%- endcapture -%}
+
+  <div class="mad-collection">
+    <div class="mad-container" style="max-width: 1290px;">
+      <div class="mad-collection__head">
+        <h1 class="mad-title">{{ collection.title | escape }}</h1>
+        {%- if section.settings.show_description and collection.description != blank -%}
+          <div class="mad-collection__desc mad-rte">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="mad-toolbar">
+        <div class="mad-toolbar__left">
+          {%- if collection.filters != empty -%}
+            <button
+              type="button"
+              class="mad-btn mad-toolbar__filter"
+              data-mad-filter-toggle
+              aria-controls="MadFilters-{{ section.id }}"
+              aria-expanded="{{ active_filters }}"
+            >
+              Filtrar
+            </button>
+          {%- endif -%}
+          <label class="visually-hidden" for="MadSort-{{ section.id }}">Ordenar por</label>
+          <select id="MadSort-{{ section.id }}" data-mad-sort>
+            {%- for option in collection.sort_options -%}
+              <option
+                value="{{ option.value | escape }}"
+                {% if option.value == sort_by %}
+                  selected
+                {% endif %}
+              >
+                {%- case option.value -%}
+                  {%- when 'manual' -%}
+                    Mais relevantes
+                  {%- when 'best-selling' -%}
+                    Mais vendidos
+                  {%- when 'title-ascending' -%}
+                    Nome: A-Z
+                  {%- when 'title-descending' -%}
+                    Nome: Z-A
+                  {%- when 'price-ascending' -%}
+                    Menor preço
+                  {%- when 'price-descending' -%}
+                    Maior preço
+                  {%- when 'created-ascending' -%}
+                    Mais antigos
+                  {%- when 'created-descending' -%}
+                    Lançamentos
+                  {%- else -%}
+                    {{ option.name | escape }}
+                {%- endcase -%}
+              </option>
+            {%- endfor -%}
+          </select>
+          <span>{{ collection.products_count }}</span>
+        </div>
+        <div class="mad-toolbar__dots" aria-hidden="true">&bull;&bull;&bull;</div>
+        {{ pages }}
+      </div>
+
+      {%- if collection.filters != empty -%}
+        <form
+          class="mad-filters"
+          id="MadFilters-{{ section.id }}"
+          action="{{ collection.url }}"
+          method="get"
+          {% unless active_filters %}
+            hidden
+          {% endunless %}
+        >
+          <input type="hidden" name="sort_by" value="{{ sort_by | escape }}">
+          <div class="mad-filters__grid">
+            {%- for filter in collection.filters -%}
+              {%- if filter.type == 'list' or filter.type == 'boolean' -%}
+                <fieldset class="mad-filters__group">
+                  <legend class="h3">{{ filter.label | escape }}</legend>
+                  {%- for value in filter.values -%}
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value | escape }}"
+                        {% if value.active %}
+                          checked
+                        {% endif %}
+                        {% if value.count == 0 and value.active == false %}
+                          disabled
+                        {% endif %}
+                      >
+                      {{ value.label | escape }} ({{ value.count }})
+                    </label>
+                  {%- endfor -%}
+                </fieldset>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="mad-filters__actions">
+            <button type="submit" class="mad-btn">Aplicar</button>
+            <a href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}">Limpar filtros</a>
+          </div>
+        </form>
+      {%- endif -%}
+
+      {%- if collection.products.size > 0 -%}
+        <ul class="mad-grid" role="list" style="--cols: {{ section.settings.columns }};">
+          {%- for product in collection.products -%}
+            <li>
+              {%- render 'mad-product-card',
+                card_product: product,
+                layout: 'inline',
+                section_id: section.id,
+                lazy: true,
+                button_label: section.settings.button_label
+              -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <p class="mad-grid__empty">Nenhum produto encontrado.</p>
+      {%- endif -%}
+
+      <div class="mad-toolbar mad-toolbar--bottom">
+        <div class="mad-toolbar__left"><span>{{ collection.products_count }}</span></div>
+        <div class="mad-toolbar__dots" aria-hidden="true">&bull;&bull;&bull;</div>
+        {{ pages }}
+      </div>
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "MAD - Coleção",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Produtos por página", "min": 12, "max": 48, "step": 3, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Colunas (desktop)", "min": 2, "max": 5, "step": 1, "default": 3 },
+    { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Comprar" },
+    { "type": "checkbox", "id": "show_description", "label": "Mostrar descrição da coleção", "default": false }
+  ]
+}
+{% endschema %}

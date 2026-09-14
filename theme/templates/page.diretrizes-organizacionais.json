@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "title": {
+      "type": "mad-main-page",
+      "settings": {
+        "layout": "title_only",
+        "heading": "Diretrizes Organizacionais"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Produtos Florestais",
+        "heading_size": 26,
+        "text_html": "Nossos padrões de respeito à natureza são criteriosos. Buscamos compreender e respeitar cada processo inspirados na natureza. Nossa produção é inteira baseada em conhecimentos ancestrais de cultivo e extração. Combinamos conhecimento e inovação para agregar valor ao maior legado da humanidade deixado pelos povos primitivos da Amazônia: a diversidade de frutas e sementes. Não adicionamos nada em nossa matéria-prima.",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/floresta-1.webp"
+      }
+    },
+    "bagy_4_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Agricultura Regenerativa",
+        "heading_size": 26,
+        "text_html": "Nossa forma de cultivo e produção ajudam a reduzir a pegada ambiental, fazendo com que colaboremos para a sustentabilidade e garantia de recursos para as futuras gerações. A agricultura regenerativa que praticamos não apenas não degrada o ambiente, como também o deixa melhor do que encontramos, no sentido de nutrientes e da troca entre solo e ar e nossa produção.",
+        "min_height": 470,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/agricultura.webp"
+      }
+    },
+    "bagy_5_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Insumos Responsáveis",
+        "heading_size": 26,
+        "text_html": "Nosso sucesso está diretamente conectado ao sucesso de nossos fornecedores de matéria-prima. Uma colaboração mútua entre nós e eles ajuda a garantir uma sustentabilidade a longo prazo. Para nós a melhor matéria-prima é a que podemos considerar boa em todos os sentidos: parceria comercial baseada em diálogo, respeito e transparência, pagamento justo, os melhores e mais puros extratos e respeito à natureza e seus recursos.",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/floresta.webp"
+      }
+    },
+    "bagy_6_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Embalagens reutilizáveis e biodegradáveis",
+        "heading_size": 26,
+        "text_html": "Nossa preocupação com as futuras gerações e a conservação do meio ambiente é nossa principal linha de escolha para nossas embalagens. Fizemos um amplo estudo ao escolher cada uma delas. Os materiais são biodegradáveis, recicláveis ou reutilizáveis.",
+        "min_height": 470,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/embalagem.webp"
+      }
+    },
+    "bagy_7_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Movimentação da economia local",
+        "heading_size": 26,
+        "text_html": "A Amazônia produtiva, competitiva, de alta inovação e 100% sustentável. Apoiamos comunidades extrativistas que protegem a floresta, movimentamos a economia local através da comercialização sustentável de produtos amazônicos e compra de matéria-prima de fornecedores nativos, além de gerarmos empregos na comunidade onde estamos inseridos. Temos consciência do impacto que a escolha de fornecedores tem nas pessoas e no ambiente quando se trata da comunidade.",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/movimentacao.webp"
+      }
+    },
+    "bagy_8_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Política Handmade",
+        "heading_size": 26,
+        "text_html": "Todos os nossos produtos são feitos à mão, frescos, todos os dias. A produção é fundamentada em pessoas, não em máquinas. Nenhuma parte da nossa produção é industrializada, aqui a regra é pegar na natureza e levar diretamente ao consumidor.",
+        "min_height": 470,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/handmade.webp"
+      }
+    }
+  },
+  "order": [
+    "title",
+    "bagy_3_1",
+    "bagy_4_1",
+    "bagy_5_1",
+    "bagy_6_1",
+    "bagy_7_1",
+    "bagy_8_1"
+  ]
+}

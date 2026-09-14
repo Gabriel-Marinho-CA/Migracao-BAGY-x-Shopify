@@ -1,0 +1,26 @@
+<article class="mad-article">
+  {%- if article.image -%}
+    <div class="mad-article__image">
+      {{
+        article.image
+        | image_url: width: 1720
+        | image_tag: widths: '860, 1290, 1720', sizes: '(min-width: 900px) 860px, 100vw', alt: article.image.alt, fetchpriority: 'high'
+      }}
+    </div>
+  {%- endif -%}
+  <h1 class="mad-article__title">{{ article.title | escape }}</h1>
+  <p class="mad-article__date">
+    <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%d/%m/%Y' }}</time>
+  </p>
+  <div class="mad-article__content mad-rte">{{ article.content }}</div>
+  <a class="mad-btn mad-article__back" href="{{ blog.url }}">Voltar ao blog</a>
+</article>
+
+{% schema %}
+{
+  "name": "MAD - Post",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["article"] }
+}
+{% endschema %}

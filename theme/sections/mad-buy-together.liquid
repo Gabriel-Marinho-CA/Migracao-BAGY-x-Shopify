@@ -1,0 +1,99 @@
+{%- liquid
+  assign keep_percent = 100 | minus: section.settings.pix_percent
+  assign recs_url = routes.product_recommendations_url | append: '?section_id=' | append: section.id | append: '&limit=' | append: section.settings.limit | append: '&intent=' | append: section.settings.intent
+-%}
+{%- if product -%}
+  {%- assign main_variant = product.selected_or_first_available_variant -%}
+  {%- assign recs_url = recs_url | append: '&product_id=' | append: product.id -%}
+{%- endif -%}
+<div class="mad-bt" data-mad-bt data-main-variant="{{ main_variant.id }}" {% if product %}hidden{% endif %}>
+  {%- if product -%}
+    <h2 class="mad-bt__title">{{ section.settings.title | escape }}</h2>
+  {%- endif -%}
+  <div class="mad-bt__grid">
+    {%- if product -%}
+      <div class="mad-bt__main">
+        {%- if product.featured_media -%}
+          {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
+        {%- endif -%}
+        <span class="mad-bt__name">{{ product.title | escape }}</span>
+        {%- if section.settings.pix_percent > 0 -%}
+          <span class="mad-bt__line">
+            <strong>{{ main_variant.price | times: keep_percent | divided_by: 100.0 | round | money }}</strong> no pix
+          </span>
+        {%- endif -%}
+        <span class="mad-bt__line"><strong>{{ main_variant.price | money }}</strong></span>
+      </div>
+      <div class="mad-bt__plus" aria-hidden="true">+</div>
+    {%- endif -%}
+    <div
+      class="mad-bt__items"
+      data-mad-recs
+      data-section="{{ section.id }}"
+      data-url="{{ recs_url }}"
+    >
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        {%- for rec in recommendations.products -%}
+          {%- assign rec_variant = rec.selected_or_first_available_variant -%}
+          {%- if rec_variant.available -%}
+            <label class="mad-bt__item">
+              <input
+                class="mad-bt__check"
+                type="checkbox"
+                value="{{ rec_variant.id }}"
+                data-mad-bt-check
+                checked
+              >
+              {%- if rec.featured_media -%}
+                {{ rec.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', alt: rec.title }}
+              {%- endif -%}
+              <span>
+                <a class="mad-bt__name" href="{{ rec.url }}">{{ rec.title | escape }}</a>
+                {%- if section.settings.pix_percent > 0 -%}
+                  <span class="mad-bt__line">
+                    <strong>{{ rec_variant.price | times: keep_percent | divided_by: 100.0 | round | money }}</strong> no pix
+                  </span>
+                {%- endif -%}
+                <span class="mad-bt__line"><strong>{{ rec_variant.price | money }}</strong></span>
+              </span>
+            </label>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+    {%- if product -%}
+      <div class="mad-bt__actions">
+        <button type="button" class="mad-btn" data-mad-bt-submit>
+          <span>{{ section.settings.button_label | escape }}</span>
+          {%- render 'loading-spinner' -%}
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+  <p class="mad-pdp__error" data-mad-bt-error hidden></p>
+</div>
+
+{% schema %}
+{
+  "name": "MAD - Compre junto",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Aproveite e compre junto" },
+    { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Comprar" },
+    { "type": "range", "id": "limit", "label": "Produtos sugeridos", "min": 1, "max": 4, "step": 1, "default": 2 },
+    {
+      "type": "select",
+      "id": "intent",
+      "label": "Tipo de sugestão",
+      "default": "related",
+      "options": [
+        { "value": "related", "label": "Relacionados" },
+        { "value": "complementary", "label": "Complementares (Search & Discovery)" }
+      ]
+    },
+    { "type": "range", "id": "pix_percent", "label": "Desconto no Pix", "min": 0, "max": 20, "step": 1, "unit": "%", "default": 5 }
+  ]
+}
+{% endschema %}

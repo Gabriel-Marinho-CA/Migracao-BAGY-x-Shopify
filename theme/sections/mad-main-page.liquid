@@ -1,0 +1,119 @@
+{%- liquid
+  assign s = section.settings
+  assign show_sidebar = false
+  if s.layout == 'sidebar' and s.menu != blank
+    assign show_sidebar = true
+  endif
+  assign heading = s.heading | default: page.title
+-%}
+{%- if s.layout == 'title_only' -%}
+  <div class="mad-page-heading">
+    <h1 class="mad-title">{{ heading | escape }}</h1>
+  </div>
+{%- else -%}
+  <div class="mad-page">
+    <div class="mad-page__grid{% unless show_sidebar %} mad-page__grid--full{% endunless %}">
+      {%- if show_sidebar -%}
+        <aside class="mad-page__aside">
+          <ul class="mad-page__nav" role="list">
+            {%- for link in s.menu.links -%}
+              <li>
+                <a
+                  href="{{ link.url }}"
+                  {% if link.current %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </aside>
+      {%- endif -%}
+      <div class="mad-page__main">
+        <h1 class="mad-title mad-page__title">{{ heading | escape }}</h1>
+        <div class="mad-page__content">
+          {%- if page.content != blank -%}
+            <div class="mad-rte">{{ page.content }}</div>
+          {%- endif -%}
+
+          {%- if s.show_contact_form -%}
+            {%- if s.contact_heading != blank -%}
+              <h2 class="mad-contact__heading">{{ s.contact_heading | escape }}</h2>
+            {%- endif -%}
+            {%- if s.contact_intro != blank -%}
+              <div class="mad-contact__intro mad-rte">{{ s.contact_intro }}</div>
+            {%- endif -%}
+            {%- form 'contact', id: 'MadContactForm', class: 'mad-contact__form' -%}
+              {%- if form.posted_successfully? -%}
+                <p class="mad-contact__status" role="status">Mensagem enviada! Responderemos em breve.</p>
+              {%- elsif form.errors -%}
+                <div class="mad-contact__status" role="alert">{{ form.errors | default_errors }}</div>
+              {%- endif -%}
+              <div class="mad-contact__field">
+                <label for="MadContact-name">Nome</label>
+                <input id="MadContact-name" type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}">
+              </div>
+              <div class="mad-contact__field">
+                <label for="MadContact-email">E-mail</label>
+                <input
+                  id="MadContact-email"
+                  type="email"
+                  name="contact[email]"
+                  autocomplete="email"
+                  value="{{ form.email }}"
+                  required
+                >
+              </div>
+              <div class="mad-contact__field mad-contact__field--third">
+                <label for="MadContact-phone">Telefone</label>
+                <input id="MadContact-phone" type="tel" name="contact[phone]" autocomplete="tel" value="{{ form.phone }}">
+              </div>
+              <div class="mad-contact__field mad-contact__field--third">
+                <label for="MadContact-city">Cidade</label>
+                <input id="MadContact-city" type="text" name="contact[Cidade]" autocomplete="address-level2">
+              </div>
+              <div class="mad-contact__field mad-contact__field--third">
+                <label for="MadContact-state">Estado</label>
+                <input id="MadContact-state" type="text" name="contact[Estado]" autocomplete="address-level1">
+              </div>
+              <div class="mad-contact__field">
+                <label for="MadContact-body">Mensagem</label>
+                <textarea id="MadContact-body" name="contact[body]">{{ form.body }}</textarea>
+              </div>
+              <button type="submit" class="mad-btn mad-contact__submit">Enviar</button>
+            {%- endform -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "MAD - Página",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "sidebar",
+      "options": [
+        { "value": "sidebar", "label": "Menu lateral + conteúdo" },
+        { "value": "full", "label": "Só conteúdo" },
+        { "value": "title_only", "label": "Só o título (seções abaixo)" }
+      ]
+    },
+    { "type": "text", "id": "heading", "label": "Título (vazio = título da página)" },
+    { "type": "link_list", "id": "menu", "label": "Menu lateral" },
+    { "type": "checkbox", "id": "show_contact_form", "label": "Mostrar formulário de contato", "default": false },
+    { "type": "text", "id": "contact_heading", "label": "Título do formulário", "default": "Atendimento por e-mail" },
+    { "type": "richtext", "id": "contact_intro", "label": "Texto do formulário" }
+  ]
+}
+{% endschema %}

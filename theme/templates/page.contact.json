@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-page",
+      "settings": {
+        "layout": "sidebar",
+        "menu": "mad-institucional",
+        "show_contact_form": true,
+        "heading": "Fale Conosco",
+        "contact_heading": "Atendimento por e-mail",
+        "contact_intro": "<p>Se preferir, entre em contato direto através do e-mail <a href=\"mailto:contato@mad4.life\">contato@mad4.life</a></p>"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

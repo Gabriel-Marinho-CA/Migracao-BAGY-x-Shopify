@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-collection",
+      "settings": {
+        "per_page": 24,
+        "columns": 3,
+        "button_label": "Comprar",
+        "show_description": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

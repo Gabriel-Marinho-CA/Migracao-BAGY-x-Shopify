@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "bagy_1_html": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "",
+            "html": "<div style=\"margin:0; padding:0; font-family:'El Messiri', sans-serif; background-color:#000;\">\n\n  <!-- CONTAINER FULL SCREEN -->\n  <div style=\"min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background-color:#000;\">\n\n    <!-- SLIDES EM MODO APRESENTAÇÃO -->\n    <div style=\"width:100%; max-width:1200px; aspect-ratio:16/9;\">\n      <iframe src=\"https://docs.google.com/presentation/d/e/2PACX-1vTZ4rThhHaBSRPshtQ-etvAB2wrFpjk8Wwix_qu7vzRqI2AZf7GxPQbHnMPF-vSww/pubembed?start=true&loop=true&delayms=3000\" frameborder=\"0\" width=\"1280\" height=\"749\" allowfullscreen=\"true\" mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\"></iframe>\n    </div>\n\n    <!-- BOTÃO PARA ABRIR / BAIXAR EM NOVA ABA -->\n    <div style=\"margin:24px 0 40px; text-align:center;\">\n      <a href=\"https://drive.google.com/file/d/1Sp4cDE8Q8KoaI7p0FPH0EtjaMYlBJgHP/view?usp=sharing\"\n         target=\"_blank\"\n         style=\"display:inline-block; padding:12px 28px; background:#FAF7F2; color:#1A3D2E; border-radius:999px; text-decoration:none; font-weight:500;\">\n        📄 Abrir / Baixar apresentação em PDF\n      </a>\n    </div>\n\n  </div>\n</div>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    }
+  },
+  "order": [
+    "bagy_1_html"
+  ]
+}

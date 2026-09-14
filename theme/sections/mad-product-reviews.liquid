@@ -1,0 +1,65 @@
+{%- liquid
+  assign entry = product.metafields.custom.depoimentos.value
+  assign clients = entry.clientes.value
+  assign texts = entry.textos.value
+  assign ratings = entry.notas.value
+-%}
+{%- capture swiper_config -%}
+  {"slidesPerView":1,"spaceBetween":20,"speed":500,"breakpoints":{"750":{"slidesPerView":3,"spaceBetween":90}}}
+{%- endcapture -%}
+{%- if clients != blank -%}
+  <div class="mad-reviews">
+    <div class="mad-container">
+      {%- if section.settings.title != blank -%}
+        <h2 class="mad-title mad-title--lg">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      <div class="mad-carousel mad-reviews__list" data-mad-swiper="{{ swiper_config | strip | escape }}">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            {%- for client in clients -%}
+              {%- liquid
+                assign index = forloop.index0
+                assign score = 5
+                if ratings != blank
+                  assign score = ratings[index].rating | round
+                endif
+              -%}
+              <div class="swiper-slide mad-review">
+                <div class="mad-review__stars" role="img" aria-label="{{ score }} de 5 estrelas">
+                  {%- for star in (1..5) -%}
+                    {%- if star <= score -%}
+                      {%- render 'mad-icon', name: 'star' -%}
+                    {%- else -%}
+                      {%- render 'mad-icon', name: 'star-outline' -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+                <p class="mad-review__text">{{ texts[index] | escape }}</p>
+                <p class="mad-review__name">{{ client | escape }}</p>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+        <button type="button" class="mad-carousel__arrow mad-carousel__arrow--prev" data-mad-prev aria-label="Depoimentos anteriores">
+          {%- render 'mad-icon', name: 'chevron-left' -%}
+        </button>
+        <button type="button" class="mad-carousel__arrow mad-carousel__arrow--next" data-mad-next aria-label="Próximos depoimentos">
+          {%- render 'mad-icon', name: 'chevron-right' -%}
+        </button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "MAD - Depoimentos",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "paragraph", "content": "Mostra o metaobjeto do metafield custom.depoimentos." },
+    { "type": "text", "id": "title", "label": "Título", "default": "Depoimentos e Avaliações" }
+  ]
+}
+{% endschema %}

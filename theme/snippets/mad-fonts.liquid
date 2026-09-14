@@ -1,0 +1,38 @@
+{% doc %}
+  Declares the self-hosted MAD fonts (Federo and Nanum Gothic, latin subset).
+
+  @example
+  {% render 'mad-fonts' %}
+{% enddoc %}
+{{ 'mad-federo-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+{{ 'mad-nanum-gothic-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+<style>
+  @font-face {
+    font-family: 'Federo';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('{{ 'mad-federo-400.woff2' | asset_url }}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('{{ 'mad-nanum-gothic-400.woff2' | asset_url }}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('{{ 'mad-nanum-gothic-700.woff2' | asset_url }}') format('woff2');
+  }
+  @font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('{{ 'mad-nanum-gothic-800.woff2' | asset_url }}') format('woff2');
+  }
+</style>

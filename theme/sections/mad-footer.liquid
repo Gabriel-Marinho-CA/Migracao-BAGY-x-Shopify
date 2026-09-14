@@ -1,0 +1,176 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<footer class="mad-footer">
+  <div class="mad-footer__inner">
+    <div class="mad-footer__cols">
+      {%- for block in section.blocks -%}
+        <div class="mad-footer__col" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h2 class="mad-footer__heading">{{ block.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- case block.type -%}
+            {%- when 'menu' -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="mad-footer__links" role="list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            {%- when 'contact' -%}
+              {%- if block.settings.email != blank -%}
+                <a class="mad-footer__contact" href="mailto:{{ block.settings.email }}">
+                  <span class="mad-footer__contact-icon">{%- render 'mad-icon', name: 'email' -%}</span>
+                  {{- block.settings.email -}}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="mad-rte">{{ block.settings.text }}</div>
+              {%- endif -%}
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="mad-footer__middle">
+      <a href="{{ routes.root_url }}" class="mad-footer__logo">
+        {%- if s.logo != blank -%}
+          {{ s.logo | image_url: width: 272 | image_tag: loading: 'lazy', alt: shop.name }}
+        {%- else -%}
+          <span class="mad-title">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+      <ul class="mad-footer__social" role="list">
+        {%- if s.facebook != blank -%}
+          <li>
+            <a href="{{ s.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">
+              {%- render 'mad-icon', name: 'facebook' -%}
+            </a>
+          </li>
+        {%- endif -%}
+        {%- if s.instagram != blank -%}
+          <li>
+            <a href="{{ s.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+              {%- render 'mad-icon', name: 'instagram' -%}
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+      {%- if s.show_newsletter -%}
+        <div class="mad-footer__news">
+          <h2 class="mad-footer__heading">{{ s.newsletter_title | escape }}</h2>
+          {%- form 'customer', id: 'MadFooterNewsletter', class: 'mad-footer__news-wrap' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="mad-footer__news-form">
+              <input
+                type="text"
+                name="contact[first_name]"
+                placeholder="Seu nome"
+                aria-label="Seu nome"
+                autocomplete="name"
+              >
+              <input
+                type="email"
+                name="contact[email]"
+                placeholder="Seu e-mail"
+                aria-label="Seu e-mail"
+                autocomplete="email"
+                required
+              >
+              <button type="submit">OK</button>
+            </div>
+            {%- if form.posted_successfully? -%}
+              <p class="mad-footer__news-msg" role="status">Cadastro realizado com sucesso</p>
+            {%- elsif form.errors -%}
+              <p class="mad-footer__news-msg" role="alert">
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="mad-footer__trust">
+      <div>
+        <h2 class="mad-footer__heading">{{ s.payments_title | escape }}</h2>
+        {%- if s.payments_image != blank -%}
+          {{
+            s.payments_image
+            | image_url: width: 820
+            | image_tag: loading: 'lazy', class: 'mad-footer__payments-image', alt: 'Formas de pagamento', width: 410
+          }}
+        {%- else -%}
+          <ul class="mad-footer__payments" role="list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>{{ type | payment_type_svg_tag }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+      <div>
+        <h2 class="mad-footer__heading">{{ s.security_title | escape }}</h2>
+        <ul class="mad-footer__seals" role="list">
+          {%- if s.seal_1 != blank -%}
+            <li>{{ s.seal_1 | image_url: height: 96 | image_tag: loading: 'lazy', height: 48, alt: 'Site seguro' }}</li>
+          {%- endif -%}
+          {%- if s.seal_2 != blank -%}
+            <li>{{ s.seal_2 | image_url: height: 96 | image_tag: loading: 'lazy', height: 48, alt: 'Google Safe Browsing' }}</li>
+          {%- endif -%}
+        </ul>
+      </div>
+    </div>
+
+    {%- if s.seo_text != blank -%}
+      <p class="mad-footer__seo">{{ s.seo_text | escape }}</p>
+    {%- endif -%}
+    {%- if s.copyright != blank -%}
+      <p class="mad-footer__copy">{{ s.copyright | escape }}</p>
+    {%- endif -%}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "MAD - Rodapé",
+  "tag": "section",
+  "class": "section mad-section",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Mostrar newsletter", "default": true },
+    { "type": "text", "id": "newsletter_title", "label": "Título da newsletter", "default": "Receba novidades e promoções" },
+    { "type": "text", "id": "payments_title", "label": "Título pagamento", "default": "Pagamento" },
+    { "type": "image_picker", "id": "payments_image", "label": "Imagem das bandeiras" },
+    { "type": "text", "id": "security_title", "label": "Título segurança", "default": "Segurança" },
+    { "type": "image_picker", "id": "seal_1", "label": "Selo 1" },
+    { "type": "image_picker", "id": "seal_2", "label": "Selo 2" },
+    { "type": "text", "id": "seo_text", "label": "Texto SEO" },
+    { "type": "textarea", "id": "copyright", "label": "Direitos e dados da empresa" }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Menu" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Atendimento",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Central de atendimento" },
+        { "type": "text", "id": "email", "label": "E-mail" },
+        { "type": "richtext", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "MAD - Rodapé" }]
+}
+{% endschema %}

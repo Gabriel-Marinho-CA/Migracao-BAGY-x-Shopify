@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Guaraná Cipó - energético 100% natural.",
+        "heading_size": 26,
+        "text_html": "<p>Termogênico natural que aumenta a concentração, melhora a disposição física e mental, combate a fadiga e eleva a libido — tudo isso sem causar taquicardia.</p>\n<p><b>Recomenda-se consumir 5g por dia:</b><br>\n✓ Shot matinal: adicione à água ou suco.\n<br>✓ Pré-treino: misture em shakes ou smoothies.\n<br>✓ Chás ou infusões.</p>",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/sobre.webp"
+      }
+    }
+  },
+  "order": [
+    "bagy_1_1"
+  ]
+}

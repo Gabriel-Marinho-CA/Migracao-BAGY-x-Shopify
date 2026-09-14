@@ -1,0 +1,104 @@
+{
+  "sections": {
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Torne-se um(a) Profissional Prescritor(a) MAD4Life",
+        "heading_size": 26,
+        "text_html": "Junte-se a uma comunidade que valoriza saúde, inovação e resultados reais. Tenha acesso exclusivo a produtos, conteúdos técnicos e condições especiais.\n<br><br>",
+        "min_height": 470,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/9a9ea549-4acd-451c-bea9-9af1782131f0.webp"
+      }
+    },
+    "bagy_2_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Torne-se um(a) Profissional Prescritor(a) MAD4Life",
+            "html": "<br><h2>Junte-se a uma comunidade que valoriza saúde, inovação e resultados reais. Tenha acesso exclusivo a produtos, conteúdos técnicos e condições especiais.</h2><br><br>\n <strong> • Acesso antecipado a lançamentos e amostras</strong><br>\nDescubra em primeira mão as novidades que fazem a diferença no consultório.<br><br>\n <strong>   •  Conteúdo técnico e suporte científico</strong><br>\nAtualize-se com materiais baseados em evidências e apoio da nossa equipe especializada.<br><br>\n <strong>   • Condições comerciais diferenciadas</strong><br>\nParcerias pensadas para quem leva a saúde a sério.<br><br>"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "heading": "",
+            "html": "<div role=\"main\" id=\"site_b2c_prescritores-9fa342e9d673169854df\"></div><script type=\"text/javascript\" src=\"https://d335luupugsy2.cloudfront.net/js/rdstation-forms/stable/rdstation-forms.min.js\"></script><script type=\"text/javascript\"> new RDStationForms('site_b2c_prescritores-9fa342e9d673169854df', 'UA-240683812-1').createForm();</script>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2"
+      ]
+    },
+    "bagy_3_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "background": "#FFFFFF"
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Dúvidas Frequentes",
+            "html": ""
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "heading": "Como entro em contato com o time Mad4Life?",
+            "html": "Pelo e-mail: [contato@mad4.life] ou via WhatsApp."
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "heading": "Quem pode se cadastrar?",
+            "html": "Profissionais da saúde com registro ativo em conselhos de classe."
+          }
+        },
+        "column_4": {
+          "type": "column",
+          "settings": {
+            "heading": "O cadastro tem custo?",
+            "html": "Não. É gratuito e sem compromisso."
+          }
+        },
+        "column_5": {
+          "type": "column",
+          "settings": {
+            "heading": "Vou receber amostras?",
+            "html": "Sim! Prescritores ativos recebem amostras e materiais conforme as ações da marca."
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2",
+        "column_3",
+        "column_4",
+        "column_5"
+      ]
+    }
+  },
+  "order": [
+    "bagy_1_1",
+    "bagy_2_text",
+    "bagy_3_text"
+  ]
+}

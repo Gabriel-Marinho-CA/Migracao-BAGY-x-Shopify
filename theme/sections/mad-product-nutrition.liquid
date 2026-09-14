@@ -1,0 +1,114 @@
+{%- liquid
+  assign table = product.metafields.custom.tabela_nutricional.value
+  assign usage = product.metafields.custom.modo_de_uso
+  assign ingredients = product.metafields.custom.ingredientes
+  assign specs = product.metafields.custom.especificacoes.value
+  assign has_content = false
+  if table != blank or usage != blank or ingredients != blank or specs != blank
+    assign has_content = true
+  endif
+-%}
+{%- if has_content -%}
+  <div class="mad-nutri">
+    {%- if section.settings.title != blank -%}
+      <h2 class="mad-title mad-title--lg">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+    <div class="mad-nutri__inner">
+      {%- if table != blank -%}
+        {%- liquid
+          assign columns = table.colunas.value
+          assign rows = table.linhas.value
+        -%}
+        <div class="mad-nutri__block">
+          <h3 class="mad-subtitle">{{ section.settings.table_title | escape }}</h3>
+          {%- if table.porcoes_por_embalagem.value != blank -%}
+            <p class="mad-nutri__meta">Porções por embalagem: {{ table.porcoes_por_embalagem.value | escape }}</p>
+          {%- endif -%}
+          {%- if table.porcao.value != blank -%}
+            <p class="mad-nutri__meta">Porção: {{ table.porcao.value | escape }}</p>
+          {%- endif -%}
+          <table class="mad-nutri__table">
+            {%- if columns != blank -%}
+              <thead>
+                <tr>
+                  <th scope="col"><span class="visually-hidden">Nutriente</span></th>
+                  {%- for column in columns -%}
+                    <th scope="col">{{ column | escape }}</th>
+                  {%- endfor -%}
+                </tr>
+              </thead>
+            {%- endif -%}
+            <tbody>
+              {%- for row in rows -%}
+                {%- assign cells = row | split: ' | ' -%}
+                <tr>
+                  {%- for cell in cells -%}
+                    {%- if forloop.first -%}
+                      <td>{{ cell | escape }}</td>
+                    {%- else -%}
+                      <td>{% if cell != '-' %}{{ cell | escape }}{% endif %}</td>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+          {%- if table.observacao.value != blank -%}
+            <p class="mad-nutri__obs">{{ table.observacao.value | escape | newline_to_br }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if specs != blank -%}
+        {%- liquid
+          assign spec_titles = specs.titulos.value
+          assign spec_values = specs.conteudos.value
+        -%}
+        <div class="mad-nutri__block">
+          <h3 class="mad-subtitle">{{ section.settings.specs_title | escape }}</h3>
+          <table class="mad-specs">
+            <tbody>
+              {%- for spec_title in spec_titles -%}
+                <tr>
+                  <th scope="row">{{ spec_title | escape }}</th>
+                  <td>{{ spec_values[forloop.index0] | escape }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- endif -%}
+
+      {%- if usage != blank -%}
+        <div class="mad-nutri__block">
+          <h3 class="mad-subtitle">{{ section.settings.usage_title | escape }}</h3>
+          <div class="mad-nutri__text mad-rte">{{ usage | metafield_tag }}</div>
+        </div>
+      {%- endif -%}
+
+      {%- if ingredients != blank -%}
+        <div class="mad-nutri__block">
+          <h3 class="mad-subtitle">{{ section.settings.ingredients_title | escape }}</h3>
+          <div class="mad-nutri__text mad-rte">{{ ingredients | metafield_tag }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "MAD - Info do produto",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "paragraph", "content": "Tabela nutricional, especificações, modo de uso e ingredientes vêm dos metafields do produto." },
+    { "type": "text", "id": "title", "label": "Título", "default": "Informações Nutricionais" },
+    { "type": "text", "id": "table_title", "label": "Título da tabela", "default": "Tabela nutricional" },
+    { "type": "text", "id": "specs_title", "label": "Título das especificações", "default": "Especificações" },
+    { "type": "text", "id": "usage_title", "label": "Título do modo de uso", "default": "Como consumir ?" },
+    { "type": "text", "id": "ingredients_title", "label": "Título dos ingredientes", "default": "Ingredientes" }
+  ]
+}
+{% endschema %}

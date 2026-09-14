@@ -1,0 +1,91 @@
+{%- liquid
+  assign s = section.settings
+  assign layout_class = ''
+  if s.layout == 'image_right'
+    assign layout_class = 'mad-it--reverse'
+  elsif s.layout == 'overlay'
+    assign layout_class = 'mad-it--overlay'
+  endif
+  assign heading_color = s.heading_color | default: 'var(--mad-text)'
+  assign text_color = s.text_color | default: 'var(--mad-text)'
+  assign background = s.background | default: '#ffffff'
+-%}
+<div
+  class="mad-it {{ layout_class }}"
+  style="--it-bg: {{ background }}; --it-color: {{ text_color }}; --it-heading: {{ heading_color }}; --it-hs: {{ s.heading_size }}px; --it-h: {{ s.min_height }}px; --it-overlay: {{ s.overlay_opacity | divided_by: 100.0 }};"
+>
+  <div class="mad-it__media">
+    {%- if s.image != blank -%}
+      {{
+        s.image
+        | image_url: width: 1440
+        | image_tag:
+          widths: '600, 900, 1200, 1440',
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          loading: 'lazy',
+          alt: s.image.alt
+      }}
+    {%- elsif s.image_src != blank -%}
+      <img src="{{ s.image_src }}" alt="" loading="lazy" width="1440" height="1440">
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  <div class="mad-it__content">
+    {%- if s.heading != blank -%}
+      <h2 class="mad-it__heading">{{ s.heading | escape | newline_to_br }}</h2>
+    {%- endif -%}
+    {%- if s.text_html != blank -%}
+      <div class="mad-it__text mad-rte">{{ s.text_html }}</div>
+    {%- elsif s.text != blank -%}
+      <div class="mad-it__text mad-rte">{{ s.text }}</div>
+    {%- endif -%}
+    {%- if s.button_label != blank -%}
+      <a
+        class="mad-btn mad-it__button"
+        {% if s.button_link != blank %}
+          href="{{ s.button_link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+      >
+        {{- s.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "MAD - Imagem e texto",
+  "tag": "section",
+  "class": "section mad-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "image_left",
+      "options": [
+        { "value": "image_left", "label": "Imagem à esquerda" },
+        { "value": "image_right", "label": "Imagem à direita" },
+        { "value": "overlay", "label": "Texto sobre a imagem" }
+      ]
+    },
+    { "type": "image_picker", "id": "image", "label": "Imagem" },
+    { "type": "text", "id": "image_src", "label": "URL da imagem (se não usar o seletor)" },
+    { "type": "range", "id": "min_height", "label": "Altura mínima (desktop)", "min": 300, "max": 1200, "step": 10, "unit": "px", "default": 470 },
+    { "type": "range", "id": "overlay_opacity", "label": "Escurecer imagem (texto sobre a imagem)", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 0 },
+    { "type": "textarea", "id": "heading", "label": "Título", "default": "Imagem com texto" },
+    { "type": "range", "id": "heading_size", "label": "Tamanho do título", "min": 16, "max": 60, "step": 2, "unit": "px", "default": 26 },
+    { "type": "richtext", "id": "text", "label": "Texto" },
+    { "type": "html", "id": "text_html", "label": "Texto em HTML (substitui o texto acima)" },
+    { "type": "text", "id": "button_label", "label": "Texto do botão" },
+    { "type": "url", "id": "button_link", "label": "Link do botão" },
+    { "type": "color", "id": "background", "label": "Cor de fundo", "default": "#ffffff" },
+    { "type": "color", "id": "heading_color", "label": "Cor do título" },
+    { "type": "color", "id": "text_color", "label": "Cor do texto" }
+  ],
+  "presets": [{ "name": "MAD - Imagem e texto" }]
+}
+{% endschema %}

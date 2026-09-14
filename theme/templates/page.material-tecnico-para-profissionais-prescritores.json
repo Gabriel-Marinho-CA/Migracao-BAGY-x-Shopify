@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "bagy_1_html": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "",
+            "html": "<div style=\"max-width:900px;margin:auto;padding:20px;font-family:Arial,sans-serif;line-height:1.7;color:#333;\">\n\n    <h1 style=\"color:#2F5D3A;text-align:center;\">\n        📘 Material Técnico para Profissionais de Saúde\n    </h1>\n\n    <p style=\"font-size:18px;text-align:center;\">\n        <strong>Da Floresta ao Consultório</strong>\n    </p>\n\n    <p>\n        Este material técnico foi desenvolvido pela <strong>MAD Bioindústria Amazônica</strong> para apoiar médicos, nutricionistas e demais profissionais de saúde na aplicação clínica de alimentos integrais da biodiversidade amazônica.\n    </p>\n\n    <p>\n        Reunimos informações científicas, referências bibliográficas e aplicações práticas relacionadas aos principais bioativos presentes em matérias-primas amazônicas selecionadas, preservadas por meio de processamento mínimo e rastreabilidade de origem.\n    </p>\n    </p>\n\n    <h2 style=\"color:#2F5D3A;\">O que você encontrará neste material?</h2>\n    </p>\n    <ul>\n        <li>✅ Principais compostos bioativos e mecanismos descritos na literatura científica</li>\n        <li>✅ Aplicações nutricionais em demandas como inflamação crônica, microbiota intestinal, saúde cardiovascular, imunidade, performance e longevidade</li>\n        <li>✅ Sugestões de combinações alimentares e protocolos de uso na prática clínica</li>\n        <li>✅ Informações sobre Terra Preta Amazônica, biodiversidade e processamento mínimo dos alimentos MAD</li>\n        <li>✅ Referências científicas para aprofundamento técnico</li>\n    </ul>\n\n    <p>\n    </p>\n        Nosso objetivo é oferecer uma referência rápida e confiável para profissionais que desejam incorporar alimentos integrais amazônicos e seus compostos bioativos em estratégias nutricionais voltadas à promoção da saúde, prevenção e qualidade de vida.\n    </p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    }
+  },
+  "order": [
+    "bagy_1_html"
+  ]
+}

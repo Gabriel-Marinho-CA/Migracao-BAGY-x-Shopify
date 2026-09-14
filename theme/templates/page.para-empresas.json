@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Junte-se a nós e represente a marca\nMAD 4 Life!",
+        "heading_size": 26,
+        "text_html": "Junte-se à MAD como representante e faça parte de uma marca reconhecida pela qualidade superior de seus produtos. Venha crescer conosco e fazer parte dessa jornada de sucesso!\n<br><br>",
+        "min_height": 470,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/9a9ea549-4acd-451c-bea9-9af1782131f0.webp"
+      }
+    },
+    "bagy_2_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "background": "#FFFFFF"
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "",
+            "html": "<div style=\"padding:177.78% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/1060479326?controls=false&loop=1&portrait=0&autoplay=1&badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"Mad Amazonia\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"></script>"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "heading": "",
+            "html": "<b>Junte-se à MAD e faça a diferença!</b>\n<br><br>\nNa MAD, estamos comprometidos em oferecer produtos de excelente qualidade que promovem a purificação do corpo, regeneração do planeta e geram um impacto social positivo.\nComo nosso representante, você terá a missão de impulsionar as vendas em sua área, estabelecendo novos contatos e mantendo parcerias existentes.\n<br><br>\n<b>O que nos torna únicos?</b>\n<br><br>\nCada produto MAD carrega a essência da Amazônia, com ingredientes cultivados de forma sustentável, respeitando a natureza e gerando oportunidades reais para as comunidades locais. Ao se tornar um revendedor, você contribui diretamente para preservar a floresta e incentivar o desenvolvimento social e econômico da região.\n<br><br>\n<b>O que nos torna únicos?</b>\n<br><br>\nCada produto MAD carrega a essência da Amazônia, com ingredientes cultivados de forma sustentável, respeitando a natureza e gerando oportunidades reais para as comunidades locais. Ao se tornar um revendedor, você contribui diretamente para preservar a floresta e incentivar o desenvolvimento social e econômico da região.\n\n\n<br><br>\n<b>Como se juntar a nós?</b>\n<br><br>\n\n1️⃣ Preencha o cadastro de interesse. <br><br>\n2️⃣ Aguarde nosso contato para validar as informações.<br><br>\n3️⃣ Comece a oferecer produtos que fazem a diferença — para seus clientes, para a natureza e para as comunidades da Amazônia.<br><br>\n\n<b>Junte-se à MAD e seja parte de um movimento que une negócios, responsabilidade e propósito.</b>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2"
+      ]
+    },
+    "bagy_3_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Entre em Contato com a MAD",
+            "html": "Na MAD, estamos prontos para te ajudar!<br><br>\nQueremos esclarecer todas as suas dúvidas e fornecer as informações necessárias para que você tenha a melhor experiência possível.<br><br>\nPreencha o formulário abaixo com seus dados e aguarde nosso retorno.<br><br>\nEntraremos em contato o mais breve possível para fornecer o suporte que você precisa.<br><br>\nVenha fazer parte dessa jornada de sucesso!"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "heading": "",
+            "html": "<div class=\"section one\" id=\"section1\">\n<script src=\"https://js.hsforms.net/forms/embed/49407455.js\" defer></script>\n<div class=\"hs-form-frame\" data-region=\"na1\" data-form-id=\"13c94be7-8654-412d-8992-8a4dc9e63c3c\" data-portal-id=\"49407455\"></div>\n\n</div>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2"
+      ]
+    }
+  },
+  "order": [
+    "bagy_1_1",
+    "bagy_2_text",
+    "bagy_3_text"
+  ]
+}

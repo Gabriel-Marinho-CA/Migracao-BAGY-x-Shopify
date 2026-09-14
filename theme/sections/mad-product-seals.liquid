@@ -1,0 +1,26 @@
+{%- assign seals = product.metafields.custom.selos.value -%}
+{%- if seals != blank -%}
+  <div class="mad-seals">
+    {%- if section.settings.title != blank -%}
+      <h2 class="mad-title mad-title--lg">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+    <ul class="mad-seals__list" role="list">
+      {%- for seal in seals -%}
+        <li>{{ seal | image_url: width: 290 | image_tag: loading: 'lazy', alt: seal.alt }}</li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "MAD - Selos do produto",
+  "tag": "section",
+  "class": "section mad-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "paragraph", "content": "Mostra as imagens do metafield custom.selos." },
+    { "type": "text", "id": "title", "label": "Título", "default": "Certificações e Qualidade" }
+  ]
+}
+{% endschema %}

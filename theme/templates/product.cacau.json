@@ -1,0 +1,89 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Cacau Selvagem MAD: O poderoso antioxidante.",
+        "heading_size": 40,
+        "text_html": "<p class=\"lead\">\n    Cacau nativo, puro e versátil, <b>sem adição de açúcar</b> e <b>sem aditivos</b>. Sabor intenso e aroma profundo para\n    bebidas e receitas doces ou salgadas.\n  </p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/cacau-selvagem-da-amazonia-mad.webp"
+      }
+    },
+    "bagy_2_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Benefícios culinários e atributos",
+        "heading_size": 40,
+        "text_html": "<ul class=\"checklist\">\n        <li>100% cacau selvagem (ingrediente único)</li>\n        <li>Sabor intenso e corpo marcante</li>\n        <li>Sem açúcar, sem aditivos, sem glúten e vegano</li>\n        <li>Origem amazônica, com práticas agroextrativistas</li>\n        <li>Ideal para <span class=\"pill\">drinks</span> <span class=\"pill\">smoothies</span> <span class=\"pill\">confeitaria</span> <span class=\"pill\">culinária</span></li>\n        <li>Contém naturalmente <i>teobromina</i> e compostos de cacau</li>\n      </ul>\n      <p class=\"muted\">\n\n<!-- =========================\nCSS CHECKLIST + TABELA ANVISA\n========================= -->",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/semente-caca-amazonia-mad.webp"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "O Processo MAD",
+        "heading_size": 40,
+        "text_html": "O Cacau Selvagem da MAD vem de árvores nativas da floresta amazônica, cultivadas por comunidades \n    agroextrativistas com práticas regenerativas. É puro e potente — sem adição de açúcar, aditivos \n    ou conservantes. A teobromina presente naturalmente ativa o corpo com suavidade, enquanto os antioxidantes \n    cuidam do coração e da mente.",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/cacau-selvagem-pe-amazonia-mad.webp"
+      }
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "bagy_1_1",
+    "bagy_2_1",
+    "bagy_3_1",
+    "seals",
+    "reviews",
+    "nutrition"
+  ]
+}

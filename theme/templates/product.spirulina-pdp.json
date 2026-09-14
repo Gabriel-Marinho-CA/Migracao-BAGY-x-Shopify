@@ -1,0 +1,250 @@
+{
+  "sections": {
+    "main": {
+      "type": "mad-main-product",
+      "settings": {
+        "button_label": "Comprar",
+        "note": "Envio imediato"
+      }
+    },
+    "buy_together": {
+      "type": "mad-buy-together",
+      "settings": {
+        "title": "Aproveite e compre junto",
+        "button_label": "Comprar",
+        "limit": 2,
+        "intent": "related",
+        "pix_percent": 5
+      }
+    },
+    "bagy_1_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_left",
+        "heading": "Benefícios do\nProduto",
+        "heading_size": 40,
+        "text_html": "<p>A Spirulina MAD é um superalimento puro, amazônico, rico em proteínas, antioxidantes e minerais, que fortalece a imunidade, aumenta a energia, limpa o organismo e equilibra corpo e mente.\n</p>\n<p>\n<b>Principais benefícios:</b><br>\n    • Alta concentração de proteína vegetal – Ideal para manutenção e recuperação muscular;<br>\n    • Inibidora da fome – causa saciedade auxiliando em dietas;<br>\n    • Desintoxicação de metais pesados presente em peixes, carnes e agrotóxicos;<br>\n    • Fonte de Ferro e Betacaroteno – Fundamental para nutrir e microbiota;<br>\n\n    • Fonte de vitamina B12 ativa – Essencial para saúde neurológica e imunológica;<br>\n\n    • Fortalece o sistema imune – Com ação antioxidante e anti-inflamatória;<br>\n    • Detox natural – Com clorofila e ficocianina, auxilia na eliminação de toxinas e metais;<br>\n\n    • Energia e vitalidade – Combate o cansaço físico e mental;<br>\n\n    •  100% natural e vegana – Livre de aditivos, cultivada com rastreabilidade e qualidade;<br>\n\n    • Água amazônica de alta pureza – Maior biodisponibilidade e segurança alimentar.</p>",
+        "min_height": 720,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/spirulina1.webp"
+      }
+    },
+    "bagy_2_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "O que é\nSpirulina ?",
+        "heading_size": 40,
+        "text_html": "<p>A Spirulina (Arthrospira platensis) é uma microalga de água doce, cultivada de forma sustentável na Amazônia. Rica em proteínas, vitaminas e antioxidantes, é considerada um dos alimentos mais completos do planeta, sendo utilizada em estratégias nutricionais, esportivas e terapêuticas.<br><br>\n\n<i>“Spirulina contains all essential amino acids and is rich in vitamins and minerals... It can be considere done of the most complete food sources available.” (FAO/ONU – Food and Agriculture Organization) </i></p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/spirutlina2.webp",
+        "heading_color": "#1C3D15",
+        "text_color": "#1C3D15"
+      }
+    },
+    "bagy_3_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "overlay",
+        "heading": "A Importância da Água na Produção da Spirulina",
+        "heading_size": 40,
+        "text_html": "<br><h2>\nA água é matriz biológica e condutora de qualidade na produção da spirulina. Ela desempenha funções cruciais:\n</h2>\n\n<p>A água é matriz biológica e condutora de qualidade na produção da spirulina. Ela desempenha funções cruciais:<br\n\n• Transporta os nutrientes necessários ao crescimento das cianobactérias;\n<br>\n• Determina a pureza do cultivo (evitando contaminações por metais pesados ou micro-organismos indesejados);\n<br>\n• Impacta diretamente o perfil fitoquímico da spirulina (influenciando teor de proteína, minerais e ficocianina);\n<br>\n“A qualidade da água utilizada no cultivo influencia diretamente a composição nutricional da spirulina.” <br>— FAO, 2008 – Spirulina in Human Nutrition and Food Security</p>",
+        "min_height": 1200,
+        "background": "#551818",
+        "image": "shopify://shop_images/amazonia-passagem-1.webp"
+      }
+    },
+    "bagy_4_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "background": "#EDEDE5"
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "A importância da água\nna produção da Spirulina",
+            "html": "<p>\nA água é matriz biológica e condutora de qualidade na produção da spirulina. Ela desempenha funções cruciais:</p>\n  <p> • Transporta os nutrientes necessários ao crescimento das cianobactérias;<br><br>\n• Determina a pureza do cultivo (evitando contaminações por metais pesados ou micro-organismos indesejados);<br><br>\n•  Impacta diretamente o perfil fitoquímico da spirulina (influenciando teor de proteína, minerais e ficocianina);<br><br>\n<i>“A qualidade da água utilizada no cultivo influencia diretamente a composição nutricional da spirulina.”\n— FAO, 2008 – Spirulina in Human Nutrition and Food Security </i></p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    },
+    "bagy_5_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Por que Escolher\na Spirulina MAD?",
+        "heading_size": 40,
+        "text_html": "<p>\nSpirulina da Amazônia: Nutrição Avançada com a Pureza Maxima da Floresta.<br>\nA água e ar mais puros do planeta que conferem o melhor sabor de Spirulina conhecida no mercado. Única capaz de ser ingerida pura em quantidades e misturada diretamente nos alimentos. Evitando a necessidade de capsulas e tablets para maquiar o cheiro e sabor.<br><br>\nNosso cultivo de Spirulina é produzida no maior aquifero do planeta – Alter do Chão na Amazônia, considerada uma das mais ricas biomassas já encontradas em microalgas. <br>\n<br>\nGraças à sua origem em aquíferos profundos e ao isolamento natural, essa água é rica em minerais e livre de contaminantes industriais e agrícolas, o que confere um padrão superior de qualidade e pureza ao produto final como nenhuma outra.\n\n</p>",
+        "min_height": 720,
+        "background": "#FFFFFF",
+        "image": "shopify://shop_images/spirulina-proteina.webp"
+      }
+    },
+    "bagy_6_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Única Proteina 99% Assimilável ou Biodisponível Constituída de 70% de Proteína.",
+            "html": "<p>Se comparada com carnes de origem animal onde apenas 15% é assimilavel; constituída apenas de apenas 25% de proteína.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    },
+    "bagy_7_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "background": "#FFFFFF"
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Vitamina B12 Ativa",
+            "html": "<p>A Spirulina é uma das únicas fontes vegetais naturais com vitamina B12 biodisponível (mecobalamina) — um nutriente essencial à saúde neurológica, sanguínea e imunológica, geralmente ausente em dietas veganas.\nOs principais nutrientes presentes em uma dose de 8g de Spirulina</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    },
+    "bagy_8_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Ferro Biodisponivel",
+            "html": "<p>Fundamental para quem tem anemia, mulheres em períodos menstruais, pessoas com deficiência alimentar. </p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1"
+      ]
+    },
+    "bagy_9_text": {
+      "type": "mad-text-columns",
+      "settings": {
+        "heading": "",
+        "alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "heading": "Única Proteina 99% assimilável ou biodisponível constituída de 70% de proteína.",
+            "html": "<p>Se comparada com carnes de origem animal onde apenas 15% é assimilavel; constituída apenas de apenas 25% de proteína.</p>"
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "heading": "Vitamina B12 ativa",
+            "html": "<p>A Spirulina é uma das únicas fontes vegetais naturais com vitamina B12 biodisponível (mecobalamina) — um nutriente essencial à saúde neurológica, sanguínea e imunológica, geralmente ausente em dietas veganas.\nOs principais nutrientes presentes em uma dose de 8g de Spirulina</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_1",
+        "column_2"
+      ]
+    },
+    "bagy_11_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Como Incluir a Amazon Spirulina\nno Seu Dia a Dia",
+        "heading_size": 40,
+        "text_html": "<p> Recomenda-se o consumo de 1 a 2 colheres de chá por dia (5g a 10g), podendo ser ajustado conforme orientação nutricional. A Spirulina não quebra jejum metabólico. Podendo ser utilizada em diversas estratégias nutricionais, epigenéticas e de jejum intermitente </p><br>\n<b>Sugestões de uso:</b>\n<br><br>\n    • Shots matinais detox;<br>\n    • Somente água, gelo, fruta e Spirulina;<br>\n    • Na granola ou iogurte;<br>\n    • Smoothies e sucos verdes;<br>\n    • Salada de frutas ou açaí;<br>\n    • Saladas, sopas e caldos;<br>\n    • Polvilhada sobre frutas e cereais;<br>\n    • Receitas salgadas e doces;<br>\n    • No pesto.<br></p>\n\n<p>Dica: Experimente combinar com limão ou abacaxi para equilibrar o sabor e potencializar a absorção dos nutrientes.</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/spirulina-shot-2.webp"
+      }
+    },
+    "seals": {
+      "type": "mad-product-seals",
+      "settings": {
+        "title": "Certificações e Qualidade"
+      }
+    },
+    "bagy_14_1": {
+      "type": "mad-image-text",
+      "settings": {
+        "layout": "image_right",
+        "heading": "Como a Spirulina\nFortalece a Imunidade?",
+        "heading_size": 40,
+        "text_html": "<p>A Spirulina é reconhecida mundialmente como um dos alimentos funcionais mais eficazes no fortalecimento do sistema imunológico. Sua composição única ativa as defesas naturais do corpo e contribui para a prevenção de infecções, inflamações, intoxicação por metais pesados e desequilíbrios imunológicos.</p>\n<p>\n   <b> 1. Ficocianina (C-ficocianina)</b>\nÉ o pigmento azul exclusivo da spirulina, com forte ação antioxidante e imunomoduladora, atuando na inibição de citocinas inflamatórias e estímulo das células de defesa (NK, linfócitos T e macrófagos).<br>\n  <b>  2. Polissacarídeos bioativos</b>\nEstimulam a produção de anticorpos (IgA e IgG) e a atividade dos macrófagos, que são a primeira linha de defesa contra vírus e bactérias.<br>\n <b>   3. Zinco, ferro e magnésio</b>\nMinerais essenciais para a proliferação e diferenciação das células imunes. A deficiência desses micronutrientes está diretamente ligada à baixa imunidade.<br>\n  <b>  4. Vitamina B12 ativa (mecobalamina)</b>\nRara em fontes vegetais, a B12 da spirulina é biodisponível e essencial para a produção de glóbulos vermelhos e resposta imunológica eficiente.<br></p><br>\n\n<p><b> Detox natural com clorofila e ficocianina:</b><br>\n    • Auxilia na eliminação de toxinas e metais pesados;<br>\n    • Suporta o fígado e rins em processos de desintoxicação;<br>\n    • Ação antioxidante que protege as células contra o estresse oxidativo</p>",
+        "min_height": 720,
+        "background": "#EDEDE5",
+        "image": "shopify://shop_images/spirulina-corrida.webp"
+      }
+    },
+    "reviews": {
+      "type": "mad-product-reviews",
+      "settings": {
+        "title": "Depoimentos e Avaliações"
+      }
+    },
+    "nutrition": {
+      "type": "mad-product-nutrition",
+      "settings": {
+        "title": "Informações Nutricionais",
+        "table_title": "Tabela nutricional",
+        "specs_title": "Especificações",
+        "usage_title": "Como consumir ?",
+        "ingredients_title": "Ingredientes"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "buy_together",
+    "bagy_1_1",
+    "bagy_2_1",
+    "bagy_3_1",
+    "bagy_4_text",
+    "bagy_5_1",
+    "bagy_6_text",
+    "bagy_7_text",
+    "bagy_8_text",
+    "bagy_9_text",
+    "bagy_11_1",
+    "seals",
+    "bagy_14_1",
+    "reviews",
+    "nutrition"
+  ]
+}
